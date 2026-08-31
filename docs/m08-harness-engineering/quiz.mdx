@@ -1,0 +1,33 @@
+---
+sidebar_position: 5
+title: 'Quiz'
+---
+
+import Quiz from '@site/src/components/Quiz';
+
+# M08 Quiz: Harness Engineering
+
+<Quiz questions={[
+  {
+    prompt:'What is a "harness," as this course uses the word?',options:[{text:'Any single skill file written for an agent',correct:false,explanation:'A skill alone is one piece, not the assembled system.'},{text:'A skill, an MCP server, and a hook assembled around one real discipline',correct:true,explanation:'A harness is what you get when the pieces taught separately in M04 through M06 are assembled around one discipline, not three unrelated tools.'},{text:'A synonym for the agent itself',correct:false,explanation:'The harness is what surrounds the agent, not the agent.'},{text:'A cloud account used only for testing',correct:false,explanation:'That\'s unrelated to what a harness is.'}]
+  },
+  {
+    prompt:'A team says: "Our agent understands the task fine, it just keeps ignoring our tagging convention." Which layer does this symptom point to?',options:[{text:'Context',correct:false,explanation:'"Can\'t get one task right at all" would be context, not this.'},{text:'Harness',correct:true,explanation:'"Ignores our standards" is the harness symptom from M01\'s diagnostic, this module\'s whole subject.'},{text:'Loop',correct:false,explanation:'"I have to babysit every run" would be loop, not this.'}]
+  },
+  {
+    prompt:'A hook script checks a response for the phrase "tests pass" and, if found, requires a real pass/fail count nearby before letting the claim stand. What discipline does this hook enforce?',options:[{text:'Test-first',correct:false,explanation:'Test-first is about writing the test before the code, not checking a claim afterward.'},{text:'Verification-before-claiming',correct:true,explanation:'The hook checks whether a completion claim has real evidence attached before it\'s accepted, that\'s verification-before-claiming.'},{text:'Root-cause debugging',correct:false,explanation:'Root-cause debugging is about fixing the cause of a bug, not verifying a claim.'},{text:'Blast radius',correct:false,explanation:'Blast radius is M06\'s subject, unrelated to this hook.'}]
+  },
+  {
+    prompt:'Which of these is NOT one of the three superpowers disciplines this module covers?',options:[{text:'Test-first',correct:false,explanation:'This is one of the three real disciplines.'},{text:'Verification-before-claiming',correct:false,explanation:'This is one of the three real disciplines.'},{text:'Root-cause debugging',correct:false,explanation:'This is one of the three real disciplines.'},{text:'Cost estimation before apply',correct:true,explanation:'Cost estimation is M09\'s subject (Infracost as a gate), not one of this module\'s three disciplines.'}]
+  },
+  {
+    prompt:'Two runs of the same agent both say "checkov passes." Run 1 gets blocked by a hook, run 2 doesn\'t. What\'s the most likely difference between the two runs?',options:[{text:'Run 2 used a more expensive model',correct:false,explanation:'The hook doesn\'t check which model produced the claim.'},{text:'Run 2\'s response had real command output backing the claim, run 1\'s didn\'t',correct:true,explanation:'The hook checks for evidence next to the claim, not the confidence of the wording.'},{text:'Run 1 ran on a Monday',correct:false,explanation:'The day of the week has nothing to do with the hook\'s check.'},{text:'Run 2 was reviewed by a human first',correct:false,explanation:'The hook runs its own mechanical check, independent of human review.'}]
+  },
+  {
+    prompt:'Why does the course\'s own rule say "never add a loop on top of a broken harness"?',options:[{text:'Loops are always slower than manual work',correct:false,explanation:'Speed isn\'t the reason for this rule.'},{text:'A loop just repeats a broken harness\'s mistakes faster, with less human attention each time',correct:true,explanation:'Module 12\'s supervised autonomy only works if the harness underneath is actually catching mistakes, otherwise the loop just makes the same unbacked claims faster.'},{text:'Loops are not supported by most agent tools',correct:false,explanation:'Tool support isn\'t the reason for this rule.'},{text:'Harnesses and loops solve the same problem, so only one is needed',correct:false,explanation:'They solve different problems: a harness enforces discipline, a loop repeats work.'}]
+  },
+  {
+    prompt:'A skill states "never claim a check passed without pasting real output." No hook exists to check this. What\'s true about this rule?',options:[{text:'It\'s a complete harness on its own',correct:false,explanation:'A skill alone is not a complete harness, it needs enforcement.'},{text:'It\'s words the agent reads, useful but not enforced, exactly the kind of thing that gets skipped under time pressure',correct:true,explanation:'A skill can only ever suggest. Without a hook enforcing it mechanically, the rule survives only as long as the agent happens to follow it carefully.'},{text:'It\'s equivalent to a gate from M06',correct:false,explanation:'A gate has to actually block something; an unenforced skill can\'t.'},{text:'It automatically becomes a hook once written down',correct:false,explanation:'Writing a rule down doesn\'t enforce it, a hook has to be built separately.'}]
+  }
+
+]} />

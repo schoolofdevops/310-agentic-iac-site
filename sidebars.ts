@@ -83,6 +83,17 @@ const sidebars: SidebarsConfig = {
     },
     {
       type: 'category',
+      label: 'Module 8: Harness Engineering',
+      items: [
+        'm08-harness-engineering/lesson',
+        'm08-harness-engineering/lab',
+        'm08-harness-engineering/reference',
+        'm08-harness-engineering/projects',
+        'm08-harness-engineering/quiz',
+      ],
+    },
+    {
+      type: 'category',
       label: 'Module 9: Verifying AI-Generated Infrastructure',
       items: [
         'm09-verifying-ai-infra/lesson',
