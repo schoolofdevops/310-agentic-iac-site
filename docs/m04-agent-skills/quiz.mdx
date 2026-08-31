@@ -1,0 +1,33 @@
+---
+sidebar_position: 5
+title: 'Quiz'
+---
+
+import Quiz from '@site/src/components/Quiz';
+
+# M04 Quiz: Agent Skills for IaC
+
+<Quiz questions={[
+  {
+    prompt:'A team writes an AGENTS.md with provider pins and naming rules, always loaded, and separately a SKILL.md for generating Terraform modules, loaded only when that specific task comes up. What\'s the actual distinction between the two?',options:[{text:'AGENTS.md is for humans, SKILL.md is for agents',correct:false,explanation:'Both files are read by an agent, that\'s not the distinction.'},{text:'Context (AGENTS.md) is always loaded; a skill is loaded only when a task matches it',correct:true,explanation:'Context is standing information true on every run. A skill is packaged capability an agent reaches for only when a task actually matches.'},{text:'There is no real distinction, they\'re interchangeable',correct:false,explanation:'They load at different times for different reasons, they are not interchangeable.'},{text:'SKILL.md is only for Docker, AGENTS.md is only for Terraform',correct:false,explanation:'Neither file format is tied to a specific tool.'}]
+  },
+  {
+    prompt:'A skill\'s description field reads "Terraform best practices." The team is confused why the agent never seems to use it. What\'s the most likely cause?',options:[{text:'The skill is too short',correct:false,explanation:'Length isn\'t the issue, specificity is.'},{text:'The description is too vague to match against a specific task, so the agent has nothing concrete to trigger on',correct:true,explanation:'The description field is the matching key. A vague description gives the agent nothing specific to match.'},{text:'Skills only work with YAML version 2',correct:false,explanation:'Not a real constraint.'},{text:'The skill needs to be renamed to SKILL.yaml',correct:false,explanation:'The filename convention is SKILL.md, and renaming it doesn\'t fix discoverability.'}]
+  },
+  {
+    prompt:'Which of these is something a skill CAN do, that it inherently CANNOT do compared to a harness gate?',options:[{text:'Suggest a convention to an agent that\'s already inclined to look for it',correct:true,explanation:'This is exactly what a skill can do: suggest, voluntarily.'},{text:'Block an action outright, regardless of what the agent decides',correct:false,explanation:'This is what a harness gate does, not a skill, a skill can only ever suggest.'},{text:'Live in a .claude/skills/ directory',correct:false,explanation:'This is just where a skill lives, not a distinguishing capability.'},{text:'Have a YAML frontmatter',correct:false,explanation:'Frontmatter is just the file format, not a capability comparison.'}]
+  },
+  {
+    prompt:'In this module\'s lab, the same one-line intent is handed to the same agent twice, once with the terraform-module-conventions skill available, once without. What autonomy rung does this lab sit on?',options:[{text:'Rung 1, suggest',correct:false,explanation:'Rung 1 is the agent proposing text only, this lab generates real code and a plan.'},{text:'Rung 3, propose with plan, because the agent proposes code and a plan, and a human still reads both before anything runs',correct:true,explanation:'The skill changes what gets proposed, not who is reading the plan before apply runs. That\'s still rung 3.'},{text:'Rung 5, supervised, because the agent runs the loop on its own',correct:false,explanation:'Nothing in this lab loops on its own across multiple iterations without review.'},{text:'Rung 6, unattended',correct:false,explanation:'A human reads and applies every step here, nothing is unattended.'}]
+  },
+  {
+    prompt:'In the lab, checkov\'s secrets framework goes from failing to clean between run 1 and run 2, but checkov\'s terraform framework still reports the same S3-hardening findings in both runs. Why doesn\'t the skill fix those too?',options:[{text:'The skill is broken',correct:false,explanation:'The skill works exactly as scoped, this isn\'t a bug.'},{text:'Checkov doesn\'t check S3 buckets at all',correct:false,explanation:'Checkov does check S3 buckets, that\'s exactly where the hardening findings come from.'},{text:'The skill was scoped to provider pins, tags, and secrets only, general S3 hardening is a systematic scanning job, covered later in M09',correct:true,explanation:'A skill fixes exactly what it says it fixes. Broad infrastructure posture needs the systematic scanners M09 covers.'},{text:'Floci doesn\'t support encrypted buckets',correct:false,explanation:'This isn\'t about Floci\'s capabilities, it\'s about what the skill was written to fix.'}]
+  },
+  {
+    prompt:'A team wants a rule enforced no matter what an agent decides, even if the agent never reaches for any skill at all. What should they reach for instead of a skill?',options:[{text:'A longer description field',correct:false,explanation:'A longer description only improves matching, it doesn\'t add enforcement.'},{text:'A harness gate or hook, covered in M06 and M08',correct:true,explanation:'Something enforced regardless of the agent\'s own decision is a harness-layer job, not a skill.'},{text:'A second AGENTS.md',correct:false,explanation:'Context is also not enforced, an agent can still fail to follow it under pressure.'},{text:'Nothing, skills already guarantee this',correct:false,explanation:'Skills are voluntary by design, they never guarantee enforcement.'}]
+  },
+  {
+    prompt:'What is demos/m1-agent-preview/.claude/skills/container-conventions/SKILL.md used for in this module?',options:[{text:'It\'s duplicated into this module as a new copy',correct:false,explanation:'It\'s referenced, not duplicated.'},{text:'It\'s the worked example the lab reads first, before writing a new skill for the Terraform/Floci case',correct:true,explanation:'It\'s a real, already-verified example the lab points learners to before they write their own skill.'},{text:'It\'s deprecated and replaced by this module\'s skill',correct:false,explanation:'It\'s still the live, real example, not replaced.'},{text:'It only applies to Kubernetes work',correct:false,explanation:'It\'s about container conventions (Docker/compose), not Kubernetes.'}]
+  }
+
+]} />

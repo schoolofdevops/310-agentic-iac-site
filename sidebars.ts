@@ -26,6 +26,17 @@ const sidebars: SidebarsConfig = {
         'm03-context-engineering/quiz',
       ],
     },
+    {
+      type: 'category',
+      label: 'Module 4: Agent Skills for IaC',
+      items: [
+        'm04-agent-skills/lesson',
+        'm04-agent-skills/lab',
+        'm04-agent-skills/reference',
+        'm04-agent-skills/projects',
+        'm04-agent-skills/quiz',
+      ],
+    },
   ],
 };
 

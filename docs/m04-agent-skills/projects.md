@@ -1,0 +1,35 @@
+---
+sidebar_position: 4
+title: 'Exploratory projects'
+---
+
+# M04 Projects: Agent Skills for IaC
+
+Stretch projects, hints not solutions. Pick one, or all three.
+
+## 1. Write a skill for your own team's convention
+
+Take one rule your team already enforces by hand in code review, naming, tagging, a
+required README, whatever it is, and write it as a real `SKILL.md`. Test it the same way
+this module's lab did: same intent, skill absent vs skill present, real diff.
+
+*Hint: the hardest part is usually the `description` field, not the body. Write it last,
+after you know exactly what should trigger the skill.*
+
+## 2. Break discoverability on purpose
+
+Take a working skill, yours or `terraform-module-conventions` from this module's lab, and
+rewrite its `description` to be vague. Run the same intent again. Does the skill still get
+used?
+
+*Hint: try a few points along the spectrum, from very specific to very vague, and note
+where it stops triggering reliably.*
+
+## 3. Skill vs hook
+
+Pick one rule from a skill you've written and reimplement it as a pre-commit hook or a CI
+check instead. Compare the two: which one only suggests the right behavior, and which one
+actually stops a violation from landing?
+
+*Hint: you'll need M06's guardrails material for the hook side of this, this project is a
+good reason to come back to it after that module.*
