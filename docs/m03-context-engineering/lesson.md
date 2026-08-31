@@ -42,6 +42,16 @@ that is half full of noise behaves like a smaller window than it actually is.
 That is the whole argument for this chapter, in one line: what you put in the
 window, on purpose, decides how much of it is actually working for you.
 
+### Try it: the context window visualizer
+
+Words only get you so far here. There'''s a small, interactive tool that makes this
+concrete: [Context Window Visualizer](pathname:///310-agentic-iac-site/sims/context-window-sim.html).
+Add pieces to a fixed 2,000-token window (an `AGENTS.md`, the file that actually
+has the bug, the one-off ask, some noise) and watch whether the task would actually
+land with what you gave it. Try adding only noise first. Then try the exact fix
+this chapter'''s lab walks through: the same `AGENTS.md`, with and without the one
+policy line spelled out.
+
 ## Context Engineering, Not Prompt Engineering
 
 You will hear the word "prompt engineering" a lot. This course does not use it,
