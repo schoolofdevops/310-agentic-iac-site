@@ -9,7 +9,9 @@ import Slides from '@site/src/components/Slides';
 
 <Slides src="decks/m01-clickops-to-agents.html" title="M1: From ClickOps to Agents" />
 
-## The server nobody can rebuild
+## How Infrastructure Automation Evolved
+
+### The server nobody can rebuild
 
 Every infrastructure team has one of these. A box, or a stack, or a cluster, that one
 person built two years ago, under deadline. They never wrote it down. That person left
@@ -20,295 +22,365 @@ production.
 
 ![A hand-built server box, a crossed-out name tag reading built by, gone, a sticky note reading restart if weird, and a stack of outdated runbook pages.](./diagrams/broken-server.svg)
 
-This is not a story about one bad engineer. It's the normal end state of infrastructure
-work done by hand, and it's the starting point for this whole book. Every era of
-infrastructure automation we're about to walk through was invented to fix some version of
+This is not a story about one bad engineer. It is the normal end state of infrastructure
+work done by hand. It is also the starting point for this whole book. Every era of
+infrastructure automation you are about to read about was invented to fix some version of
 that server. And every one of those fixes left behind a smaller, different version of the
 same problem.
 
-## Seven eras, one through-line
+### Seven eras, one pattern
 
-Here's the shape you'll see repeated seven times: someone raises the level at which a
-human states intent, and hands more of the translation work to a machine. The bottleneck
-moves. It doesn't disappear.
+Here is the pattern you will see seven times in a row: someone finds a way to state
+intent at a higher level, and hands more of the translation work to a machine. The
+bottleneck does not disappear. It just moves.
 
 ![Seven ascending steps: ClickOps, scripts, configuration management, declarative IaC, GitOps, AI-assisted, agentic, each taller than the last.](./diagrams/seven-eras-staircase.svg)
 
-**ClickOps** is where infrastructure work starts for almost everyone: a console, a mouse,
-a person clicking through a cloud provider's web UI to create a server or a database. It
-works. It's also completely undocumented by default, because a click leaves no file
-behind. It doesn't repeat itself the same way twice. Ask two engineers to set up "the
-same" server by hand, a week apart, and you'll get two different servers.
+**ClickOps** is where infrastructure work starts for almost everyone. That is a console, a
+mouse, a person clicking through a cloud provider's web UI to create a server or a
+database. It works. It is also completely undocumented by default, because a click leaves
+no file behind. It does not repeat itself the same way twice. Ask two engineers to set up
+"the same" server by hand, a week apart, and you would get two different servers.
 
-**Scripts** were the first fix. Shell scripts ran the same commands every time, saved in
-a file, checked into version control. Now the setup was documented and repeatable. But a
-script is a sequence, not a description. It fails halfway through and leaves the system
-in a state nobody planned for. Running it twice on an already-configured server usually
-breaks something, because it was written to build a fresh server, not to update one that
-already exists.
+**Scripts** were the first fix. Shell scripts ran the same commands every time, saved in a
+file, checked into version control. Now the setup was documented and repeatable. But a
+script is a sequence, not a description. It fails halfway through and leaves the system in
+a state nobody planned for. Run it twice on a server that is already configured, and it
+usually breaks something, because it was written to build a fresh server, not to update
+one that already exists.
 
-**Configuration management** tools, Puppet, Chef, Ansible, and others, fixed the "runs
-twice" problem. You describe the desired state of a server: a package installed, a file
-present, a service running. The tool figures out what's already true and only changes
-what isn't. That property is called idempotency. It's the reason config management tools
-became the default for years: run the same playbook a hundred times, get the same end
-state every time. What they didn't solve was drift between environments. They manage
-individual machines, not the relationships between them. The inventory of which servers
-exist still lived in someone's head, or a spreadsheet.
+**Configuration management** tools, Puppet, Chef, Ansible, and others, fixed that "runs
+twice" problem. You describe the state you want on a server: a package installed, a file
+present, a service running. The tool checks what is already true, and only changes what
+is not. That property has a name: idempotency. It is why configuration management tools
+became the default for years. Run the same playbook a hundred times, get the same end
+state every time. What these tools did not solve was drift between environments, because
+they manage one machine at a time, not the relationships between machines. The list of
+which servers even exist still lived in someone's head, or a spreadsheet.
 
-**Declarative infrastructure as code**, Terraform and its relatives, moved the
-description up a level again. Instead of describing the state of one server, you
-describe the state of your whole environment, the servers, the network, the load
-balancers, the database, as one set of files. The tool works out what to create, change,
-or destroy to make reality match the files. This is a genuine step up: the files are now
-the source of truth for the environment's shape, not just one machine's configuration.
-What it left behind is state. Terraform has to track what it created somewhere. If that
-state file drifts from reality, because someone made a manual change, or two people ran
-`apply` from different laptops, the next plan can be wrong in ways that are hard to spot
-before they happen.
+**Declarative infrastructure as code**, Terraform and its relatives, moved the description
+up one more level. Instead of describing the state of one server, you describe the state
+of your whole environment, the servers, the network, the load balancers, the database, as
+one set of files. The tool works out what to create, change, or destroy, so that reality
+matches the files. This is a real step up: the files are now the source of truth for the
+shape of your environment, not just one machine's setup. What it left behind is state.
+Terraform has to track what it already created, somewhere. If that record drifts from
+reality, because someone made a manual change, or two people ran `apply` from two
+different laptops, the next plan can be wrong in ways that are hard to catch before they
+happen.
 
 **GitOps** answered that by moving the source of truth into a place with a history and a
-review process. The infrastructure files live in a Git repository, and a controller
-running in the environment continuously reconciles the running system against whatever
-is in the repository. No more applying from a laptop. Every change is a commit, every
-commit is reviewable, and drift gets corrected automatically because the controller keeps
-checking. What it left behind is scale. GitOps solved *how* a change gets applied safely,
-not *how many* changes a team can review well. As the number of repositories and the
-frequency of change both grow, the humans doing the reviewing become the bottleneck.
+review step: the infrastructure files live in a Git repository, and a controller running
+inside the environment keeps checking the running system against whatever is in that
+repository. Nobody applies from a laptop anymore. Every change is a commit, every commit
+is reviewable, and drift gets corrected automatically because the controller never stops
+checking. What GitOps left behind is scale. It solved *how* a change gets applied safely.
+It did not solve *how many* changes a team can review well. As the number of repositories
+grows, and the pace of change grows with it, the humans doing the reviewing become the new
+bottleneck.
 
-**AI-assisted infrastructure**, autocomplete in your editor, a chat window where you
-paste in a Terraform error and get a fix back, arrived on top of all of that. It's
-genuinely useful. It's also where a lot of teams are stuck today: a human still drives
-every step, decides what to build, writes or approves each snippet, and runs each
-command. The AI speeds up typing. It doesn't yet close the loop.
+**AI-assisted infrastructure**, autocomplete in your editor, a chat window where you paste
+in a Terraform error and get a fix back, sits on top of all of that. It is genuinely
+useful. It is also where a lot of teams are stuck today: a human still drives every step,
+decides what to build, writes or approves each snippet, and runs each command by hand. The
+AI makes typing faster. It does not close the loop.
 
-**Agentic** infrastructure is the era this course is about. It's the first one where a
-system can run that whole loop on its own: read an intent, generate infrastructure code,
-check it, fix what's wrong, and stop when it's actually done, not just when a human gets
-tired of prompting. That's a real jump in capability. It's also a jump in how much can go
-wrong before a human notices, as you'll see over and over in this book. That's why almost
-every module after this one is about building something that catches the agent before
-the damage lands.
+**Agentic** infrastructure is the era this course teaches. It is the first one where a
+system can run that whole loop by itself: read an intent, generate infrastructure code,
+check it, fix what is wrong, and stop only when the work is actually done, not just when a
+human gets tired of prompting. That is a real jump in what is possible. It is also, as you
+will see again and again in this book, a jump in how much can go wrong before a human even
+notices. That is why almost every module after this one is about building something that
+catches the agent before any real damage lands.
 
-Read those seven again as one line: each era raised the level at which a human states
-intent, and handed more of the translation to a machine. And each one's residue, drift,
-sprawl, unreviewed state, review overload, became the reason the next era got invented.
-Agentic infrastructure is not an exception to that pattern. It's the next turn of it. The
-question this book keeps coming back to is what residue *this* era leaves, and what has
-to exist to clean it up before it piles up the way all the others did.
+Read those seven again, as one line: each era let a human state intent at a higher level,
+and handed more of the translation work to a machine. And each one's leftover mess, drift,
+sprawl, unreviewed state, too much to review, became the reason the next era got invented.
+Agentic infrastructure is not an exception to that pattern. It is simply the next turn of
+it. The question this book keeps returning to is: what mess does *this* era leave behind,
+and what has to exist to clean it up before it piles up the way every earlier mess did?
 
-## What an agent actually is
+### What each era fixed, and what it left behind
+
+Look at the same seven steps a second time, and you can name the trade at each one:
+ClickOps traded speed for a record of what happened. Scripts traded repeatability for
+safety on a second run. Configuration management traded safety on a second run for a
+shared view across machines. Declarative IaC traded a shared view for a state file that
+can drift. GitOps traded that drift for a review queue that can overflow. AI-assisted work
+traded typing speed for a human still driving every step. Each fix is real. Each fix is
+also incomplete, in a way that becomes the next era's whole reason to exist.
+
+### Two things keep rising
+
+Two arrows point the same direction across all seven eras. The first: intent keeps moving
+up. You used to describe individual commands. Now you describe a desired end state, and
+soon, an outcome you want, in plain language. The second, and this is the one people miss:
+the work does not disappear, it moves from *writing* to *verifying*. You spend less time
+typing infrastructure code by hand, and more time checking whether what got generated,
+by a human or by a machine, is actually correct, safe, and cheap enough to run. Keep that
+second arrow in mind. It explains most of the second half of this course.
+
+## What Is an Agent? Loop, Not Autocomplete, Not a Script
 
 The word "agent" gets used loosely right now, for anything from a chat autocomplete to a
-fully autonomous pipeline. So it's worth pinning down a definition that will still make
-sense after the current wave of product names has cycled through.
+fully autonomous pipeline. So before you go further, it is worth pinning down a definition
+that will still be true after the current wave of product names has cycled through twice.
 
-An agent is a loop: it takes in an intent, acts using some set of tools, observes what
-happened, decides what to do next based on that observation, and repeats, until it hits a
-stopping condition. That's the whole definition. Nothing about a specific vendor, a
-specific model, or a specific coding tool matters to it. That's the point: this
-definition should still be true in two years, even though the products will have changed
-names twice by then.
+### A working definition
+
+An agent is a loop. That is the whole definition: it takes in an intent, acts using some
+set of tools, observes what happened, decides what to do next based on that observation,
+and repeats, until it hits a stopping condition. Nothing about a specific vendor, model, or
+coding tool is load-bearing in that sentence, and that is the point. This definition
+should hold up in two years, even after the products have all changed names twice.
 
 ![An agent is a closed loop: intent feeds into act, act feeds into observe, observe feeds into decide, decide feeds back into act, and decide also exits to a stop condition.](./diagrams/agent-loop.svg)
 
-Compare that to the two things people often confuse it with. **Autocomplete** suggests
-the next few lines of code based on what you've already typed, and stops. There's no
-loop. It doesn't check whether its suggestion was right, and it doesn't try again if you
-reject it. It's a single guess, handed back to you. A **script**, even a smart one,
-executes a fixed sequence of steps in order. It doesn't decide anything as it goes. If
-step three fails, it fails. It doesn't observe the failure and pick a different step four.
+### Three things people call AI
 
-An agent does both of the things the other two don't: it makes decisions based on what it
-observes, and it keeps looping until some condition says stop. Watch for that stopping
-condition specifically. It's the part teams get wrong most often. "Keep going until it
-works" and "keep going until you run out of budget or turns" are very different systems.
-An agent with a badly defined stopping condition is the single most common way an
-agentic infrastructure run turns into an expensive mess.
+Compare that loop to the two things it most often gets confused with. **Autocomplete**
+suggests the next few lines of code based on what you already typed, and then it stops.
+There is no loop: it never checks whether its own suggestion was right, and it never tries
+again if you reject it. It is one guess, handed back to you. A **script**, even a clever
+one, runs a fixed sequence of steps in order. It never decides anything as it goes. If
+step three fails, it just fails. It does not look at that failure and choose a different
+step four.
 
-## The autonomy ladder
+![Three columns compared: autocomplete has one arrow and no loop, automation has a fixed numbered sequence with no branching, an agent is the closed loop with intent, act, observe, decide, and a stop condition.](./diagrams/three-things-ai.svg)
 
-If "agent" is the definition of the loop, the autonomy ladder is the answer to the next
-question: how much of that loop are you actually willing to let run without you
-watching? It's six rungs. The honest answer for most teams right now is that they're
-using different rungs for different kinds of work, often without saying so out loud.
+An agent does both of the things the other two cannot: it makes real decisions based on
+what it observes, and it keeps looping until some condition tells it to stop. Watch that
+stopping condition closely. It is the part teams get wrong most often, because "keep going
+until the task works" and "keep going until you run out of budget or turns" are two very
+different systems to be running, even though they can look identical from the outside for
+the first few minutes.
+
+### The stopping condition problem
+
+Here is why this matters in practice. An agent with a clear, testable stopping condition,
+"stop when `terraform plan` shows zero changes and `checkov` exits clean", behaves like a
+tool. An agent with a vague one, "stop when the infrastructure looks good", behaves like a
+liability, because "looks good" is a judgment call the agent is now making on its own,
+about a system where mistakes can be expensive and hard to undo. A badly defined stopping
+condition is the single most common way an agentic infrastructure run turns into an
+expensive mess. Fix the stopping condition before you worry about anything else in the
+loop.
+
+## The Autonomy Ladder for Infrastructure Agents
+
+If "agent" is the definition of the loop, the autonomy ladder answers the next, more
+practical question: how much of that loop are you actually willing to let run without you
+watching? It has six rungs. The honest answer, for most teams right now, is that they are
+using different rungs for different kinds of work, often without ever saying so out loud.
 
 ![A six-rung ladder, bottom to top: suggest, draft, propose with plan, gated apply, supervised autonomy, unattended.](./diagrams/autonomy-ladder.svg)
 
-**Rung 1, suggest.** The agent proposes text, and a human types it. This is autocomplete,
-strictly speaking, but it's also where a lot of chat-based "AI infrastructure" work
-actually lives today: you ask a question, you get an answer, you copy the part you trust
-into your own editor. Example: you ask an assistant how to structure a Terraform module
-for a three-tier VPC, and you type the module yourself, using its answer as a reference.
+**Rung 1, suggest.** The agent proposes text, and a human types it in. This is
+autocomplete, strictly speaking, but it is also where a lot of chat-based "AI
+infrastructure" work actually lives today: you ask a question, you get an answer, you copy
+the part you trust into your own editor. Example: you ask an assistant how to structure a
+Terraform module for a three-tier VPC, and you type the module yourself, using its answer
+only as a reference.
 
-**Rung 2, draft.** The agent writes the files directly, and a human reads every line
-before anything happens. This is the first rung where the agent actually produces
-artifacts, not just suggestions. It's exactly what M02 in this course has you doing: you
-hand an agent a one-line intent, it writes you a Terraform module, and you read it start
-to finish before you do anything else with it.
+**Rung 2, draft.** The agent writes the files directly, and a human reads every single
+line before anything happens. This is the first rung where the agent actually produces a
+real artifact, not just a suggestion, and it is exactly what M02 in this course has you
+doing: you hand an agent a one-line intent, it writes you a Terraform module, and you read
+it start to finish before you do anything else with it.
 
-**Rung 3, propose with plan.** The agent produces both the code and a plan, `terraform
-plan` output showing what will actually change, and a human reads the plan rather than
-re-reading every line of code. This is a meaningfully lighter review. A plan tells you
-the *effect* of the change, three resources created, one destroyed, which is often what
-you actually care about, rather than the code that produces that effect.
+**Rung 3, propose with plan.** The agent produces both the code and a plan, that is,
+`terraform plan` output showing what will actually change, and a human reads the plan
+instead of re-reading every line of code. This is a real, meaningfully lighter review,
+because a plan tells you the *effect* of the change, three resources created, one
+destroyed, which is often the part you actually care about, rather than the code that
+produces that effect.
 
 **Rung 4, gated apply.** Automated checks run before anything is applied: a formatter, a
-scanner, a policy check. A human approves the plan once those checks pass. This is the
-first rung where a machine, not just a human, stands between the agent and production.
+scanner, a policy check. A human approves the plan only after those checks pass. This is
+the first rung where a machine, not only a human, stands between the agent and production.
 M09 in this course is entirely about building that gate well.
 
 **Rung 5, supervised autonomy.** The agent loops on its own, generating, checking, and
-fixing, across multiple iterations. A human reviews outcomes rather than individual
-steps. You come back at the end of a run and look at what changed and why, not at every
-plan along the way.
+fixing, across several iterations. A human reviews the outcome, not each individual step.
+You come back at the end of a run, and you look at what changed and why, not at every plan
+made along the way.
 
-**Rung 6, unattended.** The agent runs to a defined stopping condition with no human in
-the loop at all. A human reviews exceptions when the system flags one. This is the top of
-the ladder. It's also the rung this course spends the least time recommending for
-infrastructure work, for reasons that will make more sense once you've read the next
-section.
+**Rung 6, unattended.** The agent runs all the way to a defined stopping condition, with
+no human anywhere in the loop. A human reviews exceptions, only when the system flags one.
+This is the top of the ladder. It is also the rung this course spends the least time
+recommending for infrastructure work, for reasons the next two chapters will make clear.
 
-The rule that matters more than any individual rung: **no rung is safe without the gate
-that makes it safe.** A team running rung 5 with no automated checks in front of `apply`
-isn't more advanced than a team running rung 2. It's running rung 2's level of actual
-safety with rung 5's level of exposure. That's worse, not better. Every module in this
-course that moves a step up this ladder also teaches the gate that has to exist first.
+### Every rung needs a gate
 
-## Where the industry actually is
+Here is the one rule that matters more than any single rung: **no rung is safe without the
+gate that makes it safe.** A team running rung 5 with no automated checks in front of
+`apply` is not more advanced than a team on rung 2. It is running rung 2's real level of
+safety, with rung 5's level of exposure, and that is worse, not better. Every module in
+this course that moves you a step up this ladder also teaches you the gate that has to
+exist first, before you are allowed to climb it.
 
-It's worth being honest about the gap between what agentic infrastructure can
-technically do and what teams currently trust it to do. That gap is the whole reason
-guardrails are this course's second half, not an afterthought tacked onto the end.
+## Where the AI Infrastructure Industry Actually Stands
 
-The Firefly *State of IaC 2026* survey, a vendor survey, so treat the numbers as
-directional rather than definitive, found that **46%** of organizations are running AI
-for infrastructure work in production or in advanced pilots. That's real, mainstream
-adoption, not an early-adopter curiosity. But only **34%** of respondents said they'd
+It is worth being honest about the gap between what agentic infrastructure can technically
+do, and what teams currently trust it to do. That gap is the whole reason guardrails make
+up the second half of this course. They are not an afterthought bolted on at the end.
+
+### Three numbers from 2026
+
+The Firefly *State of IaC 2026* survey, a vendor survey, so treat these numbers as
+directional rather than exact, found that **46%** of organizations are already running AI
+for infrastructure work in production, or in advanced pilots. That is real, mainstream
+adoption, not an early-adopter curiosity. But only **34%** of respondents said they would
 trust an autonomous system to make changes in production without a human approving each
-one first. And when asked what's holding broader trust back, **43%** named the absence
-of guardrails as the number one blocker, ahead of cost, ahead of accuracy, ahead of
-everything else on the list.
+one first. And when asked what is holding broader trust back, **43%** named the absence of
+guardrails as the number one blocker, ahead of cost, ahead of accuracy, ahead of every
+other reason on the list.
 
 ![Three bars: 46 percent run AI for infrastructure in production or advanced pilots, 34 percent would trust autonomous production changes, 43 percent name absent guardrails as the top blocker.](./diagrams/industry-stats.svg)
 
-Read those three numbers together and you get the actual shape of where things stand:
-broad adoption, narrow trust, and a named, specific reason for the gap. Teams aren't
-avoiding agentic infrastructure. They're avoiding running it unattended, because most of
-them don't yet have the gate that would make that safe. That gap between adoption and
-trust is where this entire course lives.
+### Adoption is not trust
 
-## Why infrastructure is not application code
+Read those three numbers together, and you get the real shape of where the industry
+stands: broad adoption, narrow trust, and a specific, named reason for the gap between
+them. Teams are not avoiding agentic infrastructure. They are avoiding running it
+unattended, because most of them do not yet have the gate that would make that safe. That
+gap, between how much teams have adopted and how much they actually trust, is where this
+entire course lives.
+
+## Why Infrastructure Is Harder Than Application Code for AI
 
 If agents already write application code reasonably well, why is infrastructure
-different? Four properties. Each one turns a mistake that would be an annoying bug in an
-application into something considerably worse in infrastructure.
+different? There are four properties, and each one turns a mistake that would be an
+annoying bug in an application into something considerably worse in infrastructure.
 
 ![Four panels: no undo, state, blast radius, silent failure, the four properties that make infrastructure harder than application code for an agent to touch.](./diagrams/four-asymmetries.svg)
 
+### Four differences
+
 **No undo.** Delete a customer's row in an application database by mistake, and if you
-have backups and a bit of luck, you can restore it. Delete a VPC, and every resource
-inside it goes with it. There usually isn't a restore button. Some infrastructure
-mistakes are recoverable. Some simply aren't, and the code that made the mistake can't
-tell you which kind it just made.
+have backups and a little luck, you can restore it. Delete a VPC, and every resource
+inside it goes with it. There is usually no restore button waiting for you. Some
+infrastructure mistakes can be recovered from. Some cannot, and the code that made the
+mistake has no way to tell you which kind it just made.
 
-**State.** An application, mostly, is stateless between requests, or its state lives in a
-database that's managed separately from the application's own code. Infrastructure tools
-carry state about what they've already created. If that state gets out of sync with
-reality, a clean, confident-looking plan can propose the wrong thing, recreating a
-resource that already exists, for instance, and it will look exactly as correct as a
-plan that's right.
+**State.** An application, mostly, has no memory between requests, or its memory lives in
+a database that is managed separately from the application's own code. Infrastructure
+tools carry a memory of what they have already built. If that memory drifts out of sync
+with reality, a clean, confident-looking plan can propose exactly the wrong thing,
+recreating a resource that already exists, for example, and it will look just as correct
+as a plan that actually is.
 
-**Blast radius.** A bug in one function of an application usually breaks that function. A
-bug in a shared network configuration can take down every service that depends on that
-network at once. Infrastructure changes tend to have a blast radius that's much larger,
-and much harder to predict from reading the change in isolation, than the equivalent
-change in application code.
+**Blast radius.** A bug in one function of an application usually breaks that one
+function. A bug in a shared network setting can take down every service that depends on
+that network, all at once. Infrastructure changes tend to have a blast radius that is much
+larger, and much harder to predict just by reading the change on its own, than the
+equivalent change in application code would have.
 
-**Silent failure.** This is the one that catches teams off guard most often. A 2026
-preprint studying agent behavior on infrastructure tasks found that agents can "achieve
-short-term objectives while leaving non-durable changes, broken invariants, and uncleaned
-state" behind them. In plain words: the task the agent was asked to do gets done, the
-agent reports success, and something next to it quietly breaks or gets left
-half-finished. A test suite catches most silent failures in application code.
-Infrastructure often has no equivalent test suite at all. A scanner has to be looking for
-exactly the kind of mess an agent leaves behind, or nobody finds out until it causes an
-incident weeks later.
+**Silent failure.** This is the one that catches teams off guard the most. A 2026 preprint
+studying agent behavior on infrastructure tasks found that agents can "achieve short-term
+objectives while leaving non-durable changes, broken invariants, and uncleaned state"
+behind them. In plain words: the task the agent was given gets done, the agent reports
+success, and something sitting right next to that task quietly breaks, or gets left half
+finished. A test suite catches most silent failures in application code. Infrastructure
+often has no equivalent test suite at all. A scanner has to be actively looking for exactly
+the kind of mess an agent leaves behind, or nobody finds out until it causes a real
+incident, weeks later.
 
-There's a piece of evidence worth sitting with here, from the same body of research. At
-matched resource counts, AI-generated infrastructure code showed roughly **3 to 4 times**
-the vulnerability density of human-written code covering the same task. Worst on the
+### The uncomfortable evidence
+
+There is one more piece of evidence worth sitting with, from that same body of research.
+At matched resource counts, AI-generated infrastructure code showed roughly **3 to 4
+times** the vulnerability density of human-written code doing the same job. Worst on the
 smallest snippets, about **4.9 times** on single-resource templates. It fell as the
-snippets got bigger, down to around **1.4 times** at twenty or more resources. This is a
-single-author, August 2026 preprint, not a peer-reviewed, widely-replicated finding, and
-it should be read with that caveat attached every time it's cited, including here. But
+snippets got bigger, down to around **1.4 times** at twenty or more resources.
+
+![A line chart: vulnerability density multiplier starts near 4.9x at one resource and falls to about 1.4x at twenty or more resources, worst on the smallest snippets.](./diagrams/vulnerability-density.svg)
+
+This is a single-author, August 2026 preprint, not a peer-reviewed, widely-replicated
+finding, and every time it gets cited, including here, it should carry that caveat. But
 the shape of the result is worth taking seriously regardless of the exact multiplier: the
-*smallest*, simplest-looking pieces of generated infrastructure were the *least* safe,
-not the most. That cuts against the natural assumption that a short snippet is low-risk
-because there's less of it to get wrong. The same research found that asking the model to
-think more, extended thinking, reduced that density by only about 13%. Prompting for
-chain-of-thought reasoning wasn't a significant fix either. Better prompting alone
-doesn't close this gap. A gate that checks the output does.
+*smallest*, simplest-looking pieces of generated infrastructure were the *least* safe, not
+the most. That cuts directly against the natural assumption that a short snippet must be
+low-risk, simply because there is less of it to get wrong. The same research found that
+asking the model to think for longer, extended thinking, cut that density by only about
+13%. Prompting it to reason step by step was not a significant fix either. Better
+prompting alone does not close this gap. A gate that checks the actual output does.
 
-## The thesis
+## The Core Rule: The Agent Proposes, the Pipeline Decides
 
-Put those four properties and that survey data together, and you get the argument this
+Put those four properties, and that survey data, together, and you get the argument this
 whole course is built around: **the agent proposes, the pipeline decides.**
+
+### The authority boundary
+
+The agent's job is to generate a good draft: infrastructure code that reflects the intent
+it was given, formatted correctly, plausible on first read. That is real, valuable work,
+and this book spends a lot of pages on making that draft better, through context, through
+skills, through specs. But the agent's authority ends at the plan. It does not get to
+decide, on its own, that its own draft is safe enough to apply to a shared, stateful,
+high-blast-radius system. Something else makes that call: a pipeline of scanners, policy
+checks, cost checks, and a human approval step, using evidence that the agent's own
+confidence in its answer plays no part in.
 
 ![An authority boundary: the agent generates an intent and a draft plan on the left, then a heavy line marks where its authority ends, and the pipeline on the right scans, checks policy and cost, gets human approval, and applies.](./diagrams/thesis-boundary.svg)
 
-The agent's job is to generate a good draft: infrastructure code that reflects the
-intent it was given, formatted correctly, plausible on first read. That's real, valuable
-work, and this book spends a lot of pages on making that draft better, through context,
-through skills, through specs. But the agent's authority ends at the plan. It doesn't get
-to decide, by itself, that its own draft is safe enough to apply to a shared, stateful,
-high-blast-radius system. Something else decides: a pipeline of scanners, policy checks,
-cost checks, and a human approval step, using evidence the agent's own confidence in its
-answer isn't part of.
+### What this rule does not mean
 
-This isn't a claim that agents can't be trusted, stated as a matter of principle. It's a
-narrower, more useful claim: agents are good at generating. Generating and deciding are
-different jobs, with different failure modes. Conflating them is exactly how a
-plausible-looking plan gets applied to production without anyone catching the invariant
-it quietly broke. Keep them separate, and each one can improve on its own terms: a better
-agent proposes better drafts, a better pipeline catches more of what's wrong with them,
-and neither improvement depends on the other happening first.
+This is not a claim that agents can never be trusted, stated as some kind of general
+principle. It is a narrower, more useful claim: agents are good at generating. Generating
+and deciding are different jobs, with different ways of failing. Treat them as one job,
+and you get exactly how a plausible-looking plan reaches production without anyone
+catching the rule it quietly broke on the way. Keep the two jobs separate, and each one
+can improve on its own terms: a better agent proposes better drafts, a better pipeline
+catches more of what is wrong with them, and neither improvement has to wait for the other
+to happen first.
 
-## Three layers, previewed
+## Context, Harness, Loop: The Three-Layer Debugging Model
 
-You'll build all of this out starting in Module 3, but it's worth previewing the shape
-now. You'll use it as a diagnostic for the rest of the book: when something about an
-agentic workflow isn't working, which of three layers does the problem actually live in?
+### Three layers
+
+You will build all three of these starting in Module 3, but it is worth previewing the
+shape of them now, because you will use this as a diagnostic for the rest of the book:
+when something about an agentic workflow is not working, which of three layers does the
+real problem live in?
 
 ![Three stacked layers, bottom to top: context, harness, loop, each with the symptom that points to it. Build bottom-up.](./diagrams/three-layers.svg)
 
-The **loop** layer is what re-triggers the agent and what tells it to stop. If your
-symptom is "this works, but I have to babysit every single run," the problem is here.
+The **loop** layer is what re-triggers the agent, and what tells it to stop. If your
+symptom sounds like "this works, but I have to babysit every single run", the problem
+lives here.
 
-The **harness** layer is the skills, tools, and gates around the agent: hooks, MCP
-connections, sandboxing, permission scopes. If your symptom is "this works, but it keeps
-ignoring our team's standards," the problem is usually here, not in the model.
+The **harness** layer is the skills, tools, and gates that sit around the agent: hooks,
+MCP connections, sandboxing, permission scopes. If your symptom sounds like "this works,
+but it keeps ignoring our team's standards", the problem is usually here, not in the model
+itself.
 
-The **context** layer is everything the agent knows before it starts: your `AGENTS.md`
-file, the shape of your repository, policy documents, retrieved examples. If your
-symptom is "it can't get one single task right, at all," look here first. A broken
-context layer makes the other two layers irrelevant. There's no loop worth running and
-no harness worth building on top of a model that doesn't understand the problem it's
-been given.
+The **context** layer is everything the agent knows before it even starts: your
+`AGENTS.md` file, the shape of your repository, policy documents, retrieved examples. If
+your symptom sounds like "it cannot get one single task right, at all", look here first. A
+broken context layer makes the other two layers pointless, because there is no loop worth
+running, and no harness worth building, on top of a model that never understood the
+problem in the first place.
 
-Build these three bottom-up, in that order, and never add a loop on top of a harness you
-haven't fixed yet. That single rule will save you more debugging time across this course
-than almost anything else in this chapter.
+### Build bottom-up
 
-## What's next
+Build these three layers bottom-up, in that exact order, and never add a loop on top of a
+harness you have not fixed yet. That one rule will save you more debugging time across
+this course than almost anything else in this chapter.
+
+## What You Will Build in This Course
+
+### Your journey through twelve modules
+
+![Twelve numbered modules grouped into three lab tiers, converging on a single capstone at the end.](./diagrams/journey-map.svg)
 
 You now have the vocabulary this entire book uses: the seven eras, the definition of an
 agent as a loop, the autonomy ladder, the four reasons infrastructure is a harder problem
-than application code for an agent to touch, and the thesis that ties it together. Module
-2 hands you your first real agentic workstation, Claude Code and Codex, side by side, and
+for an agent than application code, and the thesis that ties all of it together. Module 2
+hands you your first real agentic workstation, Claude Code and Codex, side by side, and
 puts you at rung 2 of the ladder: the agent drafts, you read every line. Everything after
-that is this same loop, one rung at a time, with the gate that makes each rung safe built
-in before you're allowed to climb it.
+that is this same loop, one rung at a time, with the gate that makes each rung safe, built
+in before you are ever allowed to climb it.
 
 ---
 

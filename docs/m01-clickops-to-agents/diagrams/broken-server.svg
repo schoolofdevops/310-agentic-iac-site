@@ -10,10 +10,10 @@
 
   <g stroke="black" stroke-width="2.5" fill="white" filter="url(#sketch)">
     <rect x="260" y="150" width="180" height="150"/>
-    <line x1="260" y1="180" x2="440" y2="180"/>
-    <line x1="260" y1="210" x2="440" y2="210"/>
-    <line x1="260" y1="240" x2="440" y2="240"/>
-    <line x1="260" y1="270" x2="440" y2="270"/>
+    <line x1="260" y1="180" x2="440" y2="182.0"/>
+    <line x1="260" y1="210" x2="440" y2="212.0"/>
+    <line x1="260" y1="240" x2="440" y2="242.0"/>
+    <line x1="260" y1="270" x2="440" y2="272.0"/>
   </g>
 
   <g stroke="black" stroke-width="2" fill="#f8f8f8" filter="url(#sketch)">

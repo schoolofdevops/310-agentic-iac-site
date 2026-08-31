@@ -1,0 +1,53 @@
+<svg viewBox="0 0 900 360" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Twelve numbered modules grouped into three lab tiers, converging on a single capstone at the end.">
+  <defs>
+    <filter id="sketch" filterUnits="userSpaceOnUse" x="0" y="0" width="900" height="360">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="71" result="noise"/>
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="2.6" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1e1e1e"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="900" height="360" fill="white"/>
+  <text x="450" y="30" text-anchor="middle" font-family="Segoe Print, Bradley Hand, Comic Sans MS, cursive" font-size="19" fill="#1e1e1e">Your journey through twelve modules</text>
+
+  <text x="120" y="65" text-anchor="middle" font-family="Segoe Print, Bradley Hand, Comic Sans MS, cursive" font-size="13" fill="#757575">Tier 0-1: language + cloud API</text>
+  <g stroke="#1e1e1e" stroke-width="2" fill="white" filter="url(#sketch)">
+    <circle cx="60"  cy="110" r="26"/>
+    <circle cx="130" cy="110" r="26"/>
+    <circle cx="200" cy="110" r="26"/>
+    <circle cx="270" cy="110" r="26"/>
+    <circle cx="340" cy="110" r="26"/>
+    <circle cx="410" cy="110" r="26"/>
+    <circle cx="480" cy="110" r="26"/>
+    <circle cx="550" cy="110" r="26"/>
+    <circle cx="620" cy="110" r="26"/>
+  </g>
+  <g font-family="Segoe Print, Bradley Hand, Comic Sans MS, cursive" font-size="14" fill="#1e1e1e" text-anchor="middle">
+    <text x="60"  y="115">1</text><text x="130" y="115">2</text><text x="200" y="115">3</text>
+    <text x="270" y="115">4</text><text x="340" y="115">5</text><text x="410" y="115">6</text>
+    <text x="480" y="115">7</text><text x="550" y="115">8</text><text x="620" y="115">9</text>
+  </g>
+
+  <text x="720" y="65" text-anchor="middle" font-family="Segoe Print, Bradley Hand, Comic Sans MS, cursive" font-size="13" fill="#757575">Tier 2: kubernetes</text>
+  <g stroke="#1e1e1e" stroke-width="2" fill="white" filter="url(#sketch)">
+    <circle cx="690" cy="110" r="26"/>
+    <circle cx="760" cy="110" r="26"/>
+    <circle cx="830" cy="110" r="26"/>
+  </g>
+  <g font-family="Segoe Print, Bradley Hand, Comic Sans MS, cursive" font-size="14" fill="#1e1e1e" text-anchor="middle">
+    <text x="690" y="115">10</text><text x="760" y="115">11</text><text x="830" y="115">12</text>
+  </g>
+
+  <g stroke="#757575" stroke-width="2" fill="none" filter="url(#sketch)">
+    <path d="M60,136 C 200,220 600,240 750,270" marker-end="url(#arrow)"/>
+    <path d="M830,136 C 830,200 800,240 760,268" marker-end="url(#arrow)"/>
+  </g>
+
+  <g stroke="#1e1e1e" stroke-width="3" fill="#ffe6cc" filter="url(#sketch)">
+    <rect x="670" y="285" width="160" height="55" rx="8"/>
+  </g>
+  <text x="750" y="318" text-anchor="middle" font-family="Segoe Print, Bradley Hand, Comic Sans MS, cursive" font-size="16" fill="#1e1e1e">Capstone</text>
+
+  <text x="330" y="270" text-anchor="middle" font-family="Segoe Print, Bradley Hand, Comic Sans MS, cursive" font-size="13" fill="#1e1e1e">module 1 is right here, the on-ramp</text>
+</svg>
