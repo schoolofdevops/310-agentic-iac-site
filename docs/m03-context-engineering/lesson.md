@@ -44,7 +44,7 @@ window, on purpose, decides how much of it is actually working for you.
 
 ### Try it: the context window visualizer
 
-Words only get you so far here. There'''s a small, interactive tool that makes this
+Words only get you so far here. There's a small, interactive tool that makes this
 concrete: [Context Window Visualizer](pathname:///310-agentic-iac-site/sims/context-window-sim.html).
 Add pieces to a fixed 2,000-token window (an `AGENTS.md`, the file that actually
 has the bug, the one-off ask, some noise) and watch whether the task would actually
