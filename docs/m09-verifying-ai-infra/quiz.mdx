@@ -1,0 +1,33 @@
+---
+sidebar_position: 5
+title: 'Quiz'
+---
+
+import Quiz from '@site/src/components/Quiz';
+
+# M09 Quiz: Verifying AI-Generated Infrastructure
+
+<Quiz questions={[
+  {
+    prompt:'Trivy and Checkov are run against the same Terraform module and report different finding counts. What does this mean?',options:[{text:'One of the two tools has a bug',correct:false,explanation:'Neither tool is malfunctioning, they just check different rule sets.'},{text:'The module is inconsistent and should be rewritten',correct:false,explanation:'The disagreement is expected behavior, not a sign the code itself is broken.'},{text:'The two tools ship different rule sets, running only one is a coverage gap',correct:true,explanation:'Trivy and Checkov each check their own rule set, and for Terraform\'s AWS resources those rule sets only partly overlap. Running one alone is a coverage gap, not a safety margin.'},{text:'Checkov\'s number is always the correct one to trust',correct:false,explanation:'Neither number is more correct than the other, they check different things.'}]
+  },
+  {
+    prompt:'What is Conftest, running OPA policies, for that Trivy and Checkov are not?',options:[{text:'A faster replacement for Trivy and Checkov',correct:false,explanation:'Conftest doesn\'t replace the generic scanners, it fills a different gap.'},{text:'Checking rules specific to your own organization that no generic scanner encodes',correct:true,explanation:'Neither Trivy nor Checkov knows your team\'s naming convention, tagging rule, or approved module registry. You write that rule once, in Rego, and Conftest checks every plan against it.'},{text:'A tool for estimating cloud cost',correct:false,explanation:'That\'s what Infracost is for, not Conftest.'},{text:'A replacement for terraform plan',correct:false,explanation:'Conftest checks the output of a plan, it doesn\'t replace the planning step itself.'}]
+  },
+  {
+    prompt:'A team runs infracost breakdown once a week and reads the estimate in a Slack message. Is this a cost gate?',options:[{text:'Yes, because the number is accurate',correct:false,explanation:'Accuracy isn\'t the issue, whether it can stop the pipeline is.'},{text:'No, a gate has to be able to actually stop the pipeline, a report that gets read is not enforcement',correct:true,explanation:'A report that a human might read is not the same as a check wired to fail the pipeline past a real threshold.'},{text:'Yes, as long as someone reads it before Friday',correct:false,explanation:'Reading a report, on any schedule, still isn\'t enforcement.'},{text:'No, because Infracost cannot produce accurate estimates',correct:false,explanation:'Infracost\'s accuracy isn\'t the problem here, how the team uses the output is.'}]
+  },
+  {
+    prompt:'Which pipeline order matches the reasoning in this module?',options:[{text:'Human approval, then scan, then policy, then cost',correct:false,explanation:'This spends the most expensive step, a person\'s attention, before any cheap check has run.'},{text:'Cost, then scan, then policy, then human approval',correct:false,explanation:'Cost estimation, which sometimes calls an external pricing service, should come after the free, fast checks.'},{text:'fmt/validate, then scan, then policy, then cost, then human approval',correct:true,explanation:'Cheapest and fastest checks run first, so a typo doesn\'t waste a scanner\'s runtime, and the most expensive step, a person\'s attention, runs last.'},{text:'Scan, then human approval, then policy, then cost',correct:false,explanation:'This puts human approval in the middle, before policy and cost checks have even run.'}]
+  },
+  {
+    prompt:'A learner has not set up an Infracost account yet. What should this module\'s pipeline script do?',options:[{text:'Print a plausible-looking dollar estimate anyway, so the pipeline output looks complete',correct:false,explanation:'Never fabricate a number a tool didn\'t actually produce.'},{text:'Crash with an unhandled error',correct:false,explanation:'A missing key is an expected, common state, not a crash-worthy error.'},{text:'Skip the cost stage and say clearly that it was skipped, with instructions to enable it',correct:true,explanation:'An honest skip message with a clear next step is correct, both in this course\'s own build discipline and in a real pipeline a learner would run at work.'},{text:'Silently pass the stage as if it succeeded',correct:false,explanation:'Silently passing an unrun stage hides the real state of the pipeline.'}]
+  },
+  {
+    prompt:'In main.tf, a #checkov:skip=CKV_AWS_144:... comment is added above a resource, but Checkov still reports that finding as failed. What is the most likely explanation, based on what this module found?',options:[{text:'The comment syntax always works, this must be a different bug',correct:false,explanation:'This module tested the comment directly and confirmed it did not suppress the finding.'},{text:'Inline skip comments are not guaranteed to work for every check, and were confirmed not to work for this one, --skip-check on the CLI is the reliable path',correct:true,explanation:'An isolated, minimal reproduction confirmed the inline comment did not suppress the finding on checkov 3.3.16, while --skip-check on the CLI did. Verify a suppression actually worked, don\'t assume it did because the syntax looks right.'},{text:'Checkov ignores all comments in Terraform files',correct:false,explanation:'Checkov does support some comment-based suppressions, just not reliably for this specific check in this version.'},{text:'The resource needs to be deleted, not skipped',correct:false,explanation:'The resource is fine, the suppression mechanism used to defer this specific finding is what failed.'}]
+  },
+  {
+    prompt:'Given the M01 thesis, "the agent proposes, the pipeline decides," where does this module\'s pipeline fit?',options:[{text:'It replaces the thesis with a faster one',correct:false,explanation:'The pipeline doesn\'t replace the thesis, it\'s what the thesis actually looks like once it\'s built.'},{text:'It is the concrete, runnable version of the pipeline half of that sentence',correct:true,explanation:'Every stage built in this module, scan, policy, cost, then human approval, is a real, runnable piece of the pipeline side of the M01 authority boundary.'},{text:'It only applies once the code has already been applied',correct:false,explanation:'The whole point is that every stage runs before apply, not after.'},{text:'It is optional once a human has reviewed the code once',correct:false,explanation:'The pipeline runs on every change, not as a one-time review.'}]
+  }
+
+]} />

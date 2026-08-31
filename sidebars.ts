@@ -48,6 +48,17 @@ const sidebars: SidebarsConfig = {
         'm06-guardrails/quiz',
       ],
     },
+    {
+      type: 'category',
+      label: 'Module 9: Verifying AI-Generated Infrastructure',
+      items: [
+        'm09-verifying-ai-infra/lesson',
+        'm09-verifying-ai-infra/lab',
+        'm09-verifying-ai-infra/reference',
+        'm09-verifying-ai-infra/projects',
+        'm09-verifying-ai-infra/quiz',
+      ],
+    },
   ],
 };
 
