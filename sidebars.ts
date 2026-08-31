@@ -72,6 +72,17 @@ const sidebars: SidebarsConfig = {
     },
     {
       type: 'category',
+      label: 'Module 7: Spec-Driven Infrastructure',
+      items: [
+        'm07-spec-driven-infra/lesson',
+        'm07-spec-driven-infra/lab',
+        'm07-spec-driven-infra/reference',
+        'm07-spec-driven-infra/projects',
+        'm07-spec-driven-infra/quiz',
+      ],
+    },
+    {
+      type: 'category',
       label: 'Module 9: Verifying AI-Generated Infrastructure',
       items: [
         'm09-verifying-ai-infra/lesson',
