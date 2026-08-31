@@ -20,13 +20,23 @@ remembers which service, or why it needs restarting every few weeks in the first
 Everyone is afraid to touch it. Everyone touches it anyway, because it still runs
 production.
 
+There's an old name for this box: a **snowflake server**. Every one is unique, built up
+over months or years from a long trail of manual changes, and no two snowflakes are the
+same. Nobody sits down and designs a snowflake on purpose. It happens one small step at a
+time: a package installed by hand to unblock a deploy on a Friday, a config edited
+directly on the box during an incident at 2 a.m., a one-line fix run over SSH and never
+written down anywhere else. None of that requires a mouse. Most of it is a shell prompt
+and a person who knows the command. ClickOps, clicking through a console, is one way a
+server turns into a snowflake. Plain CLI work, typed by hand, one-off, undocumented, builds
+the exact same trap, and for most teams it is the more common one.
+
 ![A hand-built server box, a crossed-out name tag reading built by, gone, a sticky note reading restart if weird, and a stack of outdated runbook pages.](./diagrams/broken-server.svg)
 
 This is not a story about one bad engineer. It is the normal end state of infrastructure
-work done by hand. It is also the starting point for this whole book. Every era of
-infrastructure automation you are about to read about was invented to fix some version of
-that server. And every one of those fixes left behind a smaller, different version of the
-same problem.
+work done by hand, whether that hand is on a mouse or a keyboard. It is also the starting
+point for this whole book. Every era of infrastructure automation you are about to read
+about was invented to fix some version of that server. And every one of those fixes left
+behind a smaller, different version of the same problem.
 
 ### Seven eras, one pattern
 
@@ -165,6 +175,29 @@ about a system where mistakes can be expensive and hard to undo. A badly defined
 condition is the single most common way an agentic infrastructure run turns into an
 expensive mess. Fix the stopping condition before you worry about anything else in the
 loop.
+
+### Coding agents and operational agents
+
+Not every agent has the same shape. A **coding agent** works inside a repository, on one
+short task: read the code, make a change, run the checks, hand you a diff. It stays
+inside a worktree, or a set of files it is allowed to touch, and when it is done, you
+review it the ordinary way, as a pull request. Almost everything in this course, M02
+through M09, is this kind of agent.
+
+![A coding agent sits inside a dashed isolation boundary labeled allowed files, worktree, CLI checks, and git diff, captioned a short-lived repository task.](./diagrams/coding-agent.svg)
+
+An **operational agent** looks different. It runs on a schedule, or in response to an
+event, not once but again and again, over time. It reads live evidence, the real state of
+a running system, compares that against what is expected, and then reports what it found,
+or escalates if something looks wrong. Most of what it does is read-only. Its risk does
+not come from which files it can edit, a coding agent's risk, it comes from how much live
+access it is given, and how often it gets to use it.
+
+![An operational agent loops: schedule, read live evidence, compare, report, escalate, back to schedule, captioned read-only, fresh evidence, a kill switch.](./diagrams/operational-agent.svg)
+
+This course spends most of its time on coding agents, since an infrastructure change is
+naturally a short repository task. Module 12 is where you meet the second kind, agents
+that watch running infrastructure over time instead of editing it once.
 
 ## The Autonomy Ladder for Infrastructure Agents
 
@@ -388,12 +421,15 @@ in before you are ever allowed to climb it.
 
 | Term | Definition |
 |---|---|
+| Snowflake server | A server shaped by so many small, undocumented manual changes, by mouse or by keyboard, that it is unique and can't reliably be rebuilt |
 | ClickOps | Building or changing infrastructure by hand through a console or web UI, with no file recording what was done |
 | Configuration management | Tools that describe the desired state of a single machine and only change what doesn't already match it |
 | Declarative IaC | Describing the desired state of a whole environment in files, so a tool can work out what to create, change, or destroy |
 | GitOps | Keeping infrastructure's source of truth in a Git repository, with a controller that continuously reconciles reality against it |
 | Agent | A loop: intent in, act with tools, observe, decide, repeat, until a stopping condition is met |
 | Agentic loop | The repeating cycle of acting and observing that defines an agent, as opposed to a single suggestion or a fixed script |
+| Coding agent | An agent that works inside a repository on one short task, isolated to a worktree or an allowed file set, reviewed as a diff |
+| Operational agent | An agent that runs repeatedly over time, reading live system state and comparing it against what's expected, mostly read-only |
 | Stopping condition | The rule that tells an agent's loop when to stop; poorly defined ones are a common source of runaway agent behavior |
 | Autonomy ladder | The six-step scale, from suggest to unattended, describing how much of an agentic workflow runs without a human watching each step |
 | Gate | An automated or human checkpoint that has to pass before an agent's proposed change is allowed to apply |

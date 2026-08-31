@@ -171,9 +171,20 @@ footer, header, hgroup, main, menu, nav, section {
 
 <section>
   <h2 class="t">The Server Nobody Can Rebuild</h2>
-  <p class="s">one person built it, they left, nobody documents a click</p>
+  <p class="s">a snowflake server: unique, and nobody wrote it down</p>
   <svg viewBox="0 0 700 420" role="img" aria-label="A hand-built server box, a crossed-out name tag reading built by, gone, a sticky note reading restart if weird, and a stack of outdated runbook pages.">
-<g stroke="#1e1e1e" stroke-width="2.5" fill="white" filter="url(#rough)">
+<g stroke="#1e1e1e" stroke-width="2" fill="none" filter="url(#rough)">
+    <line x1="350" y1="60" x2="352" y2="112"/>
+    <line x1="326" y1="72" x2="374" y2="100"/>
+    <line x1="374" y1="72" x2="326" y2="100"/>
+    <line x1="350" y1="68" x2="340" y2="62"/>
+    <line x1="350" y1="68" x2="360" y2="62"/>
+    <line x1="350" y1="104" x2="340" y2="110"/>
+    <line x1="350" y1="104" x2="360" y2="110"/>
+  </g>
+  <text x="350" y="130" text-anchor="middle" font-size="13" fill="#1e1e1e" font-style="italic">a snowflake server</text>
+
+  <g stroke="#1e1e1e" stroke-width="2.5" fill="white" filter="url(#rough)">
     <rect x="260" y="150" width="180" height="150"/>
     <line x1="260" y1="180" x2="440" y2="182.0"/>
     <line x1="260" y1="210" x2="440" y2="212.0"/>
@@ -496,9 +507,34 @@ footer, header, hgroup, main, menu, nav, section {
 </section>
 
 
+<section>
+  <h2 class="t">Coding Agents vs Operational Agents</h2>
+  <p class="s">different shape, different risk: what it can touch vs how often it watches</p>
+  <svg viewBox="0 0 840 340" role="img" aria-label="Two agent shapes compared: a coding agent bounded to a repository and reviewed as a diff, an operational agent running repeatedly on a schedule against live, read-only evidence">
+    <g class="fragment">
+      <rect x="40" y="70" width="360" height="220" rx="14" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-dasharray="8 6" filter="url(#rough)"/>
+      <text x="220" y="100" text-anchor="middle" class="lbl-b">Coding agent</text>
+      <rect x="130" y="150" width="180" height="60" rx="10" fill="#dae8fc" stroke="#1e1e1e" stroke-width="2.2" filter="url(#rough)"/>
+      <text x="220" y="185" text-anchor="middle" class="lbl">repo, one task</text>
+      <text x="60" y="270" class="lbl-sm">worktree + allowed files</text>
+      <text x="220" y="315" text-anchor="middle" class="lbl-g">reviewed as a diff, M02-M09</text>
+    </g>
+    <g class="fragment">
+      <rect x="440" y="70" width="360" height="220" rx="14" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-dasharray="8 6" filter="url(#rough)"/>
+      <text x="620" y="100" text-anchor="middle" class="lbl-b">Operational agent</text>
+      <rect x="530" y="150" width="180" height="60" rx="10" fill="#e1d5e7" stroke="#1e1e1e" stroke-width="2.2" filter="url(#rough)"/>
+      <text x="620" y="185" text-anchor="middle" class="lbl">runs on a schedule</text>
+      <text x="460" y="270" class="lbl-sm">read-only, compares live state</text>
+      <text x="620" y="315" text-anchor="middle" class="lbl-g">reports or escalates, module 12</text>
+    </g>
+  </svg>
+  <div class="pageno">M1&middot;12</div>
+</section>
+
+
 <section class="divider">
   <h2 class="t">The Autonomy Ladder for Infrastructure Agents</h2>
-  <div class="pageno">M1&middot;12</div>
+  <div class="pageno">M1&middot;13</div>
 </section>
 
 
@@ -533,7 +569,7 @@ footer, header, hgroup, main, menu, nav, section {
       <text x="270" y="146" class="lbl">6 &middot; unattended: agent runs to a stop condition</text>
     </g>
   </svg>
-  <div class="pageno">M1&middot;13</div>
+  <div class="pageno">M1&middot;14</div>
 </section>
 
 
@@ -575,13 +611,13 @@ footer, header, hgroup, main, menu, nav, section {
       <text x="430" y="626" text-anchor="middle" class="lbl-b">no step is safe without the gate beside it</text>
     </g>
   </svg>
-  <div class="pageno">M1&middot;14</div>
+  <div class="pageno">M1&middot;15</div>
 </section>
 
 
 <section class="divider">
   <h2 class="t">Where the AI Infrastructure Industry Actually Stands</h2>
-  <div class="pageno">M1&middot;15</div>
+  <div class="pageno">M1&middot;16</div>
 </section>
 
 
@@ -603,7 +639,7 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
     <text x="390" y="345" text-anchor="middle" class="lbl-g" font-style="italic">Firefly State of IaC 2026, vendor survey, treat as directional</text>
   </svg>
-  <div class="pageno">M1&middot;16</div>
+  <div class="pageno">M1&middot;17</div>
 </section>
 
 
@@ -622,13 +658,13 @@ footer, header, hgroup, main, menu, nav, section {
     <path d="M370,185 L490,185" stroke="#757575" stroke-width="2.2" fill="none" marker-end="url(#ahg)" stroke-dasharray="8 6"/>
     <text x="430" y="270" text-anchor="middle" class="lbl-g">this gap is where this course lives</text>
   </svg>
-  <div class="pageno">M1&middot;17</div>
+  <div class="pageno">M1&middot;18</div>
 </section>
 
 
 <section class="divider">
   <h2 class="t">Why Infrastructure Is Harder Than Application Code for AI</h2>
-  <div class="pageno">M1&middot;18</div>
+  <div class="pageno">M1&middot;19</div>
 </section>
 
 
@@ -657,7 +693,7 @@ footer, header, hgroup, main, menu, nav, section {
       <text x="665" y="150" text-anchor="middle" class="lbl-sm"><tspan x="665" dy="20">task reports success</tspan><tspan x="665" dy="20">while something breaks</tspan></text>
     </g>
   </svg>
-  <div class="pageno">M1&middot;19</div>
+  <div class="pageno">M1&middot;20</div>
 </section>
 
 
@@ -699,13 +735,13 @@ footer, header, hgroup, main, menu, nav, section {
 
   <text x="390" y="405" text-anchor="middle" font-size="13" fill="#1e1e1e" font-style="italic">August 2026 preprint, single author, treat as directional</text>
   </svg>
-  <div class="pageno">M1&middot;20</div>
+  <div class="pageno">M1&middot;21</div>
 </section>
 
 
 <section class="divider">
   <h2 class="t">The Core Rule: The Agent Proposes, the Pipeline Decides</h2>
-  <div class="pageno">M1&middot;21</div>
+  <div class="pageno">M1&middot;22</div>
 </section>
 
 
@@ -752,7 +788,7 @@ footer, header, hgroup, main, menu, nav, section {
       <text x="580" y="390" text-anchor="middle" class="lbl">apply</text>
     </g>
   </svg>
-  <div class="pageno">M1&middot;22</div>
+  <div class="pageno">M1&middot;23</div>
 </section>
 
 
@@ -770,13 +806,13 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="635" y="165" text-anchor="middle" class="lbl-sm">generating and deciding</text>
     <text x="635" y="187" text-anchor="middle" class="lbl-sm">are different jobs</text>
   </svg>
-  <div class="pageno">M1&middot;23</div>
+  <div class="pageno">M1&middot;24</div>
 </section>
 
 
 <section class="divider">
   <h2 class="t">Context, Harness, Loop: The Three-Layer Debugging Model</h2>
-  <div class="pageno">M1&middot;24</div>
+  <div class="pageno">M1&middot;25</div>
 </section>
 
 
@@ -807,13 +843,13 @@ footer, header, hgroup, main, menu, nav, section {
       <text x="245" y="395" text-anchor="middle" class="lbl-g">build bottom-up</text>
     </g>
   </svg>
-  <div class="pageno">M1&middot;25</div>
+  <div class="pageno">M1&middot;26</div>
 </section>
 
 
 <section class="divider">
   <h2 class="t">What You Will Build in This Course</h2>
-  <div class="pageno">M1&middot;26</div>
+  <div class="pageno">M1&middot;27</div>
 </section>
 
 
@@ -883,7 +919,7 @@ footer, header, hgroup, main, menu, nav, section {
       <text x="380" y="330" text-anchor="middle" class="lbl-g">you are here, module 1, the on-ramp</text>
     </g>
   </svg>
-  <div class="pageno">M1&middot;27</div>
+  <div class="pageno">M1&middot;28</div>
 </section>
 
 
@@ -912,7 +948,58 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
   </svg>
   <p class="credit">Now open <b>Module 1 &middot; Lab</b>. &nbsp;&middot;&nbsp; <b>Gourav Shah</b> &middot; School of DevOps &amp; AI</p>
-  <div class="pageno">M1&middot;28</div>
+  <div class="pageno">M1&middot;29</div>
+</section>
+
+
+<section>
+  <h2 class="t">Next: Open the Lab</h2>
+  <p class="s">six steps, one working module, terraform and checkov only</p>
+  <svg viewBox="0 0 840 190" role="img" aria-label="Six lab steps revealed one at a time: the intent, copy the skeleton, fmt and validate, checkov fails, fix and re-run to green, the exercise">
+    <g class="fragment" transform="translate(0,0)">
+      <rect x="10" y="35" width="120" height="95" rx="10" fill="none" stroke="#1e1e1e" stroke-width="1.8" stroke-dasharray="6 5" filter="url(#rough)"/>
+      <circle cx="70" cy="83" r="28" fill="#dae8fc" stroke="#1e1e1e" stroke-width="2" filter="url(#rough)"/>
+      <path d="M55,85 L67,97 L88,70" stroke="#1e1e1e" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      <text x="70" y="150" text-anchor="middle" class="lbl-sm">the intent</text>
+      <text x="70" y="166" text-anchor="middle" class="lbl-g" font-size="12">one-line prompt</text>
+    </g>
+    <g class="fragment" transform="translate(140,0)">
+      <rect x="10" y="35" width="120" height="95" rx="10" fill="none" stroke="#1e1e1e" stroke-width="1.8" stroke-dasharray="6 5" filter="url(#rough)"/>
+      <circle cx="70" cy="83" r="28" fill="#e1d5e7" stroke="#1e1e1e" stroke-width="2" filter="url(#rough)"/>
+      <path d="M55,85 L67,97 L88,70" stroke="#1e1e1e" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      <text x="70" y="150" text-anchor="middle" class="lbl-sm">copy skeleton</text>
+      <text x="70" y="166" text-anchor="middle" class="lbl-g" font-size="12">starter module</text>
+    </g>
+    <g class="fragment" transform="translate(280,0)">
+      <rect x="10" y="35" width="120" height="95" rx="10" fill="none" stroke="#1e1e1e" stroke-width="1.8" stroke-dasharray="6 5" filter="url(#rough)"/>
+      <circle cx="70" cy="83" r="28" fill="#ffe6cc" stroke="#1e1e1e" stroke-width="2" filter="url(#rough)"/>
+      <path d="M55,85 L67,97 L88,70" stroke="#1e1e1e" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      <text x="70" y="150" text-anchor="middle" class="lbl-sm">fmt + validate</text>
+      <text x="70" y="166" text-anchor="middle" class="lbl-g" font-size="12">the syntax floor</text>
+    </g>
+    <g class="fragment" transform="translate(420,0)">
+      <rect x="10" y="35" width="120" height="95" rx="10" fill="none" stroke="#1e1e1e" stroke-width="1.8" stroke-dasharray="6 5" filter="url(#rough)"/>
+      <circle cx="70" cy="83" r="28" fill="#f8cecc" stroke="#1e1e1e" stroke-width="2" filter="url(#rough)"/>
+      <path d="M55,68 L88,98" stroke="#1e1e1e" stroke-width="4" fill="none" stroke-linecap="round"/><path d="M88,68 L55,98" stroke="#1e1e1e" stroke-width="4" fill="none" stroke-linecap="round"/>
+      <text x="70" y="150" text-anchor="middle" class="lbl-sm">checkov: fails</text>
+      <text x="70" y="166" text-anchor="middle" class="lbl-g" font-size="12">read the finding</text>
+    </g>
+    <g class="fragment" transform="translate(560,0)">
+      <rect x="10" y="35" width="120" height="95" rx="10" fill="none" stroke="#1e1e1e" stroke-width="1.8" stroke-dasharray="6 5" filter="url(#rough)"/>
+      <circle cx="70" cy="83" r="28" fill="#d5e8d4" stroke="#1e1e1e" stroke-width="2" filter="url(#rough)"/>
+      <path d="M55,85 L67,97 L88,70" stroke="#1e1e1e" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      <text x="70" y="150" text-anchor="middle" class="lbl-sm">fix, re-run</text>
+      <text x="70" y="166" text-anchor="middle" class="lbl-g" font-size="12">green</text>
+    </g>
+    <g class="fragment" transform="translate(700,0)">
+      <rect x="10" y="35" width="120" height="95" rx="10" fill="none" stroke="#1e1e1e" stroke-width="1.8" stroke-dasharray="6 5" filter="url(#rough)"/>
+      <circle cx="70" cy="83" r="28" fill="#dae8fc" stroke="#1e1e1e" stroke-width="2" filter="url(#rough)"/>
+      <path d="M55,85 L67,97 L88,70" stroke="#1e1e1e" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      <text x="70" y="150" text-anchor="middle" class="lbl-sm">the exercise</text>
+      <text x="70" y="166" text-anchor="middle" class="lbl-g" font-size="12">three-line note</text>
+    </g>
+  </svg>
+  <div class="pageno">M1&middot;30</div>
 </section>
 
 
