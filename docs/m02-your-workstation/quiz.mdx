@@ -1,0 +1,29 @@
+---
+sidebar_position: 5
+title: 'Quiz'
+---
+
+import Quiz from '@site/src/components/Quiz';
+
+# M02 Quiz: Your Agentic IaC Workstation
+
+<Quiz questions={[
+  {
+    prompt:'Why does this course teach both Claude Code and Codex CLI instead of picking one?',options:[{text:'Because one of them will be discontinued soon',correct:false,explanation:'Neither tool\'s future is the reason, this is about what actually transfers between agent CLIs.'},{text:'Because a team that standardizes on one tool still needs to read code the other tool produced, and the underlying loop transfers between both',correct:true,explanation:'Both tools run the same core loop from module 1: intent, act, observe, decide, repeat, stop. Teaching only one CLI would teach that CLI\'s quirks instead of the loop underneath it.'},{text:'Because Codex CLI is required for Tier 1 labs',correct:false,explanation:'Tier 1 labs use Floci, not a specific agent CLI.'},{text:'Because Claude Code cannot run Terraform',correct:false,explanation:'Claude Code can run Terraform commands fine, that\'s not the reason.'}]
+  },
+  {
+    prompt:'What does the devcontainer guarantee that a bare laptop install doesn\'t?',options:[{text:'Faster internet access',correct:false,explanation:'The devcontainer has nothing to do with network speed.'},{text:'That every learner\'s Terraform, Checkov, and Trivy versions match the versions this course was written against, with the Docker socket mounted, not installed inside',correct:true,explanation:'Pinned tool versions mean "it works on my machine" isn\'t a debugging step, it\'s a bug, because your machine and the course\'s machine are the same machine for the length of a lab.'},{text:'Automatic cloud credentials',correct:false,explanation:'The devcontainer never provisions cloud credentials for you.'},{text:'A GUI for editing Terraform',correct:false,explanation:'The devcontainer is a pinned CLI environment, not a GUI.'}]
+  },
+  {
+    prompt:'An agent proposes Terraform as chat text only, and a human types it into the file by hand. Which step on the autonomy ladder is this?',options:[{text:'Step 1, suggest',correct:true,explanation:'The agent never touches a file. Every keystroke that lands in the repo is the human\'s, even though the words came from the agent.'},{text:'Step 2, draft',correct:false,explanation:'Step 2 is when the agent writes the file directly, not when a human retypes a suggestion.'},{text:'Step 3, propose with plan',correct:false,explanation:'Step 3 needs both code and a plan produced together, not a chat-only suggestion.'},{text:'Step 4, gated apply',correct:false,explanation:'Step 4 involves automated checks plus human approval before an apply, well past a chat suggestion.'}]
+  },
+  {
+    prompt:'An agent writes main.tf directly to disk, and a human reads it before running anything. Which step is this?',options:[{text:'Step 1, suggest',correct:false,explanation:'Step 1 never touches a file directly, this scenario does.'},{text:'Step 2, draft',correct:true,explanation:'The difference from step 1 isn\'t "more trust," it\'s a different kind of control: from typing every character yourself to reading every line before it runs.'},{text:'Step 5, supervised',correct:false,explanation:'Step 5 has the agent looping across multiple iterations on its own, not a single file write reviewed once.'},{text:'Step 6, unattended',correct:false,explanation:'Step 6 has no human reviewing each step at all, this scenario has a human reading before anything runs.'}]
+  },
+  {
+    prompt:'In this module\'s own real, captured run, the same one-line intent, run twice through the same agent, produced two different Terraform designs. What does that tell you?',options:[{text:'The agent made a mistake and one of the two runs is wrong',correct:false,explanation:'Both designs were individually reasonable against the intent, neither was simply wrong.'},{text:'Each session starts cold with no memory of a prior run, so reading every line every time matters, not just on the first run',correct:true,explanation:'Unless something gives an agent memory of a prior session on purpose, nothing carries over. Two runs of the same ask can both be individually reasonable and still diverge.'},{text:'This only happens with Codex, never with Claude Code',correct:false,explanation:'The real captured divergence in this module happened using the same tool across both runs.'},{text:'It means the devcontainer is misconfigured',correct:false,explanation:'The devcontainer has nothing to do with an agent\'s session memory.'}]
+  },
+  {
+    prompt:'What\'s in CLAUDE.md and AGENTS.md at the end of this module?',options:[{text:'Full provider pins and naming conventions',correct:false,explanation:'That real content gets written in module 3, not this one.'},{text:'A list of every skill available to the agent',correct:false,explanation:'Agent Skills are module 4\'s subject, not what these files hold here.'},{text:'Nothing yet, they\'re empty, real content goes in during module 3',correct:true,explanation:'This module only shows where each tool\'s standing-context file lives. Writing real content into them is module 3\'s subject, context engineering.'},{text:'The learner\'s personal API keys',correct:false,explanation:'Neither file is meant to hold credentials.'}]
+  }
+]} />

@@ -17,6 +17,17 @@ const sidebars: SidebarsConfig = {
     },
     {
       type: 'category',
+      label: 'Module 2: Your Agentic IaC Workstation',
+      items: [
+        'm02-your-workstation/lesson',
+        'm02-your-workstation/lab',
+        'm02-your-workstation/reference',
+        'm02-your-workstation/projects',
+        'm02-your-workstation/quiz',
+      ],
+    },
+    {
+      type: 'category',
       label: 'Module 3: Context Engineering for Infrastructure',
       items: [
         'm03-context-engineering/lesson',
