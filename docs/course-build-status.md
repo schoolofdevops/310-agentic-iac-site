@@ -11,7 +11,7 @@ This course is being built module by module, in the open. Here's what's live tod
 |---|---|---|---|
 | 01 | From ClickOps to Agents | conceptual | **Live** |
 | 02 | Your Agentic IaC Workstation | hands-on | Planned |
-| 03 | Context Engineering for Infrastructure | hands-on | Planned |
+| 03 | Context Engineering for Infrastructure | hands-on | **Live** |
 | 04 | Agent Skills for IaC | hands-on | Planned |
 | 05 | MCP and the Tool Layer | hands-on | Planned |
 | 06 | Guardrails: Permissions, Hooks, Blast Radius | hands-on | Planned |
