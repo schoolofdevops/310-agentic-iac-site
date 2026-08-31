@@ -48,13 +48,13 @@ to proceed, fix something, or stop.
 
 ---
 
-**4. A tool reads a one-line intent, generates a Terraform module, runs `checkov` against it, and if the scan fails, rewrites the offending resource and re-scans, up to three attempts, before handing the result to a human. Which rung of the autonomy ladder is this, and what's still missing before it could safely move up one rung?**
+**4. A tool reads a one-line intent, generates a Terraform module, runs `checkov` against it, and if the scan fails, rewrites the offending resource and re-scans, up to three attempts, before handing the result to a human. Which step of the autonomy ladder is this, and what's still missing before it could safely move up one step?**
 
 <details>
 <summary>Answer</summary>
 
-Rung 5, supervised autonomy: the agent loops on its own across multiple iterations, and a
-human reviews the outcome rather than each step. To move to rung 6, unattended, it would
+Step 5, supervised autonomy: the agent loops on its own across multiple iterations, and a
+human reviews the outcome rather than each step. To move to step 6, unattended, it would
 need a defined stopping condition that doesn't require a human to review every run, plus
 whatever gate currently makes the human review meaningful would need to become automated
 enough to trust without that review.
@@ -111,7 +111,7 @@ what the agent knows or when it runs.
 It conflates adoption with trust. The same survey found only 34% would trust an autonomous
 system to make production changes without human approval, and 43% named absent guardrails
 as the top blocker to going further. High adoption of AI-assisted work, most of it well
-below rung 6, doesn't imply readiness for unattended production changes; it implies the
+below step 6, doesn't imply readiness for unattended production changes; it implies the
 opposite: most teams that have adopted this are deliberately not running it unattended yet.
 
 </details>

@@ -19,9 +19,9 @@ One side of A4. Pin it above your desk.
 | 6 | AI-assisted | Faster typing, faster fixes | Human still drives every step |
 | 7 | Agentic | Closes the loop end to end | Damage can happen before a human notices |
 
-## The six-rung autonomy ladder
+## The six-step autonomy ladder
 
-| Rung | Name | What runs unattended | The gate under it |
+| Step | Name | What runs unattended | The gate under it |
 |---|---|---|---|
 | 1 | Suggest | Nothing, human types | N/A, human is the filter |
 | 2 | Draft | Agent writes files | Human reads every line |
@@ -30,7 +30,7 @@ One side of A4. Pin it above your desk.
 | 5 | Supervised autonomy | Agent loops across iterations | Human reviews outcomes |
 | 6 | Unattended | Agent runs to a stopping condition | Human reviews exceptions only |
 
-No rung is safe without the gate listed beside it.
+No step is safe without the gate listed beside it.
 
 ## The three layers
 

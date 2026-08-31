@@ -18,14 +18,14 @@ should. The two are often different.* Which era is most of your stack sitting in
 residue, drift, sprawl, unreviewed state, review load, are you personally living with
 because of it?
 
-### 2. Rung audit
+### 2. Step audit
 
 Pick three things you or your team already do with AI assistance on infrastructure or
-anything adjacent to it. Place each one on the six-rung ladder from this module.
+anything adjacent to it. Place each one on the six-step ladder from this module.
 
-*Hint: be honest about rung 1 versus rung 2. A lot of "we use AI for this" turns out to be
-rung 1, suggest, with a human doing all the real work anyway.* For each of the three, ask:
-is there an actual gate under this rung, or are you just trusting it?
+*Hint: be honest about step 1 versus step 2. A lot of "we use AI for this" turns out to be
+step 1, suggest, with a human doing all the real work anyway.* For each of the three, ask:
+is there an actual gate under this step, or are you just trusting it?
 
 ### 3. Find the silent failure
 

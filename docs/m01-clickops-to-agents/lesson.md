@@ -170,52 +170,52 @@ loop.
 
 If "agent" is the definition of the loop, the autonomy ladder answers the next, more
 practical question: how much of that loop are you actually willing to let run without you
-watching? It has six rungs. The honest answer, for most teams right now, is that they are
-using different rungs for different kinds of work, often without ever saying so out loud.
+watching? It has six steps. The honest answer, for most teams right now, is that they are
+using different steps for different kinds of work, often without ever saying so out loud.
 
-![A six-rung ladder, bottom to top: suggest, draft, propose with plan, gated apply, supervised autonomy, unattended.](./diagrams/autonomy-ladder.svg)
+![A six-step ladder, bottom to top: suggest, draft, propose with plan, gated apply, supervised autonomy, unattended.](./diagrams/autonomy-ladder.svg)
 
-**Rung 1, suggest.** The agent proposes text, and a human types it in. This is
+**Step 1, suggest.** The agent proposes text, and a human types it in. This is
 autocomplete, strictly speaking, but it is also where a lot of chat-based "AI
 infrastructure" work actually lives today: you ask a question, you get an answer, you copy
 the part you trust into your own editor. Example: you ask an assistant how to structure a
 Terraform module for a three-tier VPC, and you type the module yourself, using its answer
 only as a reference.
 
-**Rung 2, draft.** The agent writes the files directly, and a human reads every single
-line before anything happens. This is the first rung where the agent actually produces a
+**Step 2, draft.** The agent writes the files directly, and a human reads every single
+line before anything happens. This is the first step where the agent actually produces a
 real artifact, not just a suggestion, and it is exactly what M02 in this course has you
 doing: you hand an agent a one-line intent, it writes you a Terraform module, and you read
 it start to finish before you do anything else with it.
 
-**Rung 3, propose with plan.** The agent produces both the code and a plan, that is,
+**Step 3, propose with plan.** The agent produces both the code and a plan, that is,
 `terraform plan` output showing what will actually change, and a human reads the plan
 instead of re-reading every line of code. This is a real, meaningfully lighter review,
 because a plan tells you the *effect* of the change, three resources created, one
 destroyed, which is often the part you actually care about, rather than the code that
 produces that effect.
 
-**Rung 4, gated apply.** Automated checks run before anything is applied: a formatter, a
+**Step 4, gated apply.** Automated checks run before anything is applied: a formatter, a
 scanner, a policy check. A human approves the plan only after those checks pass. This is
-the first rung where a machine, not only a human, stands between the agent and production.
+the first step where a machine, not only a human, stands between the agent and production.
 M09 in this course is entirely about building that gate well.
 
-**Rung 5, supervised autonomy.** The agent loops on its own, generating, checking, and
+**Step 5, supervised autonomy.** The agent loops on its own, generating, checking, and
 fixing, across several iterations. A human reviews the outcome, not each individual step.
 You come back at the end of a run, and you look at what changed and why, not at every plan
 made along the way.
 
-**Rung 6, unattended.** The agent runs all the way to a defined stopping condition, with
+**Step 6, unattended.** The agent runs all the way to a defined stopping condition, with
 no human anywhere in the loop. A human reviews exceptions, only when the system flags one.
-This is the top of the ladder. It is also the rung this course spends the least time
+This is the top of the ladder. It is also the step this course spends the least time
 recommending for infrastructure work, for reasons the next two chapters will make clear.
 
-### Every rung needs a gate
+### Every step needs a gate
 
-Here is the one rule that matters more than any single rung: **no rung is safe without the
-gate that makes it safe.** A team running rung 5 with no automated checks in front of
-`apply` is not more advanced than a team on rung 2. It is running rung 2's real level of
-safety, with rung 5's level of exposure, and that is worse, not better. Every module in
+Here is the one rule that matters more than any single step: **no step is safe without the
+gate that makes it safe.** A team running step 5 with no automated checks in front of
+`apply` is not more advanced than a team on step 2. It is running step 2's real level of
+safety, with step 5's level of exposure, and that is worse, not better. Every module in
 this course that moves you a step up this ladder also teaches you the gate that has to
 exist first, before you are allowed to climb it.
 
@@ -378,8 +378,8 @@ You now have the vocabulary this entire book uses: the seven eras, the definitio
 agent as a loop, the autonomy ladder, the four reasons infrastructure is a harder problem
 for an agent than application code, and the thesis that ties all of it together. Module 2
 hands you your first real agentic workstation, Claude Code and Codex, side by side, and
-puts you at rung 2 of the ladder: the agent drafts, you read every line. Everything after
-that is this same loop, one rung at a time, with the gate that makes each rung safe, built
+puts you at step 2 of the ladder: the agent drafts, you read every line. Everything after
+that is this same loop, one step at a time, with the gate that makes each step safe, built
 in before you are ever allowed to climb it.
 
 ---
@@ -395,7 +395,7 @@ in before you are ever allowed to climb it.
 | Agent | A loop: intent in, act with tools, observe, decide, repeat, until a stopping condition is met |
 | Agentic loop | The repeating cycle of acting and observing that defines an agent, as opposed to a single suggestion or a fixed script |
 | Stopping condition | The rule that tells an agent's loop when to stop; poorly defined ones are a common source of runaway agent behavior |
-| Autonomy ladder | The six-rung scale, from suggest to unattended, describing how much of an agentic workflow runs without a human watching each step |
+| Autonomy ladder | The six-step scale, from suggest to unattended, describing how much of an agentic workflow runs without a human watching each step |
 | Gate | An automated or human checkpoint that has to pass before an agent's proposed change is allowed to apply |
 | Blast radius | How much of a system is affected when a given change goes wrong |
 | Drift | A mismatch between what infrastructure tooling believes is deployed and what's actually running |
