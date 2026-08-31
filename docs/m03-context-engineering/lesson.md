@@ -49,7 +49,7 @@ concrete: [Context Window Visualizer](pathname:///310-agentic-iac-site/sims/cont
 Add pieces to a fixed 2,000-token window (an `AGENTS.md`, the file that actually
 has the bug, the one-off ask, some noise) and watch whether the task would actually
 land with what you gave it. Try adding only noise first. Then try the exact fix
-this chapter'''s lab walks through: the same `AGENTS.md`, with and without the one
+this chapter's lab walks through: the same `AGENTS.md`, with and without the one
 policy line spelled out.
 
 ## Context Engineering, Not Prompt Engineering
