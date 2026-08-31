@@ -91,10 +91,10 @@ skill is enforcing something it can only ever suggest.
 ## Where This Sits on the Ladder
 
 The lab in this module has you read a written skill, use it once, and check the result
-yourself before applying anything for real. That's rung 3, propose with plan, from M01's
-autonomy ladder, not rung 5.
+yourself before applying anything for real. That's step 3, propose with plan, from M01's
+autonomy ladder, not step 5.
 
-![The autonomy ladder from Module 1, rung 3 highlighted, with the label: the agent proposes code and a plan, a human still reads both before anything runs.](./diagrams/ladder-rung3.svg)
+![The autonomy ladder from Module 1, step 3 highlighted, with the label: the agent proposes code and a plan, a human still reads both before anything runs.](./diagrams/ladder-rung3.svg)
 
 The skill changed what got proposed. It didn't change who's still reading the plan before
 `apply` runs. Keep that distinction sharp: a better proposal is not the same thing as more

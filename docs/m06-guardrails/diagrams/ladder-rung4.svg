@@ -1,4 +1,4 @@
-<svg viewBox="0 0 820 620" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="The six-step autonomy ladder with rung 4, gated apply, highlighted: automated checks and human approval drawn as two boxes that both have to say yes.">
+<svg viewBox="0 0 820 620" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="The six-step autonomy ladder with step 4, gated apply, highlighted: automated checks and human approval drawn as two boxes that both have to say yes.">
   <defs>
     <filter id="sketch" filterUnits="userSpaceOnUse" x="0" y="0" width="820" height="620">
       <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="4" result="noise"/>
@@ -7,7 +7,7 @@
   </defs>
 
   <rect x="0" y="0" width="820" height="620" fill="white"/>
-  <text x="410" y="34" text-anchor="middle" font-family="Segoe Print, Bradley Hand, Comic Sans MS, cursive" font-size="22" fill="black">The autonomy ladder, rung 4</text>
+  <text x="410" y="34" text-anchor="middle" font-family="Segoe Print, Bradley Hand, Comic Sans MS, cursive" font-size="22" fill="black">The autonomy ladder, step 4</text>
 
   <rect x="130" y="260" width="660" height="80" fill="#ffe6cc" stroke="none"/>
 

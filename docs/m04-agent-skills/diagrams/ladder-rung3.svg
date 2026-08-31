@@ -1,4 +1,4 @@
-<svg viewBox="0 0 760 340" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="The six-rung autonomy ladder from Module 1, rung 3 highlighted: the agent proposes code and a plan, a human still reads both before anything runs.">
+<svg viewBox="0 0 760 340" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="The six-step autonomy ladder from Module 1, step 3 highlighted: the agent proposes code and a plan, a human still reads both before anything runs.">
   <defs>
     <filter id="sketch" filterUnits="userSpaceOnUse" x="0" y="0" width="760" height="340">
       <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="17" result="noise"/>

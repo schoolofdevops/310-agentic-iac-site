@@ -96,15 +96,15 @@ that calls it, a wrapper script, a CI step, a pre-commit hook, has to actually s
 that non-zero exit. Both halves matter. A gate with the right logic but a caller that ignores its
 exit code is not a gate either, it's theater.
 
-## Rung 4: Gated Apply
+## Step 4: Gated Apply
 
-Module 1 introduced the autonomy ladder. Rung 4 is "gated apply," automated checks plus human
-approval, together, not either one on its own. This chapter's lab is where that rung stops being
+Module 1 introduced the autonomy ladder. Step 4 is "gated apply," automated checks plus human
+approval, together, not either one on its own. This chapter's lab is where that step stops being
 an abstract row in a table and becomes a script you wrote yourself.
 
-![The M01 autonomy ladder, rung 4 highlighted: automated checks (the hook) and human approval, drawn as two separate boxes that both have to say yes.](./diagrams/ladder-rung4.svg)
+![The M01 autonomy ladder, step 4 highlighted: automated checks (the hook) and human approval, drawn as two separate boxes that both have to say yes.](./diagrams/ladder-rung4.svg)
 
-Notice what rung 4 is not. It is not "the hook approved it, so it's safe to skip the human." It is
+Notice what step 4 is not. It is not "the hook approved it, so it's safe to skip the human." It is
 not "a human looked at it, so the hook is redundant." Both have to say yes. The hook catches the
 mechanical, blast-radius-shaped mistakes fast and consistently, every single time, something a
 tired human reviewing their fortieth plan of the day will eventually miss. The human catches the
@@ -119,4 +119,4 @@ specific bucket, is actually the right call.
 | Hook | Code that runs at a fixed point in an agent's workflow, every time, regardless of what the agent decided |
 | Blast radius (mechanical) | A property read directly from a `terraform plan -json`: delete actions present, resource count, high-radius resource types touched |
 | Gate | A check whose caller actually stops on a non-zero exit code, as opposed to one that only prints a warning |
-| Rung 4, gated apply | Automated checks and human approval together, neither one alone |
+| Step 4, gated apply | Automated checks and human approval together, neither one alone |
