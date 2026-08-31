@@ -37,6 +37,17 @@ const sidebars: SidebarsConfig = {
         'm04-agent-skills/quiz',
       ],
     },
+    {
+      type: 'category',
+      label: 'Module 6: Guardrails: Permissions, Hooks, Blast Radius',
+      items: [
+        'm06-guardrails/lesson',
+        'm06-guardrails/lab',
+        'm06-guardrails/reference',
+        'm06-guardrails/projects',
+        'm06-guardrails/quiz',
+      ],
+    },
   ],
 };
 

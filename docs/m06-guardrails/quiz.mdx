@@ -1,0 +1,33 @@
+---
+sidebar_position: 5
+title: 'Quiz'
+---
+
+import Quiz from '@site/src/components/Quiz';
+
+# M06 Quiz: Guardrails: Permissions, Hooks, Blast Radius
+
+<Quiz questions={[
+  {
+    prompt:'What\'s the real difference between a skill (M04) and a hook (this module)?',options:[{text:'A skill is written in YAML, a hook is written in bash',correct:false,explanation:'The language isn\'t the distinction.'},{text:'A skill is voluntary, the agent decides whether to use it; a hook runs regardless, every time',correct:true,explanation:'An agent can skip a skill with a vague description. A hook wired into the pipeline runs on every attempt.'},{text:'A skill is for reading files, a hook is for writing them',correct:false,explanation:'Both can read or write, that\'s not what separates them.'},{text:'There\'s no real difference, they\'re two names for the same thing',correct:false,explanation:'They differ in exactly one thing that matters: whether the agent\'s choice is involved.'}]
+  },
+  {
+    prompt:'A terraform plan -json shows one resource change: aws_s3_bucket.reports, action create. Default policy (block-on-delete on, max-resources 5, high-radius types aws_vpc,aws_iam_policy,aws_iam_role). Does the gate block it?',options:[{text:'Yes, any new bucket is risky',correct:false,explanation:'The gate doesn\'t treat all creates as risky, only deletes, oversized batches, and high-radius types.'},{text:'No, it passes: no delete, under the resource limit, not a high-radius type',correct:true,explanation:'All three checks come back clean: zero deletes, one resource under the limit of five, and aws_s3_bucket isn\'t high-radius.'},{text:'Yes, because S3 buckets are always high-radius',correct:false,explanation:'aws_s3_bucket is not on the default high-radius list.'},{text:'The gate can\'t evaluate a plan with only one resource',correct:false,explanation:'The gate works on plans of any size.'}]
+  },
+  {
+    prompt:'A pre-apply script finds a hardcoded secret, prints a red warning, and then lets apply run anyway. Is this a gate?',options:[{text:'Yes, it caught the problem, that\'s what matters',correct:false,explanation:'Catching a problem and stopping it are different things.'},{text:'No. A gate has to actually stop the action; a check that warns and continues is a suggestion with better formatting',correct:true,explanation:'The defining property of a gate is that its caller stops when it fails.'},{text:'Yes, as long as the message is clear enough',correct:false,explanation:'Message clarity doesn\'t change whether the risky action still happens.'},{text:'It depends on how the secret was formatted',correct:false,explanation:'Formatting is unrelated to whether this is a gate.'}]
+  },
+  {
+    prompt:'Which of these is a mechanical blast-radius check a hook can run without understanding what any specific resource is for?',options:[{text:'Whether the Terraform code follows the team\'s naming convention',correct:false,explanation:'Naming convention needs domain knowledge, not a mechanical check.'},{text:'Whether a delete action appears anywhere in the plan',correct:true,explanation:'A delete action, resource count, and resource type are all readable directly from terraform show -json, with zero domain knowledge required.'},{text:'Whether the S3 bucket name is descriptive enough',correct:false,explanation:'Descriptiveness is subjective, not a mechanical property.'},{text:'Whether the PR description explains the change well',correct:false,explanation:'PR quality needs a human, not a mechanical gate.'}]
+  },
+  {
+    prompt:'A permission boundary denies Write(shared/**) for an agent. What question is this rule actually answering?',options:[{text:'Is this specific change to shared/ safe?',correct:false,explanation:'That\'s the hook\'s question, asked after a plan exists.'},{text:'Should the agent be anywhere near this path at all, before any change is even proposed?',correct:true,explanation:'A permission boundary is set before the run starts and answers a narrower, earlier question than a hook does.'},{text:'Did the agent\'s plan pass the blast-radius gate?',correct:false,explanation:'That\'s a separate, later check.'},{text:'Is this a high-radius resource type?',correct:false,explanation:'That\'s one of the gate\'s three checks, not what a permission boundary asks.'}]
+  },
+  {
+    prompt:'An agent, at autonomy rung 4, proposes a plan. The blast-radius hook passes it (no delete, under the resource limit, no high-radius type). Is that enough to apply?',options:[{text:'Yes, an automated pass at rung 4 is sufficient on its own',correct:false,explanation:'Rung 4 requires both the hook and a human, not either alone.'},{text:'No, rung 4 is checks AND human approval together, the hook passing doesn\'t replace the human',correct:true,explanation:'Rung 4, gated apply, is automated checks plus human approval, together.'},{text:'No, rung 4 requires the agent to also pass rung 5\'s supervision',correct:false,explanation:'Rung 5 is a different, higher rung, not a requirement for rung 4.'},{text:'Yes, but only if the plan is under 3 resources',correct:false,explanation:'Resource count isn\'t what determines whether human approval is still required.'}]
+  },
+  {
+    prompt:'A team\'s gate script has correct logic, blocks deletes, blocks oversized batches, blocks high-radius types, but the CI step that calls it ignores the script\'s exit code and runs apply next regardless. What\'s the actual state of this team\'s guardrail?',options:[{text:'It\'s a working gate, the logic is correct',correct:false,explanation:'Correct logic alone doesn\'t make it a gate if nothing acts on the result.'},{text:'It\'s not a gate at all, a gate with the right logic and a caller that ignores its exit code isn\'t a gate',correct:true,explanation:'Both halves of the gate contract have to hold: the script exits non-zero, and the caller actually stops.'},{text:'It\'s a skill, not a hook',correct:false,explanation:'It\'s still enforced code, the problem is the caller ignoring the result, not that it\'s voluntary.'},{text:'It\'s a permission boundary',correct:false,explanation:'A permission boundary is a different, earlier mechanism entirely.'}]
+  }
+
+]} />
