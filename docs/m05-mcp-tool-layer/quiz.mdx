@@ -1,0 +1,33 @@
+---
+sidebar_position: 5
+title: 'Quiz'
+---
+
+import Quiz from '@site/src/components/Quiz';
+
+# M05 Quiz: MCP and the Tool Layer
+
+<Quiz questions={[
+  {
+    prompt:'In one sentence, what is MCP?',options:[{text:'A faster way to write Terraform',correct:false,explanation:'MCP has nothing to do with writing Terraform faster.'},{text:'A standard protocol that lets an agent call a tool or read a resource from an external server, instead of every vendor building its own integration',correct:true,explanation:'That\'s the whole idea: one shared interface instead of a bespoke connector per vendor per tool.'},{text:'A replacement for writing skills',correct:false,explanation:'MCP doesn\'t replace skills, they\'re different components of the same harness layer.'},{text:'A new autonomy step above step 6',correct:false,explanation:'MCP has nothing to do with the autonomy ladder\'s steps.'}]
+  },
+  {
+    prompt:'A teammate says: "A skill and an MCP tool are basically the same thing, just configured differently." What\'s wrong with that?',options:[{text:'Nothing, they are the same thing',correct:false,explanation:'They\'re genuinely different: one never leaves the agent\'s own reasoning, the other reaches a real system.'},{text:'A skill is packaged instructions the agent follows itself; an MCP tool is a live call to a real external system that returns real data',correct:true,explanation:'A skill never leaves the agent\'s own reasoning. An MCP tool call reaches an actual external system and gets back a real answer.'},{text:'Skills are enforced, MCP tools are voluntary',correct:false,explanation:'This has it backwards: both a skill and an MCP tool are voluntary, the agent chooses whether to reach for either one.'},{text:'MCP tools only work with GitHub',correct:false,explanation:'MCP works with any server that speaks the protocol, GitHub is just one example.'}]
+  },
+  {
+    prompt:'Asked the exact same question about a Terraform provider\'s latest version, an agent gave two different answers: "~3.6.2, best guess" without a tool, and "4.5.0, from the registry" with the Terraform MCP server. What does this actually demonstrate?',options:[{text:'The agent is unreliable and shouldn\'t be trusted with either answer',correct:false,explanation:'This isn\'t about the agent being unreliable in general, it\'s about knowing when to reach for a live source.'},{text:'Training data has a cutoff, so a live lookup can catch a stale guess a model would otherwise state with real confidence',correct:true,explanation:'The model\'s own knowledge is frozen at training time. A live MCP lookup reads the actual current state instead.'},{text:'MCP servers always return higher numbers than a model\'s guess',correct:false,explanation:'That\'s a coincidence of this one example, not a rule.'},{text:'The first answer was a formatting bug, not a real difference',correct:false,explanation:'The disagreement is real, not cosmetic, the two numbers are genuinely different provider versions.'}]
+  },
+  {
+    prompt:'An agent opens a pull request through the GitHub MCP server. Given the course thesis from module 1, what happens next?',options:[{text:'The PR merges automatically, since the agent authored it through an official tool',correct:false,explanation:'This hands the actual decision to the tool, which is exactly what the thesis says not to do.'},{text:'Nothing, opening a PR through MCP is the final step',correct:false,explanation:'Opening isn\'t the final step, a human still has to review and decide.'},{text:'A human reviews the diff and decides whether to merge, the agent\'s authority ends at opening it',correct:true,explanation:'The agent proposes, the pipeline decides, same as every other module. Opening a PR through MCP doesn\'t change that boundary.'},{text:'The MCP server itself decides whether to merge, based on CI status',correct:false,explanation:'This also hands the decision to something other than a human.'}]
+  },
+  {
+    prompt:'Which autonomy step does this module\'s lab sit on?',options:[{text:'Step 2, draft, because the agent writes the PR content itself',correct:false,explanation:'Writing content isn\'t what determines the step, who decides what happens next is.'},{text:'Step 3, propose with plan, the same step as module 4\'s skill-based lab',correct:true,explanation:'MCP adds capability, real tool calls and real data, not autonomy. A human still reads and decides on everything the agent produces through MCP.'},{text:'Step 4, gated apply, because a hook checks the PR before merge',correct:false,explanation:'This module doesn\'t introduce a hook, that\'s module 6.'},{text:'Step 5, supervised, because the agent runs the whole sequence unattended',correct:false,explanation:'Nothing in this lab runs unattended, a human is reading each result.'}]
+  },
+  {
+    prompt:'Why does the reading warn that an MCP server is "still a permission surface," even an official one?',options:[{text:'Official servers are actually more dangerous than unofficial ones',correct:false,explanation:'This overstates the point, officialness isn\'t about danger.'},{text:'What a server can read or write is configured, and a broadly-scoped token is a real risk regardless of who built the server',correct:true,explanation:'"Official" describes who maintains the server, not what access you\'ve granted it. A broadly-scoped token is a bigger blast radius no matter which server holds it.'},{text:'MCP servers can\'t be trusted at all, official or not',correct:false,explanation:'This overstates the reading\'s actual point, which is about scoping access carefully, not distrust in general.'},{text:'This only applies to servers that charge money',correct:false,explanation:'Pricing has nothing to do with the permission-surface argument.'}]
+  },
+  {
+    prompt:'What\'s the actual difference between a hook (module 6) and an MCP tool call (this module)?',options:[{text:'There is no real difference, both are just "extra code that runs"',correct:false,explanation:'Enforcement is a real, meaningful axis that separates them.'},{text:'A hook is enforced, it runs whether or not the agent wants it to; an MCP tool call is voluntary, the agent chooses to make it, but what comes back is real, live data',correct:true,explanation:'A hook can\'t be skipped. An MCP tool call can be, the agent decides whether to reach for it, same as a skill, but a real answer comes back from a real system.'},{text:'Hooks are for GitHub, MCP is for Terraform',correct:false,explanation:'This invents a rule the material never states, both mechanisms apply generally.'},{text:'MCP tool calls always run before a hook would',correct:false,explanation:'There\'s no fixed ordering rule like this in the material.'}]
+  }
+
+]} />

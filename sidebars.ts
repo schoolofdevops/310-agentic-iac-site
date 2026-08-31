@@ -50,6 +50,17 @@ const sidebars: SidebarsConfig = {
     },
     {
       type: 'category',
+      label: 'Module 5: MCP and the Tool Layer',
+      items: [
+        'm05-mcp-tool-layer/lesson',
+        'm05-mcp-tool-layer/lab',
+        'm05-mcp-tool-layer/reference',
+        'm05-mcp-tool-layer/projects',
+        'm05-mcp-tool-layer/quiz',
+      ],
+    },
+    {
+      type: 'category',
       label: 'Module 6: Guardrails: Permissions, Hooks, Blast Radius',
       items: [
         'm06-guardrails/lesson',
