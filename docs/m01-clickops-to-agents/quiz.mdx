@@ -1,0 +1,35 @@
+---
+sidebar_position: 5
+title: 'Quiz'
+---
+
+import Quiz from '@site/src/components/Quiz';
+
+# M01 Quiz: From ClickOps to Agents
+
+<Quiz questions={[
+  {
+    prompt:'Which lists the seven eras in the correct order?',options:[{text:'ClickOps, Scripts, Configuration management, Declarative IaC, GitOps, AI-assisted, Agentic',correct:true,explanation:'Each era raises the level at which a human states intent and hands more of the translation to a machine.'},{text:'ClickOps, Configuration management, Scripts, GitOps, Declarative IaC, AI-assisted, Agentic',correct:false,explanation:'Configuration management fixed the problem scripts left behind, so scripts comes first. Declarative IaC comes before GitOps, not after.'},{text:'Scripts, ClickOps, Declarative IaC, Configuration management, AI-assisted, GitOps, Agentic',correct:false,explanation:'ClickOps is the starting point, before scripts existed at all.'},{text:'ClickOps, Scripts, Declarative IaC, Configuration management, GitOps, Agentic, AI-assisted',correct:false,explanation:'Configuration management comes before declarative IaC, and AI-assisted comes before agentic, not after.'}]
+  },
+  {
+    prompt:'A teammate pastes a Terraform error into a chat window, gets a suggested fix, and copies the fixed line into their own file by hand. What is this?',options:[{text:'Automation',correct:false,explanation:'Automation runs a fixed sequence. There was no sequence here, just one suggestion.'},{text:'Autocomplete',correct:true,explanation:'There\'s no loop: the tool produced one suggestion and stopped. The teammate did all of the deciding and all of the acting.'},{text:'An agent',correct:false,explanation:'An agent decides and acts based on what it observes. Here, a human did both.'}]
+  },
+  {
+    prompt:'A CI script always runs terraform fmt, terraform validate, and terraform apply in that fixed order, with no branching logic. Is this an agent?',options:[{text:'Yes, it acts on infrastructure without a human typing each command',correct:false,explanation:'Acting without a human typing each command isn\'t what makes something an agent.'},{text:'No, it\'s automation: a fixed sequence with no decisions',correct:true,explanation:'It executes a fixed sequence regardless of what it observes. An agent would decide, based on what validate returned, whether to proceed, fix something, or stop.'},{text:'Yes, because it runs more than one command in a row',correct:false,explanation:'Running several commands in a row isn\'t what makes something an agent, deciding between them based on what happened is.'},{text:'No, because it never touches a real cloud account',correct:false,explanation:'Whether it touches a cloud account has nothing to do with whether it\'s an agent.'}]
+  },
+  {
+    prompt:'A tool reads a one-line intent, generates a Terraform module, runs checkov against it, and if the scan fails, rewrites the offending resource and re-scans, up to three attempts, before handing the result to a human. Which step of the autonomy ladder is this?',options:[{text:'Step 3, propose with plan',correct:false,explanation:'Step 3 only produces a plan for a human to read, it doesn\'t loop and fix things on its own.'},{text:'Step 4, gated apply',correct:false,explanation:'Step 4 is about automated checks gating a human approval before apply, not the agent looping to fix its own draft.'},{text:'Step 5, supervised autonomy',correct:true,explanation:'The agent loops on its own across multiple iterations, and a human reviews the final outcome rather than each individual step.'},{text:'Step 6, unattended',correct:false,explanation:'A human still reviews the final result here, step 6 has no human in the loop at all.'}]
+  },
+  {
+    prompt:'Which of the following is NOT one of the four properties that make infrastructure harder for an agent to touch than application code?',options:[{text:'No undo',correct:false,explanation:'This is one of the four real properties.'},{text:'State',correct:false,explanation:'This is one of the four real properties.'},{text:'Verbose syntax',correct:true,explanation:'Terraform\'s syntax has nothing to do with why infrastructure mistakes are more dangerous.'},{text:'Blast radius',correct:false,explanation:'This is one of the four real properties.'},{text:'Silent failure',correct:false,explanation:'This is one of the four real properties.'}]
+  },
+  {
+    prompt:'Given the thesis "the agent proposes, the pipeline decides," where is apply authorized to run in a well-built agentic infrastructure workflow?',options:[{text:'As soon as terraform plan and checkov both pass',correct:false,explanation:'A clean checkov pass is only one gate among several, not the whole pipeline.'},{text:'Whenever the agent is confident its own plan is correct',correct:false,explanation:'This hands the decision back to the agent, exactly what the thesis says not to do.'},{text:'Only after the full pipeline, scans, policy checks, cost checks, and human approval, has approved the plan',correct:true,explanation:'The agent\'s own confidence that its plan is correct is never sufficient on its own, its authority ends at producing the plan.'},{text:'After the agent\'s own internal tests pass, before any human sees it',correct:false,explanation:'This also hands the decision back to the agent, skipping human approval entirely.'}]
+  },
+  {
+    prompt:'A team says: "Our agent writes correct Terraform for simple modules, but every time we ask it to follow our internal naming convention or use our approved module registry, it ignores the instruction." Which of the three layers does this symptom point to?',options:[{text:'Context',correct:false,explanation:'A context problem looks like the agent failing to understand the task at all, not ignoring a known standard.'},{text:'Harness',correct:true,explanation:'Team standards live in the tools, hooks, and gates around the agent, the harness, not in what the agent knows or when it runs.'},{text:'Loop',correct:false,explanation:'A loop problem looks like the agent not stopping or not re-triggering correctly, not ignoring a standard.'}]
+  },
+  {
+    prompt:'A junior engineer argues: "Since 46% of organizations already run AI for infrastructure in production, we should let our agent apply changes unattended, adoption is clearly high enough." What\'s wrong with that argument?',options:[{text:'Nothing, 46% is a strong majority',correct:false,explanation:'This ignores that adoption and trust are two different numbers in the same survey.'},{text:'It conflates adoption with trust: only 34% would trust autonomous production changes, and 43% name absent guardrails as the top blocker',correct:true,explanation:'Most teams that have adopted AI for infrastructure work are deliberately not running it unattended yet.'},{text:'The 46% figure only counts small companies',correct:false,explanation:'The survey doesn\'t make this claim, and it isn\'t the real flaw in the argument.'},{text:'Adoption numbers don\'t apply to infrastructure work at all',correct:false,explanation:'The 46% figure is specifically about infrastructure work, so this isn\'t the issue.'}]
+  }
+]} />
