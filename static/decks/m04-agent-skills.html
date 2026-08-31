@@ -170,7 +170,9 @@ footer, header, hgroup, main, menu, nav, section {
   <p class="s">always on, on demand, or once, pick by asking which one it is</p>
   <svg viewBox="0 0 960 320" role="img" aria-label="Three panels compared: standing context that loads on every run, a skill that loads only when a task matches, and a one-off prompt that is spent once.">
 <g>
-    <rect x="40" y="60" width="270" height="200" rx="10" fill="#d5e8d4" stroke="#1e1e1e" stroke-width="2.4" filter="url(#rough)"/><text x="175" y="130" text-anchor="middle" font-size="13" fill="#1e1e1e">AGENTS.md</text>
+    <rect x="40" y="60" width="270" height="200" rx="10" fill="#d5e8d4" stroke="#1e1e1e" stroke-width="2.4" filter="url(#rough)"/>
+    <text x="175" y="95" text-anchor="middle" font-size="18" fill="#1e1e1e">context</text>
+    <text x="175" y="130" text-anchor="middle" font-size="13" fill="#1e1e1e">AGENTS.md</text>
     <text x="175" y="190" text-anchor="middle" font-size="13" fill="#1e1e1e">always loaded,</text>
     <text x="175" y="210" text-anchor="middle" font-size="13" fill="#1e1e1e">every run</text>
 
@@ -204,7 +206,9 @@ footer, header, hgroup, main, menu, nav, section {
   <svg viewBox="0 0 860 340" role="img" aria-label="An annotated SKILL.md file: YAML frontmatter with name and description fields at the top, plain instructions in the body below.">
 <g>
     <rect x="60" y="30" width="420" height="300" rx="8" fill="white" stroke="#1e1e1e" stroke-width="2.4" filter="url(#rough)"/>
-    <rect x="60" y="30" width="420" height="90" rx="8" fill="#e1d5e7" stroke="#1e1e1e" stroke-width="2" filter="url(#rough)"/><text x="80" y="78" font-size="13" fill="#1e1e1e">name: terraform-module-conventions</text>
+    <rect x="60" y="30" width="420" height="90" rx="8" fill="#e1d5e7" stroke="#1e1e1e" stroke-width="2" filter="url(#rough)"/>
+    <text x="80" y="55" font-size="13" fill="#1e1e1e">---</text>
+    <text x="80" y="78" font-size="13" fill="#1e1e1e">name: terraform-module-conventions</text>
     <text x="80" y="101" font-size="13" fill="#1e1e1e">description: use whenever...</text>
     <text x="80" y="145" font-size="13" fill="#1e1e1e"># Terraform module conventions</text>
     <text x="80" y="175" font-size="13" fill="#1e1e1e">- pin the aws provider ~&gt; 6.0</text>
@@ -236,7 +240,9 @@ footer, header, hgroup, main, menu, nav, section {
   <p class="s">a vague description means the skill sits there, correct, unused</p>
   <svg viewBox="0 0 900 300" role="img" aria-label="A task description flowing into a matcher, compared against several skill descriptions, one match found and invoked, others left untouched.">
 <g>
-    <rect x="30" y="110" width="180" height="80" rx="10" fill="#ffe6cc" stroke="#1e1e1e" stroke-width="2.2" filter="url(#rough)"/><text x="120" y="165" text-anchor="middle" font-size="12" fill="#1e1e1e">"write an S3 module"</text>
+    <rect x="30" y="110" width="180" height="80" rx="10" fill="#ffe6cc" stroke="#1e1e1e" stroke-width="2.2" filter="url(#rough)"/>
+    <text x="120" y="145" text-anchor="middle" font-size="13" fill="#1e1e1e">task:</text>
+    <text x="120" y="165" text-anchor="middle" font-size="12" fill="#1e1e1e">"write an S3 module"</text>
 
     <path d="M215,150 L275,150" stroke="#1e1e1e" stroke-width="2.2" marker-end="url(#ah)"/>
 
@@ -273,7 +279,10 @@ footer, header, hgroup, main, menu, nav, section {
   <p class="s">write the rule once, or retype the same review comment forever</p>
   <svg viewBox="0 0 880 300" role="img" aria-label="One skill icon connected by arrows to many generated modules, each carrying the same conventions, next to a crossed-out stack of repeated manual review comments.">
 <g>
-    <circle cx="110" cy="150" r="42" fill="#e1d5e7" stroke="#1e1e1e" stroke-width="2.4" filter="url(#rough)"/><path d="M155,120 L260,60" stroke="#1e1e1e" stroke-width="1.8" marker-end="url(#ah)" filter="url(#rough)"/>
+    <circle cx="110" cy="150" r="42" fill="#e1d5e7" stroke="#1e1e1e" stroke-width="2.4" filter="url(#rough)"/>
+    <text x="110" y="155" text-anchor="middle" font-size="12" fill="#1e1e1e">skill</text>
+
+    <path d="M155,120 L260,60" stroke="#1e1e1e" stroke-width="1.8" marker-end="url(#ah)" filter="url(#rough)"/>
     <path d="M155,150 L260,150" stroke="#1e1e1e" stroke-width="1.8" marker-end="url(#ah)"/>
     <path d="M155,180 L260,240" stroke="#1e1e1e" stroke-width="1.8" marker-end="url(#ah)" filter="url(#rough)"/>
 
@@ -307,7 +316,9 @@ footer, header, hgroup, main, menu, nav, section {
   <h2 class="t">Voluntary vs Enforced</h2>
   <p class="s">a skill can only ever suggest, a hook can actually block</p>
   <svg viewBox="0 0 880 300" role="img" aria-label="Two paths compared: a skill, invoked only if the agent decides the task matches, versus a hook, which runs and blocks regardless of what the agent decides.">
-<g><rect x="60" y="60" width="140" height="55" rx="8" fill="#dae8fc" stroke="#1e1e1e" stroke-width="2.2" filter="url(#rough)"/>
+<g>
+    <text x="220" y="45" text-anchor="middle" font-size="16" fill="#1e1e1e">skill (voluntary)</text>
+    <rect x="60" y="60" width="140" height="55" rx="8" fill="#dae8fc" stroke="#1e1e1e" stroke-width="2.2" filter="url(#rough)"/>
     <text x="130" y="93" text-anchor="middle" font-size="12" fill="#1e1e1e">agent decides</text>
     <path d="M200,88 L280,88" stroke="#1e1e1e" stroke-width="2.2" marker-end="url(#ah)"/>
     <rect x="290" y="60" width="140" height="55" rx="8" fill="#d5e8d4" stroke="#1e1e1e" stroke-width="2.2" filter="url(#rough)"/>
@@ -341,7 +352,10 @@ footer, header, hgroup, main, menu, nav, section {
   <p class="s">a better proposal is not more autonomy</p>
   <svg viewBox="0 0 760 340" role="img" aria-label="The six-rung autonomy ladder from Module 1, rung 3 highlighted: the agent proposes code and a plan, a human still reads both before anything runs.">
 <g font-size="13">
-    <rect x="60" y="270" width="620" height="40" rx="6" fill="white" stroke="#1e1e1e" stroke-width="1.8" filter="url(#rough)"/><rect x="60" y="225" width="620" height="40" rx="6" fill="white" stroke="#1e1e1e" stroke-width="1.8" filter="url(#rough)"/>
+    <rect x="60" y="270" width="620" height="40" rx="6" fill="white" stroke="#1e1e1e" stroke-width="1.8" filter="url(#rough)"/>
+    <text x="80" y="295" fill="#1e1e1e">1 · suggest</text>
+
+    <rect x="60" y="225" width="620" height="40" rx="6" fill="white" stroke="#1e1e1e" stroke-width="1.8" filter="url(#rough)"/>
     <text x="80" y="250" fill="#1e1e1e">2 · draft</text>
 
     <rect x="60" y="180" width="620" height="40" rx="6" fill="#dae8fc" stroke="#1e1e1e" stroke-width="3" filter="url(#rough)"/>

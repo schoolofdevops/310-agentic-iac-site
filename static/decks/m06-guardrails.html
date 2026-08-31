@@ -169,7 +169,10 @@ footer, header, hgroup, main, menu, nav, section {
   <p class="s">set before the run starts, not negotiated in the middle of one</p>
   <svg viewBox="0 0 820 340" role="img" aria-label="A repo divided into two zones, modules where an agent may read and write freely, and shared, walled off with a deny rule the agent cannot argue its way past, set before the run starts.">
 <g>
-    <rect x="40" y="60" width="740" height="240" rx="10" fill="none" stroke="#1e1e1e" stroke-width="2.2" filter="url(#rough)"/><rect x="70" y="100" width="330" height="160" rx="8" fill="#d5e8d4" stroke="#1e1e1e" stroke-width="2.2" filter="url(#rough)"/>
+    <rect x="40" y="60" width="740" height="240" rx="10" fill="none" stroke="#1e1e1e" stroke-width="2.2" filter="url(#rough)"/>
+    <text x="410" y="45" text-anchor="middle" font-size="17" fill="#1e1e1e">the repo</text>
+
+    <rect x="70" y="100" width="330" height="160" rx="8" fill="#d5e8d4" stroke="#1e1e1e" stroke-width="2.2" filter="url(#rough)"/>
     <text x="235" y="130" text-anchor="middle" font-size="14" fill="#1e1e1e">modules/**</text>
     <text x="235" y="155" text-anchor="middle" font-size="12" fill="#1e1e1e">agent may read + write</text>
     <text x="235" y="175" text-anchor="middle" font-size="12" fill="#1e1e1e">this is normal work</text>
@@ -195,7 +198,9 @@ footer, header, hgroup, main, menu, nav, section {
   <h2 class="t">Voluntary vs Enforced</h2>
   <p class="s">a skill can only ever suggest, a hook can actually stop the action</p>
   <svg viewBox="0 0 880 300" role="img" aria-label="Two paths compared: a skill, invoked only if the agent decides the task matches, versus a hook, which intercepts every attempt and runs the same check every time regardless of what the agent decided.">
-<g><rect x="50" y="55" width="150" height="55" rx="8" fill="#dae8fc" stroke="#1e1e1e" stroke-width="2.2" filter="url(#rough)"/>
+<g>
+    <text x="220" y="40" text-anchor="middle" font-size="17" fill="#1e1e1e">skill (voluntary, M04)</text>
+    <rect x="50" y="55" width="150" height="55" rx="8" fill="#dae8fc" stroke="#1e1e1e" stroke-width="2.2" filter="url(#rough)"/>
     <text x="125" y="88" text-anchor="middle" font-size="12" fill="#1e1e1e">task arrives</text>
     <path d="M200,82 L280,82" stroke="#1e1e1e" stroke-width="2.2" marker-end="url(#ah)"/>
     <rect x="290" y="55" width="150" height="55" rx="8" fill="#e1d5e7" stroke="#1e1e1e" stroke-width="2.2" filter="url(#rough)"/>
@@ -227,7 +232,10 @@ footer, header, hgroup, main, menu, nav, section {
   <p class="s">between the plan and the apply, not before or after</p>
   <svg viewBox="0 0 820 300" role="img" aria-label="The authority boundary redrawn: agent proposes and drafts a plan, then a hook checkpoint intercepts before apply, and only a pass lets apply run, a block stops it there.">
 <g font-size="14" fill="#1e1e1e" text-anchor="middle">
-    <rect x="20"  y="110" width="120" height="50" fill="white" stroke="#1e1e1e" stroke-width="2" filter="url(#rough)"/><rect x="180" y="110" width="120" height="50" fill="white" stroke="#1e1e1e" stroke-width="2" filter="url(#rough)"/>
+    <rect x="20"  y="110" width="120" height="50" fill="white" stroke="#1e1e1e" stroke-width="2" filter="url(#rough)"/>
+    <text x="80" y="140">agent proposes</text>
+
+    <rect x="180" y="110" width="120" height="50" fill="white" stroke="#1e1e1e" stroke-width="2" filter="url(#rough)"/>
     <text x="240" y="140">draft plan</text>
 
     <rect x="340" y="90" width="150" height="90" fill="#f8cecc" stroke="#1e1e1e" stroke-width="2.8" filter="url(#rough)"/>
@@ -270,7 +278,9 @@ footer, header, hgroup, main, menu, nav, section {
   <p class="s">delete present, count over threshold, high-radius type touched</p>
   <svg viewBox="0 0 840 300" role="img" aria-label="A terraform plan in JSON form, parsed into three mechanical checks: does it contain a delete action, does the resource count exceed a threshold, does it touch a resource type on a high-radius list.">
 <g>
-    <rect x="30" y="90" width="200" height="110" rx="8" fill="#dae8fc" stroke="#1e1e1e" stroke-width="2.2" filter="url(#rough)"/><text x="130" y="140" text-anchor="middle" font-size="13" fill="#1e1e1e">-json plan.bin</text>
+    <rect x="30" y="90" width="200" height="110" rx="8" fill="#dae8fc" stroke="#1e1e1e" stroke-width="2.2" filter="url(#rough)"/>
+    <text x="130" y="120" text-anchor="middle" font-size="13" fill="#1e1e1e">terraform show</text>
+    <text x="130" y="140" text-anchor="middle" font-size="13" fill="#1e1e1e">-json plan.bin</text>
     <text x="130" y="170" text-anchor="middle" font-size="11" fill="#1e1e1e">resource_changes[]</text>
 
     <path d="M230,145 L300,145" stroke="#1e1e1e" stroke-width="2.2" marker-end="url(#ah)"/>
@@ -311,7 +321,9 @@ footer, header, hgroup, main, menu, nav, section {
   <h2 class="t">Gate vs Warning</h2>
   <p class="s">a warning that lets apply run anyway is not a gate</p>
   <svg viewBox="0 0 860 280" role="img" aria-label="Two hooks compared: one prints a warning and lets the pipeline continue anyway, the other exits non-zero and the apply never runs. Only the second one is a real gate.">
-<g><rect x="60" y="55" width="150" height="50" rx="8" fill="#ffe6cc" stroke="#1e1e1e" stroke-width="2.2" filter="url(#rough)"/>
+<g>
+    <text x="215" y="35" text-anchor="middle" font-size="16" fill="#1e1e1e">check finds a problem, prints a warning</text>
+    <rect x="60" y="55" width="150" height="50" rx="8" fill="#ffe6cc" stroke="#1e1e1e" stroke-width="2.2" filter="url(#rough)"/>
     <text x="135" y="85" text-anchor="middle" font-size="12" fill="#1e1e1e">exit 0 anyway</text>
     <path d="M210,80 L280,80" stroke="#1e1e1e" stroke-width="2.2" marker-end="url(#ah)"/>
     <rect x="290" y="55" width="150" height="50" rx="8" fill="#f8cecc" stroke="#1e1e1e" stroke-width="2.2" filter="url(#rough)"/>
@@ -343,7 +355,9 @@ footer, header, hgroup, main, menu, nav, section {
   <h2 class="t">Gated Apply: Checks AND Approval</h2>
   <p class="s">both have to say yes, neither one alone</p>
   <svg viewBox="0 0 820 620" role="img" aria-label="The six-step autonomy ladder with rung 4, gated apply, highlighted: automated checks and human approval drawn as two boxes that both have to say yes.">
-<rect x="130" y="260" width="660" height="80" fill="#ffe6cc" stroke="none"/>
+<text x="410" y="34" text-anchor="middle" font-size="22" fill="#1e1e1e">The autonomy ladder, rung 4</text>
+
+  <rect x="130" y="260" width="660" height="80" fill="#ffe6cc" stroke="none"/>
 
   <g stroke="#1e1e1e" stroke-width="3" filter="url(#rough)">
     <line x1="150" y1="560" x2="152.0" y2="70"/>
