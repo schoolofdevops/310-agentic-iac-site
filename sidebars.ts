@@ -15,6 +15,17 @@ const sidebars: SidebarsConfig = {
         'm01-clickops-to-agents/quiz',
       ],
     },
+    {
+      type: 'category',
+      label: 'Module 3: Context Engineering for Infrastructure',
+      items: [
+        'm03-context-engineering/lesson',
+        'm03-context-engineering/lab',
+        'm03-context-engineering/reference',
+        'm03-context-engineering/projects',
+        'm03-context-engineering/quiz',
+      ],
+    },
   ],
 };
 

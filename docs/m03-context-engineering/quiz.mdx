@@ -1,0 +1,33 @@
+---
+sidebar_position: 5
+title: 'Quiz'
+---
+
+import Quiz from '@site/src/components/Quiz';
+
+# M03 Quiz: Context Engineering for Infrastructure
+
+<Quiz questions={[
+  {
+    prompt:'A team says: "Our agent writes correct Terraform for simple modules, but every time we ask it to follow our internal naming convention or use our approved module registry, it ignores the instruction." Which of the three layers does this point to?',options:[{text:'Context',correct:true,explanation:'If the convention was never written down anywhere the agent could read it, the fix is context: write it down. This question tests whether you can tell that apart from an agent that knows a rule and skips it, which is harness.'},{text:'Harness',correct:false,explanation:'Harness is the right answer only if the agent already knows the rule and still skips it under pressure. Read the scenario again: nothing says the rule was ever written anywhere.'},{text:'Loop',correct:false,explanation:'A loop problem sounds like babysitting every run, not ignoring a convention.'}]
+  },
+  {
+    prompt:'Which belongs in an AGENTS.md, and which belongs in a one-off prompt: "build me a VPC with two subnets" vs "secrets are always sensitive, never a default"?',options:[{text:'Both belong in AGENTS.md',correct:false,explanation:'Build me a VPC with two subnets is true for this one task only, not every run.'},{text:'"build me a VPC" belongs in AGENTS.md, the secrets rule belongs in a prompt',correct:false,explanation:'This is backwards. The VPC request is a one-off ask, the secrets rule is true on every task.'},{text:'"build me a VPC" is a prompt, the secrets rule belongs in AGENTS.md',correct:true,explanation:'The secrets rule is true on every task, forever, until the team changes its mind. That\'s exactly the test for standing context versus a prompt.'},{text:'Neither belongs in either',correct:false,explanation:'Both belong somewhere, just not the same place.'}]
+  },
+  {
+    prompt:'In the information-gap finding cited in this module, how many of the residual policy failures were resolved once policy text was made visible to the agent?',options:[{text:'79% of them',correct:false,explanation:'That\'s a rounded percentage. This module asks you to quote the real fraction instead.'},{text:'11 of 14',correct:true,explanation:'Quote the fraction, not a rounded percentage. Small sample, real finding, the 3 that remained were not fixed by visibility alone.'},{text:'All of them',correct:false,explanation:'3 of the 14 remained unresolved even after policy text became visible.'},{text:'None, visibility didn\'t help',correct:false,explanation:'Visibility resolved most of them, 11 of 14, just not all.'}]
+  },
+  {
+    prompt:'Why does repo shape affect what an agent retrieves?',options:[{text:'Agents have a hidden channel that reads a repo\'s true intent, independent of file names',correct:false,explanation:'There is no hidden channel. This is the exact misconception this module corrects.'},{text:'An agent finds files the same way a human does, mostly by name and path, so a confusingly organized repo confuses the agent the same way it would confuse a new hire',correct:true,explanation:'There is no hidden channel. If a human engineer would struggle to find the right file, an agent will struggle too.'},{text:'It doesn\'t matter for repos under 10,000 files',correct:false,explanation:'Repo shape matters regardless of size, since retrieval works by name and path either way.'},{text:'It doesn\'t, retrieval is random regardless of repo shape',correct:false,explanation:'Retrieval follows names and paths, it isn\'t random.'}]
+  },
+  {
+    prompt:'A learner writes an AGENTS.md that says only: "Follow best practices." Is this good context engineering?',options:[{text:'Yes, "best practices" covers everything',correct:false,explanation:'It covers nothing specific enough to check against.'},{text:'No, it\'s too vague to act on. Good context is specific and checkable, like "secrets are always sensitive, never a default", not a general aspiration',correct:true,explanation:'The AGENTS.md examples in this module are specific enough that a violation is obvious on sight. "Follow best practices" gives an agent nothing to check its own output against.'},{text:'Yes, as long as the file exists at all',correct:false,explanation:'A file nobody can act on is barely better than no file.'},{text:'No, because AGENTS.md files should never contain the word "practices"',correct:false,explanation:'The word itself isn\'t the problem, the vagueness is.'}]
+  },
+  {
+    prompt:'In the lab, the exact same intent was run twice, same agent, same repo. What was the only thing that changed between run 1 and run 2?',options:[{text:'The agent\'s model version',correct:false,explanation:'The model stayed the same across both runs, that\'s the point of the test.'},{text:'Whether an AGENTS.md file was present in the repo',correct:true,explanation:'Hold everything else constant, change one variable, the presence of written context, and read the diff.'},{text:'The intent itself was reworded to be clearer',correct:false,explanation:'The intent was identical both times, word for word.'},{text:'A more powerful stopping condition was added',correct:false,explanation:'Stopping conditions weren\'t part of this comparison at all.'}]
+  },
+  {
+    prompt:'Which of these is a context problem, and which needs a harness gate instead: (1) an agent hardcodes a secret because nobody wrote down the rule against it, (2) an agent knows the rule against hardcoding secrets but does it anyway because it\'s the fastest way to finish under a deadline?',options:[{text:'Both are context problems',correct:false,explanation:'In (2), the agent already had the information. More context won\'t fix a mistake the agent already knew was a mistake.'},{text:'(1) is context, fixed by writing the rule down. (2) is not, the agent already knew the rule and skipped it anyway, which needs an enforced gate, not a file',correct:true,explanation:'A context problem is missing information. Once the information exists and the mistake still happens, only an automated check that makes the shortcut impossible will fix it. That\'s the seam into M06.'},{text:'Both need a harness gate',correct:false,explanation:'(1) is fully explained by missing information, no enforcement needed once the rule is written down.'},{text:'Neither is fixable, some mistakes are just unavoidable',correct:false,explanation:'Both are fixable, just by different layers.'}]
+  }
+
+]} />
