@@ -103,6 +103,17 @@ const sidebars: SidebarsConfig = {
         'm09-verifying-ai-infra/quiz',
       ],
     },
+    {
+      type: 'category',
+      label: 'Module 10: Agentic Kubernetes and Platform IaC',
+      items: [
+        'm10-agentic-kubernetes/lesson',
+        'm10-agentic-kubernetes/lab',
+        'm10-agentic-kubernetes/reference',
+        'm10-agentic-kubernetes/projects',
+        'm10-agentic-kubernetes/quiz',
+      ],
+    },
   ],
 };
 

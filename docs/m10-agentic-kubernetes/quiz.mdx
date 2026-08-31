@@ -1,0 +1,33 @@
+---
+sidebar_position: 5
+title: 'Quiz'
+---
+
+import Quiz from '@site/src/components/Quiz';
+
+# M10 Quiz: Agentic Kubernetes and Platform IaC
+
+<Quiz questions={[
+  {
+    prompt:'What\'s the real mechanical difference between terraform apply and a Kubernetes reconcile loop?',options:[{text:'There is no real difference, they both just create resources',correct:false,explanation:'There is a real difference: what happens after the resource exists.'},{text:'terraform apply runs once and stops; a reconcile loop keeps comparing desired state against actual state, continuously',correct:true,explanation:'A one-shot apply does its work and stops. A controller\'s reconcile loop keeps watching, and corrects drift on its own.'},{text:'Kubernetes never lets you see a plan before applying',correct:false,explanation:'kubectl diff plays that role, same as terraform plan.'},{text:'Terraform can only be used for cloud resources, Kubernetes can\'t',correct:false,explanation:'Not a real distinction, and not what this module is about.'}]
+  },
+  {
+    prompt:'Why does this module\'s kind cluster config pin the node image by digest instead of a version tag like v1.31.0?',options:[{text:'Digests are shorter to type',correct:false,explanation:'Digests are longer, not shorter.'},{text:'A tag like v1.31.0 can still move to a different underlying build over time; a digest is the exact content hash and can\'t',correct:true,explanation:'A floating tag can quietly point at a different build later. A digest always resolves to the exact same image.'},{text:'kind doesn\'t support version tags at all',correct:false,explanation:'It does support tags, that\'s exactly the problem, they can move.'},{text:'It\'s required by Docker, not a kind-specific choice',correct:false,explanation:'This is a kind/course convention, not a Docker requirement.'}]
+  },
+  {
+    prompt:'What changed in Crossplane v2 that this module actually uses?',options:[{text:'XRDs were removed',correct:false,explanation:'XRDs are still very much a core concept in v2.'},{text:'Compositions became optional',correct:false,explanation:'A Composition is still required to define what gets created.'},{text:'Claims were removed, a composite resource (XR) is now namespaced and requested directly',correct:true,explanation:'In v1, a namespaced claim stood in for a cluster-scoped XR. In v2, the XR itself is namespaced.'},{text:'Crossplane no longer supports custom resources',correct:false,explanation:'Custom resources are the whole point of Crossplane, v1 and v2 both.'}]
+  },
+  {
+    prompt:'Match the pieces: which Terraform concept does a Crossplane XRD play the same role as?',options:[{text:'A resource block',correct:false,explanation:'That\'s the XR\'s role, not the XRD\'s.'},{text:'terraform apply',correct:false,explanation:'An XRD is a schema, not an action.'},{text:'A provider\'s resource schema, what fields a request can carry',correct:true,explanation:'An XRD defines the schema, same job a provider\'s resource schema does.'},{text:'terraform state',correct:false,explanation:'Not related, state tracks what\'s actually deployed.'}]
+  },
+  {
+    prompt:'Why does this module\'s ConfigMap need readinessChecks: [{type: None}] in its Composition?',options:[{text:'It\'s required for every Crossplane resource, no exceptions',correct:false,explanation:'Resources with real status conditions don\'t need this override.'},{text:'A plain ConfigMap has no status conditions Crossplane can watch, so without an explicit check the XR stays READY False forever, waiting for a signal that never comes',correct:true,explanation:'Crossplane\'s default readiness detection watches for status conditions a ConfigMap doesn\'t have.'},{text:'It speeds up the reconcile loop',correct:false,explanation:'Not about speed, about what Crossplane is actually waiting for.'},{text:'It disables the resource\'s owner reference',correct:false,explanation:'Owner references are unrelated to readiness checks.'}]
+  },
+  {
+    prompt:'In this module\'s lab, what actually deletes the composed ConfigMap when you delete the XR?',options:[{text:'A separate kubectl delete configmap command, run manually',correct:false,explanation:'No manual step is needed.'},{text:'The ownerReferences block Crossplane set on the ConfigMap, Kubernetes garbage-collects it automatically',correct:true,explanation:'The composed ConfigMap carries an owner reference back to the XR, so Kubernetes cleans it up automatically.'},{text:'Nothing, it has to be deleted by hand every time',correct:false,explanation:'It\'s automatic, verified in the lab\'s own run.sh.'},{text:'The kind cluster teardown, not the XR delete',correct:false,explanation:'The ConfigMap is gone before the cluster is even torn down.'}]
+  },
+  {
+    prompt:'Why does Helm 4 matter for this module specifically, beyond "it\'s the newer version"?',options:[{text:'Helm 3 can\'t install Crossplane at all',correct:false,explanation:'Helm 3 can technically install it, that\'s not the point.'},{text:'Helm 3\'s last feature release was September 2026 and its security support ends February 2027, so this course teaches the version that will still be supported',correct:true,explanation:'The point is which version is still receiving security support when a learner actually runs this lab.'},{text:'Helm 4 removed the ability to install charts from a repo',correct:false,explanation:'Chart installs from a repo work the same way in both versions.'},{text:'Helm 4 is required by kind',correct:false,explanation:'kind doesn\'t require any specific Helm version.'}]
+  }
+
+]} />
