@@ -1,12 +1,26 @@
 # 310 — Agentic Infrastructure as Code: site
 
 Learner site for *Agentic Infrastructure as Code: AI Agents for DevOps* (course 310).
+Live at: https://schoolofdevops.github.io/310-agentic-iac-site/
 
-**Status: not yet built.** The course's authoring source and Module 1 content exist in a
-private repo; the Docusaurus site itself hasn't been scaffolded and deployed yet. This repo
-holds the spot for it, `docusaurus-scaffold` + `docusaurus.config.ts` + GitHub Pages CI land
-here once the course has enough modules built to publish a first version.
+Docusaurus 3, deploys to GitHub Pages via `.github/workflows/deploy.yml` on every push to
+`main`. Module 1 is live; the rest of the course lands here module by module.
 
-In the meantime:
+## Local development
+
+```
+npm install
+npm start
+```
+
+## Build
+
+```
+npm run build
+npm run serve
+```
+
+## Related repos
+
 - Course source: `schoolofdevops/310-agentic-iac-src` (private)
 - Learner labs: [`schoolofdevops/310-agentic-iac-labs`](https://github.com/schoolofdevops/310-agentic-iac-labs)
