@@ -103,6 +103,11 @@ your org standardizes on. None of that is a failure of spec-driven work. It's th
 exactly what it promised, no more. A spec shapes what gets generated. It was never supposed to
 replace what checks it afterward.
 
+### Try it: spec-driven vs vibe-coded
+
+Pick a path for the same S3 bucket ask and watch the real checkov numbers from this module's own
+lab play out: [Spec-Driven vs Vibe-Coded Simulator](pathname:///310-agentic-iac-site/sims/spec-vs-vibe-sim.html).
+
 ## Spec vs Gate vs Policy: Three Different Jobs
 
 ![The M01 authority-boundary line, now with three real stages marked on it: a spec box shaping the intent before generation, a gate box (M06) blocking apply, and a policy box (M09) checking the plan, each labeled with what it does and what it does not do.](./diagrams/spec-gate-policy.svg)

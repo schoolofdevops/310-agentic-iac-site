@@ -23,13 +23,21 @@ running, and keeps doing that forever, in a loop, whether or not anyone is watch
 loop is called reconciliation, and it is the real mechanical difference this chapter is
 about.
 
-![A fixed-size context window box divided into segments: task-relevant content, repository noise, and unused space, showing the window as a scarce, shared resource.](./diagrams/plan-apply-vs-reconcile.svg)
+![A one-shot Terraform plan then apply, next to Kubernetes continuously reconciling desired state against a live cluster.](./diagrams/plan-apply-vs-reconcile.svg)
 
 Would a one-shot apply and a continuous reconcile loop ever disagree on the same intent?
 Not on what you asked for. They disagree on what happens after. Delete something a
 Terraform-managed resource owns, and it stays deleted until someone runs `apply` again.
 Delete something a Kubernetes controller owns, and it often comes right back, because the
 controller is still watching.
+
+### Try it: the reconcile loop visualizer
+
+Words describe a loop, they don't let you feel one running. There's a small, interactive
+tool that does: [Reconcile Loop Visualizer](pathname:///310-agentic-iac-site/sims/reconcile-loop-sim.html). Drift
+the live state away from what's desired, the same way the lab's own drift step does, and
+watch the controller correct it back over a few ticks, unattended, without anyone running a
+command.
 
 ## A Real Cluster, Not an Emulated One
 

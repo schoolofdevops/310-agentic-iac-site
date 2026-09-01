@@ -78,6 +78,11 @@ constraint against a release that's several minor versions behind current.
 This is what an MCP tool buys you that a skill can't: not a better-worded suggestion, an
 actual answer, sourced from the actual current state of a real system.
 
+### Try it: stale vs live lookup
+
+Toggle the Terraform MCP server on and off against the real captured question above, plus two
+more in the same spirit: [Stale vs Live Lookup Simulator](pathname:///310-agentic-iac-site/sims/stale-vs-live-sim.html).
+
 ## Opening a Pull Request Is Not Merging It
 
 The GitHub MCP server lets an agent do real things on a real repository: read files, open

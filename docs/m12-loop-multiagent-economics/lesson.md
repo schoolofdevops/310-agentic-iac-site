@@ -61,6 +61,13 @@ system you built last week? Probably not, and that instinct is correct.
 
 ![The autonomy ladder's sixth step, drawn as a loop running on its own with a single escalation path leading to a human, only for exceptions, everything else handled underneath.](./diagrams/step6-unattended.svg)
 
+### Try it: does your stopping condition actually stop?
+
+[Stopping Condition + Economics Check](pathname:///310-agentic-iac-site/sims/stopping-condition-sim.html) runs a
+loop against a precise stopping condition and a vague one, so you can watch the difference
+instead of just reading about it, plus a second panel putting this chapter's real
+token-economics numbers on a bar chart, advertised next to measured.
+
 Step 6 only works because of what came before it. A complete harness, from module eight,
 catches the mistakes a human would have caught. A real pipeline, from module nine, blocks what
 shouldn't ship. A real gate, from module six. Without all three already solid, "unattended"

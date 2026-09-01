@@ -85,6 +85,14 @@ Count the manual steps in that loop. There's exactly one: the human reading the 
 request and deciding to merge it. Everything before that step and everything after it
 runs on its own.
 
+### Try it: the full GitOps loop
+
+[The Full GitOps Loop](pathname:///310-agentic-iac-site/sims/gitops-loop-sim.html) steps through exactly this
+path, one stage at a time: propose, the automatic gate, the one human click, the automatic
+sync, healthy. Click through to the end, then hit the tamper button and watch the
+controller self-heal a change made directly against the cluster, the same test this
+module's own lab ran for real.
+
 ## Step 5, Precisely
 
 Go back to the autonomy ladder from module 1. Step 4, gated apply, means automated checks

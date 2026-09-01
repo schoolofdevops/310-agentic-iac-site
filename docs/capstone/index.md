@@ -3,7 +3,7 @@ sidebar_position: 1
 title: "Capstone: Propose, Don't Decide"
 ---
 
-# Capstone — "Propose, Don't Decide"
+# Capstone: "Propose, Don't Decide"
 
 Every module from M03 to M12 built one piece. This is where they run together, on one
 real task, end to end: **the agent proposes, the pipeline decides.**
@@ -19,9 +19,14 @@ Spec+context → Agent generates → validate (fmt/plan)
 See `rubric.md` for the full stage-by-stage mapping: what was built, and which module
 taught it first.
 
+### Try it: the pipeline tracer
+
+Walk the whole course thesis pipeline, spec through apply through drift, one stage at a
+time: [Pipeline Tracer Simulator](pathname:///310-agentic-iac-site/sims/pipeline-tracer-sim.html).
+
 ## Required: Part 1, Tier 1 (Floci)
 
-`lab/tier1-floci/` — the full pipeline against a real Floci-backed AWS emulation. No
+`lab/tier1-floci/`: the full pipeline against a real Floci-backed AWS emulation. No
 cloud account, no cost.
 
 ```
@@ -38,7 +43,7 @@ the emulated S3 API and catches it on the next `plan`, then tears down with a re
 
 ## Required: Part 2, Tier 2 (Kubernetes)
 
-`lab/tier2-kubernetes/` — the same discipline on a real `kind` cluster: Crossplane v2,
+`lab/tier2-kubernetes/`: the same discipline on a real `kind` cluster: Crossplane v2,
 a real CI-gated pull request, a real merge, a real Argo CD reconciling the cluster
 from that merge, unattended.
 
@@ -55,7 +60,7 @@ removes the Argo CD application and deletes the cluster.
 
 ## Optional: Part 3, Tier 3 (real AWS)
 
-`lab/tier3-aws-optional/` — the same pipeline, the same Terraform shape, against a
+`lab/tier3-aws-optional/`: the same pipeline, the same Terraform shape, against a
 real AWS account. **Read `capstone/lab/tier3-aws-optional/README.md (src repo)` before running anything
 here.** It states three things you need to know before your first real `apply`: a
 $5 budget alert, EKS's real cost, and a free-plan AWS account's lifecycle. Never

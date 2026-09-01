@@ -69,6 +69,11 @@ you'd expect: the same words, "checkov passes," get blocked once with nothing be
 pass once with a real `Passed checks: 11, Failed checks: 5` line sitting right next to it. The
 hook doesn't care whether the claim sounds confident. It cares whether the evidence is there.
 
+### Try it: the verification hook simulator
+
+Pick a claim, toggle real evidence on and off, and watch the same regex logic from
+`verify_claim.sh` decide block or pass, live: [Verification Hook Simulator](pathname:///310-agentic-iac-site/sims/verification-hook-sim.html).
+
 ## A Skill States the Rule, a Hook Enforces It
 
 Notice these are two different jobs, and a harness needs both. `SKILL.md` states the rule in words
