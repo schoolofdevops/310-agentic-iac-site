@@ -21,10 +21,12 @@ title: 'Exploratory projects'
    example online (a lot of documentation still shows claims). What object existed in that
    example that doesn't exist in yours? What took over its job?
 
-4. **Add a real readiness check.** Swap the `ConfigMap` in this lab's Composition for a
-   resource type that has real status conditions (a `Deployment`, for instance), and write a
-   proper `readinessChecks` entry instead of `type: None`. Confirm the XR only goes `Ready`
-   once the underlying resource actually is.
+4. **Add a fourth delivery layer: a claim-style wrapper for a non-platform team.** The lab's
+   `XDatabase` is namespaced and direct, aimed at teams comfortable applying a custom resource.
+   Write a small script or Makefile target that takes a plain `dbName` argument and generates
+   the XR YAML for someone who'd rather run `make new-database NAME=billing` than write YAML by
+   hand at all. What did you have to validate before generating, that the schema itself
+   doesn't already enforce?
 
 5. **Pin by digest somewhere else in your own stack.** Find one place in your own
    infrastructure that still references a floating tag (`latest`, or a bare version) for

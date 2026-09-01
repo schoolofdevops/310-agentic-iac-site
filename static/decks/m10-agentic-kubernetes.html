@@ -348,6 +348,69 @@ footer, header, hgroup, main, menu, nav, section {
 </section>
 
 
+<section class="divider">
+  <h2 class="t">One Capability, Three Ways to Deliver It</h2>
+  <div class="pageno">M10&middot;12</div>
+</section>
+
+
+<section>
+  <h2 class="t">Manifests, Chart, or XR</h2>
+  <p class="s">same Secret, Service, StatefulSet underneath, all three</p>
+  <svg viewBox="0 0 900 320" role="img" aria-label="The same Postgres database delivered three ways: raw manifests requiring full knowledge of every field, a Helm chart requiring only values.yaml, and a Crossplane XR requiring only a five-line request.">
+<g>
+    <rect x="40" y="60" width="240" height="200" rx="10" fill="#dae8fc" stroke="#1e1e1e" stroke-width="2.4" filter="url(#rough)"/>
+    <text x="160" y="95" text-anchor="middle" font-size="16" fill="#1e1e1e">raw manifests</text>
+    <text x="160" y="150" text-anchor="middle" font-size="13" fill="#1e1e1e">Secret, Service,</text>
+    <text x="160" y="168" text-anchor="middle" font-size="13" fill="#1e1e1e">StatefulSet,</text>
+    <text x="160" y="186" text-anchor="middle" font-size="13" fill="#1e1e1e">every field explicit</text>
+    <text x="160" y="230" text-anchor="middle" font-size="12" fill="#1e1e1e">knows: everything</text>
+
+    <rect x="330" y="60" width="240" height="200" rx="10" fill="#d5e8d4" stroke="#1e1e1e" stroke-width="2.4" filter="url(#rough)"/>
+    <text x="450" y="95" text-anchor="middle" font-size="16" fill="#1e1e1e">helm chart</text>
+    <text x="450" y="150" text-anchor="middle" font-size="13" fill="#1e1e1e">helm install</text>
+    <text x="450" y="168" text-anchor="middle" font-size="13" fill="#1e1e1e">--set dbName=X</text>
+    <text x="450" y="230" text-anchor="middle" font-size="12" fill="#1e1e1e">knows: values.yaml</text>
+
+    <rect x="620" y="60" width="240" height="200" rx="10" fill="#e1d5e7" stroke="#1e1e1e" stroke-width="2.4" filter="url(#rough)"/>
+    <text x="740" y="95" text-anchor="middle" font-size="16" fill="#1e1e1e">crossplane xr</text>
+    <text x="740" y="150" text-anchor="middle" font-size="13" fill="#1e1e1e">dbName: billing</text>
+    <text x="740" y="168" text-anchor="middle" font-size="13" fill="#1e1e1e">storageSize: 1Gi</text>
+    <text x="740" y="230" text-anchor="middle" font-size="12" fill="#1e1e1e">knows: 2 fields</text>
+  </g>
+  <text x="450" y="300" text-anchor="middle" font-size="14" fill="#1e1e1e">same Secret + Service + StatefulSet underneath, all three</text>
+  </svg>
+  <div class="pageno">M10&middot;13</div>
+</section>
+
+
+<section>
+  <h2 class="t">Composing a Native Kind Needs Its Own RBAC</h2>
+  <p class="s">a Deployment grant is not a StatefulSet grant</p>
+  <svg viewBox="0 0 820 300" role="img" aria-label="Crossplane composing a Secret and a Service works with the default ClusterRole, but composing a StatefulSet fails with an Informer sync timeout until an explicit RBAC grant for apps/statefulsets is added.">
+<g>
+    <rect x="50" y="40" width="320" height="100" rx="10" fill="#d5e8d4" stroke="#1e1e1e" stroke-width="2.4" filter="url(#rough)"/>
+    <text x="210" y="75" text-anchor="middle" font-size="15" fill="#1e1e1e">Secret, Service compose fine</text>
+    <text x="210" y="100" text-anchor="middle" font-size="12" fill="#1e1e1e">default ClusterRole already covers core/v1</text>
+
+    <rect x="450" y="40" width="320" height="100" rx="10" fill="#f8cecc" stroke="#1e1e1e" stroke-width="2.4" filter="url(#rough)"/>
+    <text x="610" y="70" text-anchor="middle" font-size="15" fill="#1e1e1e">StatefulSet fails</text>
+    <text x="610" y="93" text-anchor="middle" font-size="12" fill="#1e1e1e">Informer sync timeout,</text>
+    <text x="610" y="111" text-anchor="middle" font-size="12" fill="#1e1e1e">reads like caching, is RBAC</text>
+
+    <rect x="230" y="190" width="360" height="80" rx="10" fill="#ffe6cc" stroke="#1e1e1e" stroke-width="2.4" filter="url(#rough)"/>
+    <text x="410" y="220" text-anchor="middle" font-size="14" fill="#1e1e1e">fix: ClusterRole granting the crossplane</text>
+    <text x="410" y="242" text-anchor="middle" font-size="14" fill="#1e1e1e">ServiceAccount CRUD on apps/statefulsets</text>
+  </g>
+  <g stroke="#1e1e1e" stroke-width="2" fill="none" marker-end="url(#ah)">
+    <path d="M610,140 L440,190"/>
+  </g>
+  
+  </svg>
+  <div class="pageno">M10&middot;14</div>
+</section>
+
+
 <section>
   <p class="kicker">MODULE 10 TAKEAWAYS</p>
   <h2 class="t">Same Discipline, Real Cluster</h2>
@@ -370,7 +433,7 @@ footer, header, hgroup, main, menu, nav, section {
     </g>
   </svg>
   <p class="credit">Now open <b>Module 10 &middot; Lab</b>. &nbsp;&middot;&nbsp; <b>Gourav Shah</b> &middot; School of DevOps &amp; AI</p>
-  <div class="pageno">M10&middot;12</div>
+  <div class="pageno">M10&middot;15</div>
 </section>
 
 
@@ -382,46 +445,46 @@ footer, header, hgroup, main, menu, nav, section {
       <rect x="10" y="35" width="120" height="95" rx="10" fill="none" stroke="#1e1e1e" stroke-width="1.8" stroke-dasharray="6 5" filter="url(#rough)"/>
       <circle cx="70" cy="83" r="28" fill="#dae8fc" stroke="#1e1e1e" stroke-width="2" filter="url(#rough)"/>
       <path d="M55,85 L67,97 L88,70" stroke="#1e1e1e" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-      <text x="70" y="150" text-anchor="middle" class="lbl-sm">kind cluster up</text>
-      <text x="70" y="166" text-anchor="middle" class="lbl-g" font-size="12">node image pinned by digest</text>
+      <text x="70" y="150" text-anchor="middle" class="lbl-sm">kind + crossplane</text>
+      <text x="70" y="166" text-anchor="middle" class="lbl-g" font-size="12">node image pinned, v2.4.0</text>
     </g>
     <g class="fragment" transform="translate(140,0)">
       <rect x="10" y="35" width="120" height="95" rx="10" fill="none" stroke="#1e1e1e" stroke-width="1.8" stroke-dasharray="6 5" filter="url(#rough)"/>
-      <circle cx="70" cy="83" r="28" fill="#e1d5e7" stroke="#1e1e1e" stroke-width="2" filter="url(#rough)"/>
+      <circle cx="70" cy="83" r="28" fill="#f8cecc" stroke="#1e1e1e" stroke-width="2" filter="url(#rough)"/>
       <path d="M55,85 L67,97 L88,70" stroke="#1e1e1e" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-      <text x="70" y="150" text-anchor="middle" class="lbl-sm">crossplane v2</text>
-      <text x="70" y="166" text-anchor="middle" class="lbl-g" font-size="12">real helm chart, v2.4.0</text>
+      <text x="70" y="150" text-anchor="middle" class="lbl-sm">layer 1: manifests</text>
+      <text x="70" y="166" text-anchor="middle" class="lbl-g" font-size="12">a real postgres, by hand</text>
     </g>
     <g class="fragment" transform="translate(280,0)">
       <rect x="10" y="35" width="120" height="95" rx="10" fill="none" stroke="#1e1e1e" stroke-width="1.8" stroke-dasharray="6 5" filter="url(#rough)"/>
-      <circle cx="70" cy="83" r="28" fill="#dae8fc" stroke="#1e1e1e" stroke-width="2" filter="url(#rough)"/>
+      <circle cx="70" cy="83" r="28" fill="#e1d5e7" stroke="#1e1e1e" stroke-width="2" filter="url(#rough)"/>
       <path d="M55,85 L67,97 L88,70" stroke="#1e1e1e" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-      <text x="70" y="150" text-anchor="middle" class="lbl-sm">xrd + composition</text>
-      <text x="70" y="166" text-anchor="middle" class="lbl-g" font-size="12">the schema and the recipe</text>
+      <text x="70" y="150" text-anchor="middle" class="lbl-sm">layer 2: helm chart</text>
+      <text x="70" y="166" text-anchor="middle" class="lbl-g" font-size="12">helm install --set dbName</text>
     </g>
     <g class="fragment" transform="translate(420,0)">
       <rect x="10" y="35" width="120" height="95" rx="10" fill="none" stroke="#1e1e1e" stroke-width="1.8" stroke-dasharray="6 5" filter="url(#rough)"/>
       <circle cx="70" cy="83" r="28" fill="#d5e8d4" stroke="#1e1e1e" stroke-width="2" filter="url(#rough)"/>
       <path d="M55,85 L67,97 L88,70" stroke="#1e1e1e" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-      <text x="70" y="150" text-anchor="middle" class="lbl-sm">request the xr</text>
-      <text x="70" y="166" text-anchor="middle" class="lbl-g" font-size="12">namespaced, no claim object</text>
+      <text x="70" y="150" text-anchor="middle" class="lbl-sm">layer 3: crossplane xr</text>
+      <text x="70" y="166" text-anchor="middle" class="lbl-g" font-size="12">a 5-line database request</text>
     </g>
     <g class="fragment" transform="translate(560,0)">
       <rect x="10" y="35" width="120" height="95" rx="10" fill="none" stroke="#1e1e1e" stroke-width="1.8" stroke-dasharray="6 5" filter="url(#rough)"/>
       <circle cx="70" cy="83" r="28" fill="#d5e8d4" stroke="#1e1e1e" stroke-width="2" filter="url(#rough)"/>
       <path d="M55,85 L67,97 L88,70" stroke="#1e1e1e" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-      <text x="70" y="150" text-anchor="middle" class="lbl-sm">verify ready</text>
-      <text x="70" y="166" text-anchor="middle" class="lbl-g" font-size="12">composed resource exists</text>
+      <text x="70" y="150" text-anchor="middle" class="lbl-sm">agent proposes</text>
+      <text x="70" y="166" text-anchor="middle" class="lbl-g" font-size="12">claude -p writes the xr, you apply</text>
     </g>
     <g class="fragment" transform="translate(700,0)">
       <rect x="10" y="35" width="120" height="95" rx="10" fill="none" stroke="#1e1e1e" stroke-width="1.8" stroke-dasharray="6 5" filter="url(#rough)"/>
       <circle cx="70" cy="83" r="28" fill="#ffe6cc" stroke="#1e1e1e" stroke-width="2" filter="url(#rough)"/>
       <path d="M55,85 L67,97 L88,70" stroke="#1e1e1e" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
       <text x="70" y="150" text-anchor="middle" class="lbl-sm">teardown</text>
-      <text x="70" y="166" text-anchor="middle" class="lbl-g" font-size="12">delete xr, then delete cluster</text>
+      <text x="70" y="166" text-anchor="middle" class="lbl-g" font-size="12">delete xrs, uninstall, delete cluster</text>
     </g>
   </svg>
-  <div class="pageno">M10&middot;13</div>
+  <div class="pageno">M10&middot;16</div>
 </section>
 
 

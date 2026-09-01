@@ -117,6 +117,50 @@ whether the object being proposed is a Terraform resource or a Kubernetes manife
 before anything lands. A human approval gate sits in the same spot it always has. Only the
 verb at the very end changes, `kubectl apply` instead of `terraform apply`.
 
+## One Capability, Three Ways to Deliver It
+
+Everything above explains the mechanics. The lab's real build is a single capability, a
+Postgres database, delivered three ways, each one a step up in how self-service it is for the
+team asking for it. No Backstage, no catalog product sitting on top, this is what a platform
+team actually operates at the Kubernetes layer: a chart, plain manifests, and a Kubernetes-native
+custom resource.
+
+Raw manifests are the ground truth. A `Secret`, a headless `Service`, a `StatefulSet` with a
+`volumeClaimTemplate`, written by hand, every field explicit. Nothing about the layers above
+this one is doing anything you couldn't do yourself, they're doing it with less typing.
+
+A Helm chart packages exactly those manifests, swapping hardcoded values for
+`{{ .Values.* }}` references. `helm install --set dbName=billing_service` installs a
+completely independent instance without anyone reading or editing YAML. This is real
+packaging, not a teaching simplification, `helm list` shows a real release, `helm uninstall`
+removes exactly what was installed.
+
+A Crossplane XR turns the same three manifests into a Composition, and the request itself
+shrinks to five lines: a `dbName` and a `storageSize`. The team requesting it never sees a
+`StatefulSet`, only the XRD's schema. This is the version an agent can safely propose on a
+team's behalf, the schema is small enough to read in full before generating anything against
+it.
+
+### Composing a Built-In Kind Is Not Like Composing a Provider
+
+Crossplane's earliest, most common use composes resources through a provider, `provider-aws`
+or similar, authenticating to a cloud API with its own credentials. Composing a native
+Kubernetes kind directly, a `Secret`, a `Service`, a `StatefulSet`, has no separate credential
+to lean on. Crossplane acts as itself, through its own `ServiceAccount`, and needs its own RBAC
+grant for exactly what it composes. The default `crossplane` `ClusterRole` grants
+`get/list/create` on `apps/deployments` and nothing on `apps/statefulsets`. Compose a
+`StatefulSet` without adding that grant, and the failure reads like a caching bug, `Timeout:
+failed waiting for *unstructured.Unstructured Informer to sync`, when the real cause is a
+permission Crossplane never had.
+
+Readiness has the same trap in a different shape. A `Deployment` and most provider-managed
+resources carry `status.conditions`, so `MatchCondition` reads them cleanly. A `StatefulSet`
+carries `status.readyReplicas` instead, no `Ready` condition at all. `MatchInteger` against
+that field looks like the right fix and hits a real number-parsing bug in this function
+version. The actual fix is the same one the module's own `ConfigMap` warm-up already used,
+`readinessChecks: [{type: None}]`, then check real readiness with `kubectl` the way you would
+for any workload. Same workaround, two different real reasons to reach for it.
+
 ## Vocabulary
 
 | Term | Meaning |
@@ -129,3 +173,5 @@ verb at the very end changes, `kubectl apply` instead of `terraform apply`.
 | XRD | `CompositeResourceDefinition`, the schema for a platform request, Terraform's provider-resource-schema equivalent |
 | Composition | The recipe a Crossplane XRD generates against, Terraform's module equivalent |
 | XR | The composite resource a team actually requests, Terraform's resource-block equivalent |
+| Database-as-a-service | A capability, not a product, requesting a real database without hand-writing its manifests, delivered here via raw manifests, a Helm chart, and a Crossplane XR |
+| Composed-resource RBAC | The explicit `ClusterRole` grant Crossplane's own `ServiceAccount` needs to compose a native Kubernetes kind it doesn't already have permission for |
