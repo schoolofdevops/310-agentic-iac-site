@@ -54,6 +54,38 @@ Same intent, same model, two sessions: the outputs can genuinely differ. Nothing
 memory between fresh sessions unless something is built to give it that memory on purpose
 (module 3's subject). Read every line, every run, not just the first one.
 
+## The second real finding: validate is not the floor
+
+Both real sessions above also made the same mistake: a `docker_container` volume `host_path`
+that referenced `path.module` without `abspath()`. `terraform validate` passed both times.
+`terraform plan` did not:
+
+```
+Error: './site' must be an absolute path
+```
+
+Fix: wrap the reference in `abspath()` at the point Docker needs it. Run `plan`, not just
+`validate`, as part of your own floor from here on, in this course and outside it.
+
+## Subagents: when to delegate
+
+One-line rule: delegate a **bounded, well-defined** check to a subagent when you want the
+answer without spending your main session's context on it, or without giving that check more
+tool reach than it needs. A subagent's permissions are its own, narrower by default than the
+parent session's, not inherited wholesale. A blocked subagent call that reports honestly
+instead of guessing is working as intended.
+
+## Slash commands: where they live
+
+```
+.claude/commands/<name>.md      # project-scoped, checked into the repo
+~/.claude/commands/<name>.md    # personal, this machine only
+```
+
+Frontmatter `description:` plus a plain-language body describing what to run and in what order.
+Invoke with `/<name>`. A slash command is a fact the repo carries, not a sequence one person
+has to remember.
+
 ## Where standing config lives (empty until module 3)
 
 | Tool | File |

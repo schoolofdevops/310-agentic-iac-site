@@ -143,6 +143,53 @@ every line" instruction is not a formality. Two runs of the same ask can produce
 two different, both individually reasonable, answers. The only way you catch that
 is by actually reading what came back, every time.
 
+Both runs also shared something less obvious: neither one wrapped its
+`path.module`-derived file path in `abspath()`, and the docker provider rejects a
+relative `host_path` the moment you actually plan a change, a check
+`terraform validate` never performs. Two independent sessions made the identical
+real mistake, caught only once someone ran `terraform plan`, not `validate`. That
+gap, between a file that type-checks and a file that is actually safe to run,
+is the whole reason this course keeps a real syntax-and-plan floor under every
+lab, not just a syntax floor.
+
+## `acceptEdits`, Delegating to a Subagent, and a Slash Command
+
+Step 2 asked you to approve one file write, once. `acceptEdits` mode keeps
+approving for the rest of that session, no more per-edit prompts, while you still
+watch every change happen in the transcript, turn by turn. It sits between step 2
+and step 3's plan mode on the ladder: more autonomy than draft-and-read-once, less
+than a plan you approve before anything moves.
+
+In this module's own real run, `acceptEdits` extended the already-fixed step 2
+module with a second static page and an nginx health-check location. The result
+correctly carried the `abspath()` fix forward onto both new resources, imitating
+the pattern already in the file rather than reintroducing the bug. That is a real
+result from one run, not a guarantee about yours. `acceptEdits` removes the
+per-edit prompt. It does not remove your job of reading what came back, the exact
+same discipline step 2 already asked for, now covering more than one file change
+at a time.
+
+![A subagent, isolated in its own dashed box, delegated one bounded read-only task by a parent Claude session, reporting back that its checkov attempt was blocked by its own narrower permissions instead of guessing at a result.](./diagrams/delegate-subagent.svg)
+
+Not every check belongs inline. A **subagent** runs in its own isolated context,
+useful for a bounded, well-defined task you want an answer to without spending
+your main session's own context on it, and without handing it more reach than
+that one task needs. In this module's real run, a subagent asked to audit a
+module with `checkov` had its own `Bash` call blocked, its permission surface was
+narrower than the parent session's, and rather than fabricate a result it said so
+and told the parent to run the check itself. That is not a malfunction. A
+subagent that inherited every one of its parent's permissions would not be
+providing isolation at all, it would just be the same session with extra steps.
+Module 6 turns this same idea, a narrower surface for a narrower job, into a
+formal guardrail.
+
+A **slash command** turns a sequence you keep re-typing into one word, checked
+into the repo instead of remembered by a person. This module's lab builds a real
+one, `.claude/commands/tf-check.md`, wrapping `fmt`, `init`, `validate`, and
+`plan` behind `/tf-check`. It lives in the repo the same way `AGENTS.md` will
+starting module 3, a fact the repo carries, not a habit one person has to
+remember to run.
+
 ## Where Config Will Live
 
 You will notice both CLIs look for a standing file at the root of your repo,
@@ -165,3 +212,6 @@ them the moment module 3 asks you to fill them in.
 | `AGENTS.md` | Codex's standing-context file at a repo's root, empty until module 3 |
 | Step 1, suggest | The agent proposes text, you type it into the file yourself |
 | Step 2, draft | The agent writes the file directly, you read every line before doing anything else |
+| `acceptEdits` | Every edit auto-approved for the rest of the session, still visible turn by turn |
+| Subagent | An isolated, narrower-permission agent delegated one bounded task |
+| Slash command | A repo-checked-in shortcut, `.claude/commands/name.md`, invoked as `/name` |

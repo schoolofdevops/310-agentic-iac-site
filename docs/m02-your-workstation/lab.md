@@ -214,6 +214,59 @@ terraform validate
 Success! The configuration is valid.
 ```
 
+**`terraform validate` is not the whole floor.** It checks types and syntax, not every constraint a
+provider enforces once it actually has to act on your values. Run `terraform plan` on this same
+file:
+
+```
+terraform plan
+```
+
+`[ Expected output ]`
+```
+Error: './site' must be an absolute path
+
+  with docker_container.nginx,
+  on main.tf line 23, in resource "docker_container" "nginx":
+  23: resource "docker_container" "nginx" {
+
+'./site' must be an absolute path
+```
+
+That's a real, captured error, not a hypothetical. The `docker_container` resource's
+`volumes.host_path` has to be an absolute path, a rule the docker provider enforces once it plans
+the actual create, and `terraform validate` never evaluates. Your file validated clean and would
+still have failed the moment anyone tried to plan or apply it. **Fix** it by wrapping the
+reference in `abspath()` at the point Docker actually needs it:
+
+`edit file: ~/m02-lab/step1-suggested/main.tf`
+```
+  volumes {
+    host_path      = abspath(var.site_dir)
+    container_path = "/usr/share/nginx/html"
+    read_only      = true
+  }
+```
+
+Re-plan:
+
+```
+terraform plan
+```
+
+`[ Expected output ]`
+```
+Plan: 2 to add, 0 to change, 0 to destroy.
+
+Changes to Outputs:
+  + url = "http://127.0.0.1:8080"
+```
+
+Clean. Two real bugs in one suggestion, both caught before anything ran: a `variable` default
+that referenced `path.module` where Terraform doesn't allow it, and a relative path a provider
+rejects at plan time. `terraform validate` caught the first, on its own it can't see the second,
+only `terraform plan` did. Both were yours to have caught either way.
+
 ## Step 2: draft, the agent writes it
 
 **Open** a fresh `claude` session in a new directory, same intent, and this time when the
@@ -254,9 +307,54 @@ terraform validate
 Success! The configuration is valid.
 ```
 
-No fix needed this time, this real run's draft validated clean on the first try. That's not a
-guarantee, it's what happened once. Read every line anyway, every time, that's the whole
-lesson of step 2.
+Validated clean on the first try. Before you call that "no fix needed," remember step 1's
+lesson: validate isn't the floor, plan is. Run it:
+
+```
+terraform plan
+```
+
+`[ Expected output ]`
+```
+Error: './html/index.html' must be an absolute path
+
+  with docker_container.nginx,
+  on main.tf line 51, in resource "docker_container" "nginx":
+  51: resource "docker_container" "nginx" {
+
+'./html/index.html' must be an absolute path
+```
+
+Same bug, independently. The agent's draft wrote `filename = "${path.module}/html/index.html"`
+on `local_file.index_html`, and that resource's `filename` feeds straight into the container's
+`host_path`. Two different sessions, two different designs, the exact same real plan-time
+failure, because neither the model nor `terraform validate` catches Docker's absolute-path
+requirement. **Fix** it the same way, wrapping the reference in `abspath()`:
+
+`edit file: ~/m02-lab/step2-drafted/main.tf`
+```
+resource "local_file" "index_html" {
+  filename = abspath("${path.module}/html/index.html")
+```
+
+Re-plan:
+
+```
+terraform plan
+```
+
+`[ Expected output ]`
+```
+Plan: 3 to add, 0 to change, 0 to destroy.
+
+Changes to Outputs:
+  + url = "http://127.0.0.1:8080"
+```
+
+Clean. "Draft validated on the first try" was true and still wasn't the whole story, that's the
+actual lesson of step 2, sharper than the version of it you'd have gotten by stopping at
+`validate`. Read every line anyway, every time, and run `plan`, every time, that's the whole
+lesson.
 
 ## Preview: what plan mode actually does
 
@@ -318,7 +416,7 @@ diff -u step1-suggested/main.tf step2-drafted/main.tf
 ```
 --- step1-suggested/main.tf
 +++ step2-drafted/main.tf
-@@ -4,43 +4,69 @@
+@@ -4,45 +4,72 @@
        source  = "kreuzwerker/docker"
        version = "~> 3.0"
      }
@@ -328,9 +426,9 @@ diff -u step1-suggested/main.tf step2-drafted/main.tf
 +    }
    }
  }
-
+ 
  provider "docker" {}
-
+ 
 -variable "site_dir" {
 -  description = "Path to local dir with static HTML you author/edit"
 +variable "container_name" {
@@ -338,39 +436,65 @@ diff -u step1-suggested/main.tf step2-drafted/main.tf
    type        = string
 -  default     = "./site"
 +  default     = "nginx-local-test"
-+}
-+
+ }
+ 
 +variable "host_port" {
 +  description = "Port on localhost to bind nginx to (loopback only, not exposed externally)"
 +  type        = number
 +  default     = 8080
 +}
 +
++# Static page content lives here on disk, tracked in git, so changes are diffable.
++# abspath() matters here: docker_container.volumes.host_path below must be
++# absolute, a constraint the docker provider enforces at plan time, not
++# something terraform validate checks
 +resource "local_file" "index_html" {
-+  filename = "${path.module}/html/index.html"
++  filename = abspath("${path.module}/html/index.html")
 +  content  = <<-EOT
 +    ...
 +  EOT
- }
-
++}
++
  resource "docker_image" "nginx" {
 -  name         = "nginx:1.27-alpine"
 +  name         = "nginx:alpine"
    keep_locally = true
  }
-
+ 
  resource "docker_container" "nginx" {
 -  name  = "local-nginx-test"
 +  name  = var.container_name
    image = docker_image.nginx.image_id
-
-   volumes {
+ 
+-  volumes {
 -    host_path      = var.site_dir
 -    container_path = "/usr/share/nginx/html"
+-    read_only      = true
+-  }
+-
+   ports {
+     internal = 80
+-    external = 8080
+-    ip       = "127.0.0.1" # localhost only, no external exposure
++    external = var.host_port
++    ip       = "127.0.0.1" # loopback only, not reachable from outside this machine
+   }
+ 
+-  # no env vars / secrets passed
+-  restart = "no"
++  volumes {
 +    host_path      = local_file.index_html.filename
 +    container_path = "/usr/share/nginx/html/index.html"
-     read_only      = true
-   }
++    read_only      = true
++  }
++
++  # No env vars, no secrets passed to the container.
+ }
+ 
+ output "url" {
+-  value = "http://127.0.0.1:8080"
++  value = "http://127.0.0.1:${var.host_port}"
+ }
 ```
 
 Same intent, same model, two different, both individually reasonable, designs. Step 1's file
@@ -378,7 +502,11 @@ bind-mounts a directory you edit by hand. Step 2's file has Terraform itself wri
 through a `local_file` resource. Neither is wrong against the intent. Would you have expected
 the agent to remember what it told you in step 1 when you started step 2? It doesn't, unless
 something gives it that memory on purpose, and this run had nothing. Every fresh session
-starts cold, with only the intent you gave it.
+starts cold, with only the intent you gave it. Notice, though, what both runs got wrong the
+same way: neither suggestion used `abspath()` unprompted. Two independent sessions, same
+blind spot, because nothing in either run's context ever told the agent Docker needs it, that's
+a preview of module 3's whole argument, a fact worth writing down once instead of caught by
+hand twice.
 
 ## Check both with checkov
 
@@ -395,38 +523,230 @@ Exit code: 0
 Same gap from Lab 1: no secrets, and neither `docker_container` nor `local_file` has built-in
 Checkov coverage, so a clean exit here means "found nothing to flag," not "audited and safe."
 
+## `acceptEdits`: the agent extends it while you watch
+
+Step 2 approved one file write, once. `acceptEdits` mode keeps every future edit in this session
+approved automatically, no more per-file prompts, while you still watch each one happen, turn by
+turn, in the transcript. **Open** a fresh session in a copy of your fixed `step2-drafted` module
+and press **Shift+Tab** until the mode indicator reads `accept edits`:
+
+```
+cp -r ~/m02-lab/step2-drafted ~/m02-lab/step3-acceptedits && cd ~/m02-lab/step3-acceptedits
+claude
+```
+```
+[Shift+Tab, until the prompt shows: accept edits on]
+> Extend main.tf: add a second static page at /about.html, same local_file + volume mechanism
+  already used here, real content about this being a Terraform lab. Add an nginx health-check
+  location at /healthz returning 200 "ok", without touching disk on every request.
+```
+
+**Scripted, for a reproducible capture** (same ask, mode set as a flag instead of Shift+Tab):
+
+```
+claude -p "This directory has an existing Terraform module (main.tf) for a local nginx test
+container. Extend it, editing main.tf directly: add a second static page at /about.html (served
+alongside the existing index.html, same local_file + volume mechanism already used here) with
+real content about this being a Terraform lab, and add an nginx health-check location at
+/healthz that returns a 200 with the plain text 'ok', without touching disk on every request. Do
+not ask questions, just edit the file." --permission-mode acceptEdits --allowedTools "Read,Write,Edit"
+```
+
+`[ Expected output ]`
+```
+Done. main.tf now:
+
+- `local_file.about_html` → `/usr/share/nginx/html/about.html`, real content about it being a
+  Terraform lab.
+- `local_file.healthz_conf` → nginx conf snippet, mounted `/etc/nginx/conf.d/healthz.conf`,
+  `location = /healthz { return 200 'ok'; }` — answers from memory, no disk read per request
+```
+
+That's a real, captured response. First, check what `acceptEdits` didn't skip: **read** the new
+`main.tf`. Did the agent keep the `abspath()` convention your fix already established for
+`local_file.index_html`, or did it drop back to a raw `path.module` reference on the two new
+resources? `acceptEdits` means it stopped asking, it doesn't mean it stopped needing to be
+checked, that's the whole judgment call this step exists to force:
+
+```
+terraform fmt -check -diff
+terraform init -backend=false -input=false
+terraform validate
+terraform plan
+```
+
+`[ Expected output ]`
+```
+Success! The configuration is valid.
+```
+```
+Plan: 5 to add, 0 to change, 0 to destroy.
+
+Changes to Outputs:
+  + url = "http://127.0.0.1:8080"
+```
+
+Clean, and both new resources did carry `abspath()` forward correctly here, a real run's actual
+result, not a guarantee for yours. Confirm it in your own output before you trust it. There's
+one more thing static checks can't tell you: nginx only auto-loads `/etc/nginx/conf.d/*.conf`
+files at the point they're `include`d inside its own `http` block, and a bare `location` block
+dropped in there has to make sense in that context. `terraform plan` has no opinion on nginx's
+config grammar, only Terraform's. **Apply this for real** in your devcontainer, where Docker is
+reachable, and curl all three paths:
+
+```
+terraform apply -auto-approve
+curl -i http://127.0.0.1:8080/
+curl -i http://127.0.0.1:8080/about.html
+curl -i http://127.0.0.1:8080/healthz
+terraform destroy -auto-approve
+```
+
+Whatever you see, write it in this step's line of your exercise notes below, a real result, not
+a predicted one. This is exactly the gap `acceptEdits` leaves open: it removes the per-edit
+prompt, it does not remove the need to actually run the thing.
+
+## Delegating a bounded task to a subagent
+
+Not everything you'd check is worth doing inline. A subagent runs in its own isolated context,
+good for a bounded, well-defined check you want an answer to without spending your main
+session's context on it, and without giving it more reach than the one task needs. **Open**
+`claude` in `step3-acceptedits/` and ask it to delegate:
+
+```
+claude
+```
+```
+> Use a subagent (the Task tool) to audit main.tf in this directory: run checkov against this
+  directory and report any findings, and separately check whether every local_file resource's
+  filename wraps path.module in abspath() the way the existing resources already do. The
+  subagent should not edit any files, read-only audit only. Report back what the subagent
+  found, in 5 lines or fewer.
+```
+
+**Scripted, for a reproducible capture:**
+
+```
+claude -p "Use a subagent (the Task tool) to audit main.tf in this directory: run checkov
+against this directory and report any findings, and separately check whether every local_file
+resource's filename wraps path.module in abspath() the way the existing resources already do.
+The subagent should not edit any files, read-only audit only. Report back what the subagent
+found, in 5 lines or fewer." --permission-mode acceptEdits --allowedTools "Read,Bash(checkov*),Task"
+```
+
+`[ Expected output ]`
+```
+Audit done, read-only.
+
+- checkov: blocked — Bash perms denied agent. Run yourself: checkov -d .
+- abspath check: all 3 local_file resources consistent — filename = abspath("${path.module}/...")
+  at lines 33, 50, 74. No violators.
+- Matters here: docker provider needs absolute host paths, so pattern is load-bearing not style.
+```
+
+That's a real, captured, unedited transcript, checkov call and all. The subagent's checkov
+attempt got blocked, its own tool permissions didn't extend as far as the pattern I'd granted
+the parent session, and instead of guessing at an answer it said so and told me to run it
+myself. That's not a bug in this lab, it's the actual point: a subagent inherits an isolated,
+narrower surface, not a blank check on your permissions, the same discipline module 6 turns
+into a formal gate.
+
+## A slash command for this module's own floor
+
+You've now typed `fmt`, `init`, `validate`, `plan` by hand four times in this lab. A custom slash
+command turns a sequence you run often into one word. **Create** this file:
+
+`file: ~/m02-lab/step3-acceptedits/.claude/commands/tf-check.md`
+```
+---
+description: Run this course's Terraform syntax + plan floor (fmt, validate, plan) against the current directory
+---
+
+Run, in order, in the current directory, and report the real output of each:
+
+1. `terraform fmt -check -diff`
+2. `terraform init -backend=false -input=false -no-color`
+3. `terraform validate -no-color`
+4. `terraform plan -no-color`
+
+Stop and report immediately if any step fails. Do not continue past a failure, and do not
+summarize a step you didn't actually run.
+```
+
+**Open** `claude` in that same directory and invoke it:
+
+```
+claude
+```
+```
+> /tf-check
+```
+
+`[ Expected output ]`
+```
+All 4 steps pass.
+
+- fmt -check -diff: clean, no diff
+- init: success, providers installed
+- validate: "Success! The configuration is valid."
+- plan: 5 to add, 0 change, 0 destroy — clean plan
+```
+
+A real, captured run. `.claude/commands/` is project-scoped, checked into the repo alongside the
+module it belongs to, so anyone (or any agent) working in this directory gets the same
+one-word floor you just built. That's the last real dial this module teaches: slash commands
+turn a repeatable check into a fact the repo carries, not a sequence you re-type or re-explain
+every session.
+
 #### Exercise
 
-Write a short note, in your own words, in a file called `notes.md` next to your two modules:
+Write a short note, in your own words, in a file called `notes.md` next to your modules:
 
 - What felt different between typing step 1's suggestion and reading step 2's draft?
-- If you had to pick only one to keep doing for the rest of this course, which one, and why?
-- You just saw three real permission postures: no tools at all, `Write`/`Edit` allowed with
-  the interactive default, and `plan` mode. If this were a real production repo, not a lab,
-  which one would you want an agent running against by default, and what would have to be true
-  before you'd loosen it? `bypassPermissions` exists too, you didn't use it here, say why not.
+- Both step 1 and step 2 validated clean and still failed `terraform plan`. What does that tell
+  you about where you should actually set your own floor, on a real repo, not a lab?
+- What did you find when you actually applied `step3-acceptedits` and curled `/healthz`? Write
+  the real result, whatever it was.
+- The subagent's checkov call got blocked by its own permissions. Why is that the right default,
+  not a bug, for a subagent doing a bounded, read-only audit?
+- You just saw four real permission postures: no tools at all, `Write`/`Edit` with the
+  interactive default, `acceptEdits`, and `plan` mode. If this were a real production repo, not
+  a lab, which one would you want an agent running against by default, and what would have to
+  be true before you'd loosen it? `bypassPermissions` exists too, you didn't use it here, say
+  why not.
 
-Keep the file, same as Lab 1's note, you'll compare both against your capstone answer.
+Keep the file, same as Lab 1's note, you'll compare it against your capstone answer.
 
 #### Summary
 
-You stood up a real agentic IaC workstation and ran the same intent through it twice, once as
-a suggestion you typed, once as a file it wrote. Both are on the autonomy ladder from module
-1, steps 1 and 2, the two lowest steps, the ones where you keep the most direct control.
-Module 3 is where you start giving the agent standing context, `CLAUDE.md` and `AGENTS.md`,
-instead of retyping the same intent details every session.
+You stood up a real agentic IaC workstation and ran the same intent through it three times:
+typed as a suggestion, written as a draft, then extended under `acceptEdits` while you watched.
+All three are on the autonomy ladder from module 1, steps 1 and 2, the ones where you keep the
+most direct control. Along the way you found a real bug two independent agent sessions both
+made the same way, one `terraform validate` couldn't see and only `terraform plan` caught, which
+is the actual argument for running your whole floor, every time, not just the parts that feel
+like they'd catch something. You also delegated a bounded check to a subagent and watched its
+narrower permissions do their job, and you turned this module's own floor into a slash command
+so it doesn't have to be re-typed. Module 3 is where you start giving the agent standing
+context, `CLAUDE.md` and `AGENTS.md`, so a fact like "wrap `path.module` file paths in
+`abspath()` for Docker" gets written down once instead of rediscovered by hand.
 
 ##### Reading List
 
 - [Claude Code CLI reference](https://docs.claude.com/en/docs/claude-code/cli-reference)
+- [Claude Code subagents](https://docs.claude.com/en/docs/claude-code/sub-agents)
+- [Claude Code slash commands](https://docs.claude.com/en/docs/claude-code/slash-commands)
 - [Codex CLI documentation](https://developers.openai.com/codex/cli)
-- `reading/concepts.md` in this module: why two CLIs, what the devcontainer pins and why, and
-  the full "what actually differed" finding
+- `reading/concepts.md` in this module: why two CLIs, what the devcontainer pins and why, the
+  full "what actually differed" finding, and the subagent/slash-command sections
+- `PROJECTS.md` in this module: a bonus Ansible project extending this same nginx module
 
 ##### Search Keywords
 
 - Claude Code, Codex CLI, devcontainer
-- step 1 suggest, step 2 draft, step 3 plan mode, autonomy ladder
-- `--allowedTools`, `--permission-mode`, `bypassPermissions`
-- terraform fmt, terraform validate
-- `path.module`, variable defaults
+- step 1 suggest, step 2 draft, `acceptEdits`, plan mode preview, autonomy ladder
+- `--allowedTools`, `--permission-mode`, `acceptEdits`, `bypassPermissions`
+- subagents, Task tool, context isolation
+- slash commands, `.claude/commands/`
+- terraform fmt, terraform validate, terraform plan
+- `path.module`, `abspath()`, absolute host paths, docker provider

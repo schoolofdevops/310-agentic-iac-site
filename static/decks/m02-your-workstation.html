@@ -325,8 +325,48 @@ footer, header, hgroup, main, menu, nav, section {
 
 
 <section class="divider">
-  <h2 class="t">Where Config Will Live</h2>
+  <h2 class="t">acceptEdits, Subagents, a Slash Command</h2>
   <div class="pageno">M2&middot;12</div>
+</section>
+
+
+<section>
+  <h2 class="t">A Bounded Task, A Narrower Surface</h2>
+  <p class="s">a subagent's checkov call gets blocked, and it says so instead of guessing</p>
+  <svg viewBox="0 0 900 320" role="img" aria-label="A subagent, isolated in its own dashed box, delegated one bounded read-only task by a parent Claude session, reporting back that its checkov attempt was blocked by its own narrower permissions instead of guessing at a result.">
+<g>
+    <text x="170" y="35" text-anchor="middle" font-size="16" fill="#1e1e1e">parent session</text>
+    <rect x="70" y="55" width="200" height="80" rx="8" fill="#dae8fc" stroke="#1e1e1e" stroke-width="2.2" filter="url(#rough)"/>
+    <text x="170" y="90" text-anchor="middle" font-size="12" fill="#1e1e1e">claude, full session</text>
+    <text x="170" y="108" text-anchor="middle" font-size="12" fill="#1e1e1e">permissions</text>
+
+    <path d="M280,95 L420,95" stroke="#1e1e1e" stroke-width="2.2" marker-end="url(#arrow2)"/>
+    <text x="350" y="80" text-anchor="middle" font-size="11" fill="#1e1e1e">delegates one bounded task</text>
+
+    <rect x="430" y="45" width="230" height="110" rx="8" fill="#e1d5e7" stroke="#1e1e1e" stroke-width="2.2" stroke-dasharray="6,4" filter="url(#rough)"/>
+    <text x="545" y="70" text-anchor="middle" font-size="13" fill="#1e1e1e">subagent</text>
+    <text x="545" y="92" text-anchor="middle" font-size="11" fill="#1e1e1e">isolated context,</text>
+    <text x="545" y="108" text-anchor="middle" font-size="11" fill="#1e1e1e">narrower permissions</text>
+    <text x="545" y="124" text-anchor="middle" font-size="11" fill="#1e1e1e">than the parent</text>
+
+    <path d="M545,155 L545,190" stroke="#1e1e1e" stroke-width="2.2" marker-end="url(#arrow2)"/>
+    <text x="545" y="175" text-anchor="middle" font-size="11" fill="#1e1e1e">tries checkov</text>
+
+    <rect x="410" y="195" width="270" height="90" rx="8" fill="#f8cecc" stroke="#1e1e1e" stroke-width="2.2" filter="url(#rough)"/>
+    <text x="545" y="220" text-anchor="middle" font-size="12" fill="#1e1e1e">Bash(checkov) blocked</text>
+    <text x="545" y="240" text-anchor="middle" font-size="11" fill="#1e1e1e">reports the block honestly,</text>
+    <text x="545" y="256" text-anchor="middle" font-size="11" fill="#1e1e1e">does not invent a result</text>
+
+    <text x="450" y="310" text-anchor="middle" font-size="14" fill="#1e1e1e">a bounded task, a narrower surface, an honest report when blocked</text>
+  </g>
+  </svg>
+  <div class="pageno">M2&middot;13</div>
+</section>
+
+
+<section class="divider">
+  <h2 class="t">Where Config Will Live</h2>
+  <div class="pageno">M2&middot;14</div>
 </section>
 
 
@@ -349,40 +389,43 @@ footer, header, hgroup, main, menu, nav, section {
     <text x="450" y="235" text-anchor="middle" font-size="12" fill="#1e1e1e">filled in for real in module 3, context engineering</text>
   </g>
   </svg>
-  <div class="pageno">M2&middot;13</div>
+  <div class="pageno">M2&middot;15</div>
 </section>
 
 
 <section>
   <p class="kicker">MODULE 2 TAKEAWAYS</p>
-  <h2 class="t">Two Steps, Felt Directly</h2>
-  <svg viewBox="0 0 1100 320" role="img" aria-label="Four key takeaways listed as numbered rows">
+  <h2 class="t">Steps, Felt Directly</h2>
+  <svg viewBox="0 0 1100 380" role="img" aria-label="Five key takeaways listed as numbered rows">
     <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="2.4">
-      <circle cx="110" cy="50"  r="22" fill="#dae8fc"/>
-      <circle cx="110" cy="118" r="22" fill="#d5e8d4"/>
-      <circle cx="110" cy="186" r="22" fill="#ffe6cc"/>
-      <circle cx="110" cy="254" r="22" fill="#f8cecc"/>
+      <circle cx="110" cy="38"  r="20" fill="#dae8fc"/>
+      <circle cx="110" cy="100" r="20" fill="#d5e8d4"/>
+      <circle cx="110" cy="162" r="20" fill="#ffe6cc"/>
+      <circle cx="110" cy="224" r="20" fill="#f8cecc"/>
+      <circle cx="110" cy="286" r="20" fill="#e1d5e7"/>
     </g>
     <g class="num" text-anchor="middle">
-      <text x="110" y="58">1</text><text x="110" y="126">2</text>
-      <text x="110" y="194">3</text><text x="110" y="262">4</text>
+      <text x="110" y="45">1</text><text x="110" y="107">2</text>
+      <text x="110" y="169">3</text><text x="110" y="231">4</text>
+      <text x="110" y="293">5</text>
     </g>
     <g class="lbl" text-anchor="start">
-      <text x="158" y="58">two CLIs, one workstation, the loop transfers, not the quirks</text>
-      <text x="158" y="126">the devcontainer is the floor everyone starts from, pinned, shared</text>
-      <text x="158" y="194">step 1 you type it, step 2 you read it, both keep you in control</text>
-      <text x="158" y="262">same intent, same model, two runs can still diverge, read every time</text>
+      <text x="158" y="45">two CLIs, one workstation, the loop transfers, not the quirks</text>
+      <text x="158" y="107">the devcontainer is the floor everyone starts from, pinned, shared</text>
+      <text x="158" y="169">step 1 you type it, step 2 you read it, both keep you in control</text>
+      <text x="158" y="231">validate is not the floor, plan is, both real drafts proved it</text>
+      <text x="158" y="293">acceptEdits, subagents, slash commands, all real dials, still yours to check</text>
     </g>
   </svg>
   <p class="credit">Now open <b>Module 2 &middot; Lab</b>. &nbsp;&middot;&nbsp; <b>Gourav Shah</b> &middot; School of DevOps &amp; AI</p>
-  <div class="pageno">M2&middot;14</div>
+  <div class="pageno">M2&middot;16</div>
 </section>
 
 
 <section>
   <h2 class="t">Next: Open the Lab</h2>
-  <p class="s">the same intent, twice, once typed, once drafted</p>
-  <svg viewBox="0 0 840 190" role="img" aria-label="Six lab steps revealed one at a time: step 1 suggest and type by hand, validate hits a real bug, fix and re-validate, step 2 draft, diff the two, the exercise">
+  <p class="s">the same intent, typed, drafted, then extended under acceptEdits</p>
+  <svg viewBox="0 0 840 190" role="img" aria-label="Six lab steps revealed one at a time: step 1 suggest and type by hand, plan hits a real abspath bug, fix and re-plan, step 2 draft hits the same bug independently, acceptEdits extends the module while you watch, a subagent runs a bounded audit and a slash command wraps the floor">
     <g class="fragment" transform="translate(0,0)">
       <rect x="10" y="35" width="120" height="95" rx="10" fill="none" stroke="#1e1e1e" stroke-width="1.8" stroke-dasharray="6 5" filter="url(#rough)"/>
       <circle cx="70" cy="83" r="28" fill="#dae8fc" stroke="#1e1e1e" stroke-width="2" filter="url(#rough)"/>
@@ -394,14 +437,14 @@ footer, header, hgroup, main, menu, nav, section {
       <rect x="10" y="35" width="120" height="95" rx="10" fill="none" stroke="#1e1e1e" stroke-width="1.8" stroke-dasharray="6 5" filter="url(#rough)"/>
       <circle cx="70" cy="83" r="28" fill="#f8cecc" stroke="#1e1e1e" stroke-width="2" filter="url(#rough)"/>
       <path d="M55,68 L88,98" stroke="#1e1e1e" stroke-width="4" fill="none" stroke-linecap="round"/><path d="M88,68 L55,98" stroke="#1e1e1e" stroke-width="4" fill="none" stroke-linecap="round"/>
-      <text x="70" y="150" text-anchor="middle" class="lbl-sm">validate</text>
-      <text x="70" y="166" text-anchor="middle" class="lbl-g" font-size="12">path.module bug, real</text>
+      <text x="70" y="150" text-anchor="middle" class="lbl-sm">plan</text>
+      <text x="70" y="166" text-anchor="middle" class="lbl-g" font-size="12">abspath bug, real</text>
     </g>
     <g class="fragment" transform="translate(280,0)">
       <rect x="10" y="35" width="120" height="95" rx="10" fill="none" stroke="#1e1e1e" stroke-width="1.8" stroke-dasharray="6 5" filter="url(#rough)"/>
       <circle cx="70" cy="83" r="28" fill="#d5e8d4" stroke="#1e1e1e" stroke-width="2" filter="url(#rough)"/>
       <path d="M55,85 L67,97 L88,70" stroke="#1e1e1e" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-      <text x="70" y="150" text-anchor="middle" class="lbl-sm">fix, re-validate</text>
+      <text x="70" y="150" text-anchor="middle" class="lbl-sm">fix, re-plan</text>
       <text x="70" y="166" text-anchor="middle" class="lbl-g" font-size="12">green</text>
     </g>
     <g class="fragment" transform="translate(420,0)">
@@ -409,24 +452,24 @@ footer, header, hgroup, main, menu, nav, section {
       <circle cx="70" cy="83" r="28" fill="#e1d5e7" stroke="#1e1e1e" stroke-width="2" filter="url(#rough)"/>
       <path d="M55,85 L67,97 L88,70" stroke="#1e1e1e" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
       <text x="70" y="150" text-anchor="middle" class="lbl-sm">step 2: draft</text>
-      <text x="70" y="166" text-anchor="middle" class="lbl-g" font-size="12">agent writes it</text>
+      <text x="70" y="166" text-anchor="middle" class="lbl-g" font-size="12">agent writes it, same bug</text>
     </g>
     <g class="fragment" transform="translate(560,0)">
       <rect x="10" y="35" width="120" height="95" rx="10" fill="none" stroke="#1e1e1e" stroke-width="1.8" stroke-dasharray="6 5" filter="url(#rough)"/>
       <circle cx="70" cy="83" r="28" fill="#ffe6cc" stroke="#1e1e1e" stroke-width="2" filter="url(#rough)"/>
       <path d="M55,85 L67,97 L88,70" stroke="#1e1e1e" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-      <text x="70" y="150" text-anchor="middle" class="lbl-sm">diff the two</text>
-      <text x="70" y="166" text-anchor="middle" class="lbl-g" font-size="12">same intent, real divergence</text>
+      <text x="70" y="150" text-anchor="middle" class="lbl-sm">acceptEdits</text>
+      <text x="70" y="166" text-anchor="middle" class="lbl-g" font-size="12">agent extends it, watched</text>
     </g>
     <g class="fragment" transform="translate(700,0)">
       <rect x="10" y="35" width="120" height="95" rx="10" fill="none" stroke="#1e1e1e" stroke-width="1.8" stroke-dasharray="6 5" filter="url(#rough)"/>
       <circle cx="70" cy="83" r="28" fill="#dae8fc" stroke="#1e1e1e" stroke-width="2" filter="url(#rough)"/>
       <path d="M55,85 L67,97 L88,70" stroke="#1e1e1e" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-      <text x="70" y="150" text-anchor="middle" class="lbl-sm">the exercise</text>
-      <text x="70" y="166" text-anchor="middle" class="lbl-g" font-size="12">two-line note</text>
+      <text x="70" y="150" text-anchor="middle" class="lbl-sm">subagent + slash cmd</text>
+      <text x="70" y="166" text-anchor="middle" class="lbl-g" font-size="12">bounded task, /tf-check</text>
     </g>
   </svg>
-  <div class="pageno">M2&middot;15</div>
+  <div class="pageno">M2&middot;17</div>
 </section>
 
 
