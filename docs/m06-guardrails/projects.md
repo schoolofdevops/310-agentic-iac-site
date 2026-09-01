@@ -5,7 +5,7 @@ title: 'Exploratory projects'
 
 # M06 Projects: Guardrails: Permissions, Hooks, Blast Radius
 
-3 stretch projects. Hints, not solutions.
+4 stretch projects. Hints, not solutions.
 
 ---
 
@@ -32,7 +32,17 @@ the literal string `"delete"`.
 
 ---
 
-### 3. Audit a warning-only check in your own CI
+### 3. Extend the harness with an expiring approval
+
+Right now `plans/<slug>.md.approved` is valid forever once it exists. Add a timestamp check to
+`harness/apply_with_approval.sh` that refuses an approval older than, say, 15 minutes, and makes
+the approver re-run `harness/approve.sh`. What's the right expiry window for your own team, and
+why: too short and every approval turns into a race against the clock, too long and an approval
+granted for one plan quietly covers a plan that drifted after review.
+
+---
+
+### 4. Audit a warning-only check in your own CI
 
 Find one check in your team's real pipeline that prints a warning but doesn't block. Would making
 it a real gate, exit non-zero, caller stops, break anything that currently depends on it staying

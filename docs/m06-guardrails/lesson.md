@@ -4,7 +4,6 @@ title: 'Guardrails: Permissions, Hooks, Blast Radius'
 ---
 
 import Slides from '@site/src/components/Slides';
-import Embed from '@site/src/components/Embed';
 
 # Chapter 6: Guardrails: Permissions, Hooks, Blast Radius
 
@@ -79,8 +78,6 @@ a single delete, a bulk delete, a shared VPC change, tune the policy, and watch 
 actually trips. Try loosening `max-resources` until a bulk delete would pass on count alone, then
 notice the delete check still catches it, because the checks are independent, not a single score.
 
-<Embed src="sims/blast-radius-sim.html" title="Blast Radius Gate Visualizer" />
-
 None of those checks require the hook to know what your S3 bucket is for. That's the whole appeal.
 A mechanical check catches a mechanical property. It won't catch "this bucket name is wrong for
 our naming convention," that's still a skill's job, or a scanner's job, coming in M09.
@@ -98,6 +95,40 @@ gate. It's a suggestion with better formatting. A gate exits non-zero on failure
 that calls it, a wrapper script, a CI step, a pre-commit hook, has to actually stop when it sees
 that non-zero exit. Both halves matter. A gate with the right logic but a caller that ignores its
 exit code is not a gate either, it's theater.
+
+## Two More Ways to Stop the Same Delete
+
+The gate above catches a dangerous plan by reading it. That's one guardrail, not the only shape a
+guardrail can take. This module's lab builds two more, on purpose, so the difference is concrete
+rather than a taxonomy exercise.
+
+**Structural: remove the ability, don't just check the plan.** A gate has to be right every time
+it runs. A structural guardrail sidesteps that by never giving the agent `apply` access at all. An
+agent proposes a change as a pull request. Automated checks and a human review run against the PR,
+not the running infrastructure. A GitOps controller, reconciling against the merged state of the
+repo, is the only thing that ever calls `apply` for real. "Can this agent apply?" stops being a
+question a gate answers correctly on every attempt, because the agent was never wired to `apply`
+in the first place. This module only previews the idea. M11 builds the real GitOps pipeline behind
+it, PR, automated review, merge, reconcile, correctly and unattended.
+
+**Procedural: an explicit human approval, sitting between two separate agent runs.** M02 already
+showed the real mechanic: `claude --permission-mode plan` proposes a change and writes nothing. A
+plan-review-approve-apply harness turns that single flag into four real steps: an agent proposes
+in plan mode, the plan gets saved somewhere reviewable, a human runs an explicit approval command
+that writes a marker file, and only then does a second, separate agent invocation apply the
+approved plan, itself still passing through the mechanical gate from mechanism one. Skipping the
+approval step doesn't quietly work, `apply_with_approval.sh` refuses outright with no marker file
+present. This is what step 4, gated apply, looks like as a script you actually own, not a
+description of what "gated apply" means in the abstract.
+
+![Three guardrails against the same dangerous apply: a mechanical gate reading the plan's shape, a structural guardrail that never gives the agent apply access, and a procedural harness requiring an explicit human approval marker between two separate agent runs.](./diagrams/three-guardrails.svg)
+
+Notice what these three don't do: agree on one mechanism and call it done. A mechanical gate is
+fast and consistent but only as good as the checks someone wrote into it. A structural guardrail
+is strong but changes your whole delivery shape, which is real cost, not free. A procedural harness
+adds a human in the loop but depends on that human actually reading the plan, not just clicking
+approve. Real infrastructure teams run more than one of these at once, for the same reason a
+building has a lock on the door, a guard at the desk, and a badge system, none of the three alone.
 
 ## Step 4: Gated Apply
 

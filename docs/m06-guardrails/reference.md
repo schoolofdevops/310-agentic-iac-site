@@ -35,8 +35,29 @@ specific resource is for.
 | Permission boundary (this module) | Before the run starts | The system | Yes, denies before a plan even exists |
 | Hook / gate (this module) | Every attempted `apply` | The system, not the agent | Yes, blocks a specific plan |
 
+## Three guardrail shapes, side by side
+
+| Shape | How it stops the action | Built where |
+|---|---|---|
+| Mechanical | Reads `terraform plan -json`, exits non-zero on a bad shape | This module's `hooks/blast_radius_gate.sh` |
+| Structural | Removes `apply` access from the agent entirely, PR + GitOps applies | Previewed here, real build in M11 |
+| Procedural | Explicit human approval marker required between two separate agent runs | This module's `harness/` scripts |
+
+## The harness's contract
+
+```
+harness/propose.sh "<ask>"                    -> real plan, saved to plans/<slug>.md
+harness/apply_with_approval.sh plans/<slug>.md -> REFUSED, no .approved marker exists
+harness/approve.sh plans/<slug>.md             -> writes plans/<slug>.md.approved
+harness/apply_with_approval.sh plans/<slug>.md -> applies, still runs the mechanical gate
+```
+
+No marker file, no apply, regardless of how safe the plan looks. Two independent guardrails stack
+on the same apply: who approved it, and what the plan actually contains.
+
 ## This module's lab, in one line
 
-The exact same delete: with no gate, it happens. With the gate wired in, it's refused, real
-non-zero exit, bucket still there. A safe additive change passes the same gate without changing
-a single policy setting.
+The exact same delete of a real object: with no gate, it's destroyed for good. With the gate wired
+in, it's refused, real non-zero exit, bucket and object still there. A safe additive change passes
+the same gate without changing a single policy setting. A separate, explicit approval marker gates
+the harness on top of that, independently.

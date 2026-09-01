@@ -396,29 +396,78 @@ footer, header, hgroup, main, menu, nav, section {
 </section>
 
 
+<section class="divider">
+  <h2 class="t">Two More Ways to Stop the Same Delete</h2>
+  <div class="pageno">M6&middot;13</div>
+</section>
+
+
+<section>
+  <h2 class="t">Three Guardrail Shapes</h2>
+  <p class="s">mechanical, structural, procedural, none of the three alone</p>
+  <svg viewBox="0 0 900 320" role="img" aria-label="Three guardrails against the same dangerous apply: a mechanical gate reading the plan's shape, a structural guardrail that never gives the agent apply access, and a procedural harness requiring an explicit human approval marker between two separate agent runs.">
+<g>
+    <text x="450" y="30" text-anchor="middle" font-size="17" fill="#1e1e1e">same dangerous apply, three independent guardrails</text>
+
+    <rect x="30" y="55" width="260" height="220" rx="10" fill="#f8cecc" stroke="#1e1e1e" stroke-width="2.2" filter="url(#rough)"/>
+    <text x="160" y="85" text-anchor="middle" font-size="15" fill="#1e1e1e">1. mechanical</text>
+    <text x="160" y="110" text-anchor="middle" font-size="12" fill="#1e1e1e">reads terraform plan -json</text>
+    <text x="160" y="130" text-anchor="middle" font-size="12" fill="#1e1e1e">delete? count? high-radius type?</text>
+    <text x="160" y="160" text-anchor="middle" font-size="12" fill="#1e1e1e">exit 0 pass / exit 1 block</text>
+    <text x="160" y="200" text-anchor="middle" font-size="12" fill="#1e1e1e">this lab's blast_radius_gate.sh</text>
+    <text x="160" y="245" text-anchor="middle" font-size="12" fill="#1e1e1e">fast, consistent, only as good</text>
+    <text x="160" y="262" text-anchor="middle" font-size="12" fill="#1e1e1e">as the checks someone wrote</text>
+
+    <rect x="320" y="55" width="260" height="220" rx="10" fill="#d5e8d4" stroke="#1e1e1e" stroke-width="2.2" filter="url(#rough)"/>
+    <text x="450" y="85" text-anchor="middle" font-size="15" fill="#1e1e1e">2. structural</text>
+    <text x="450" y="110" text-anchor="middle" font-size="12" fill="#1e1e1e">agent never gets apply access</text>
+    <text x="450" y="130" text-anchor="middle" font-size="12" fill="#1e1e1e">PR, review, merge, GitOps applies</text>
+    <text x="450" y="160" text-anchor="middle" font-size="12" fill="#1e1e1e">"can it apply" is never asked</text>
+    <text x="450" y="200" text-anchor="middle" font-size="12" fill="#1e1e1e">previewed here, built for real in M11</text>
+    <text x="450" y="245" text-anchor="middle" font-size="12" fill="#1e1e1e">strong, but changes the whole</text>
+    <text x="450" y="262" text-anchor="middle" font-size="12" fill="#1e1e1e">delivery shape, real cost</text>
+
+    <rect x="610" y="55" width="260" height="220" rx="10" fill="#dae8fc" stroke="#1e1e1e" stroke-width="2.2" filter="url(#rough)"/>
+    <text x="740" y="85" text-anchor="middle" font-size="15" fill="#1e1e1e">3. procedural</text>
+    <text x="740" y="110" text-anchor="middle" font-size="12" fill="#1e1e1e">propose (plan mode) -&gt; save</text>
+    <text x="740" y="130" text-anchor="middle" font-size="12" fill="#1e1e1e">-&gt; explicit human approve</text>
+    <text x="740" y="160" text-anchor="middle" font-size="12" fill="#1e1e1e">-&gt; separate session applies</text>
+    <text x="740" y="200" text-anchor="middle" font-size="12" fill="#1e1e1e">no marker file, apply refuses</text>
+    <text x="740" y="245" text-anchor="middle" font-size="12" fill="#1e1e1e">needs a human who actually</text>
+    <text x="740" y="262" text-anchor="middle" font-size="12" fill="#1e1e1e">reads the plan, not just clicks yes</text>
+  </g>
+  <text x="450" y="305" text-anchor="middle" font-size="14" fill="#1e1e1e">none of the three alone, the same way a building has a lock, a guard, and a badge system</text>
+  </svg>
+  <div class="pageno">M6&middot;14</div>
+</section>
+
+
 <section>
   <p class="kicker">MODULE 6 TAKEAWAYS</p>
   <h2 class="t">A Hook Runs Whether the Agent Wants It To or Not</h2>
-  <svg viewBox="0 0 1100 320" role="img" aria-label="Four key takeaways listed as numbered rows">
+  <svg viewBox="0 0 1100 380" role="img" aria-label="Five key takeaways listed as numbered rows">
     <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="2.4">
       <circle cx="110" cy="50"  r="22" fill="#dae8fc"/>
       <circle cx="110" cy="118" r="22" fill="#d5e8d4"/>
       <circle cx="110" cy="186" r="22" fill="#ffe6cc"/>
       <circle cx="110" cy="254" r="22" fill="#f8cecc"/>
+      <circle cx="110" cy="322" r="22" fill="#e1d5e7"/>
     </g>
     <g class="num" text-anchor="middle">
       <text x="110" y="58">1</text><text x="110" y="126">2</text>
       <text x="110" y="194">3</text><text x="110" y="262">4</text>
+      <text x="110" y="330">5</text>
     </g>
     <g class="lbl" text-anchor="start">
       <text x="158" y="58">a skill can only ever suggest, a hook can actually block the apply</text>
       <text x="158" y="126">blast radius is mechanical: a delete, a resource count, a high-radius type</text>
       <text x="158" y="194">a gate is only real if its caller stops on a non-zero exit code</text>
       <text x="158" y="262">step 4 is checks AND approval together, never either one alone</text>
+      <text x="158" y="330">mechanical, structural, procedural: three guardrail shapes, stack more than one</text>
     </g>
   </svg>
   <p class="credit">Now open <b>Module 6 &middot; Lab</b>. &nbsp;&middot;&nbsp; <b>Gourav Shah</b> &middot; School of DevOps &amp; AI</p>
-  <div class="pageno">M6&middot;13</div>
+  <div class="pageno">M6&middot;15</div>
 </section>
 
 
@@ -469,7 +518,7 @@ footer, header, hgroup, main, menu, nav, section {
       <text x="70" y="166" text-anchor="middle" class="lbl-g" font-size="12">numbered last step</text>
     </g>
   </svg>
-  <div class="pageno">M6&middot;14</div>
+  <div class="pageno">M6&middot;16</div>
 </section>
 
 
