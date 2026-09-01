@@ -4,6 +4,7 @@ title: 'Harness Engineering'
 ---
 
 import Slides from '@site/src/components/Slides';
+import Embed from '@site/src/components/Embed';
 
 # Chapter 8: Harness Engineering
 
@@ -73,6 +74,8 @@ hook doesn't care whether the claim sounds confident. It cares whether the evide
 
 Pick a claim, toggle real evidence on and off, and watch the same regex logic from
 `verify_claim.sh` decide block or pass, live: [Verification Hook Simulator](pathname:///310-agentic-iac-site/sims/verification-hook-sim.html).
+
+<Embed src="sims/verification-hook-sim.html" title="Verification Hook Simulator" />
 
 ## A Skill States the Rule, a Hook Enforces It
 

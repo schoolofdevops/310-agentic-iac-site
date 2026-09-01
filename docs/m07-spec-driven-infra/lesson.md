@@ -4,6 +4,7 @@ title: 'Spec-Driven Infrastructure'
 ---
 
 import Slides from '@site/src/components/Slides';
+import Embed from '@site/src/components/Embed';
 
 # Chapter 7: Spec-Driven Infrastructure
 
@@ -107,6 +108,8 @@ replace what checks it afterward.
 
 Pick a path for the same S3 bucket ask and watch the real checkov numbers from this module's own
 lab play out: [Spec-Driven vs Vibe-Coded Simulator](pathname:///310-agentic-iac-site/sims/spec-vs-vibe-sim.html).
+
+<Embed src="sims/spec-vs-vibe-sim.html" title="Spec-Driven vs Vibe-Coded Simulator" />
 
 ## Spec vs Gate vs Policy: Three Different Jobs
 

@@ -4,6 +4,7 @@ title: 'Agentic Kubernetes and Platform IaC'
 ---
 
 import Slides from '@site/src/components/Slides';
+import Embed from '@site/src/components/Embed';
 
 # Chapter 10: Agentic Kubernetes and Platform IaC
 
@@ -38,6 +39,8 @@ tool that does: [Reconcile Loop Visualizer](pathname:///310-agentic-iac-site/sim
 the live state away from what's desired, the same way the lab's own drift step does, and
 watch the controller correct it back over a few ticks, unattended, without anyone running a
 command.
+
+<Embed src="sims/reconcile-loop-sim.html" title="Reconcile Loop Visualizer" />
 
 ## A Real Cluster, Not an Emulated One
 

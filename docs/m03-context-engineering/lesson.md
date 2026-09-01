@@ -4,6 +4,7 @@ title: 'Context Engineering for Infrastructure'
 ---
 
 import Slides from '@site/src/components/Slides';
+import Embed from '@site/src/components/Embed';
 
 # Chapter 3: Context Engineering for Infrastructure
 
@@ -51,6 +52,8 @@ has the bug, the one-off ask, some noise) and watch whether the task would actua
 land with what you gave it. Try adding only noise first. Then try the exact fix
 this chapter's lab walks through: the same `AGENTS.md`, with and without the one
 policy line spelled out.
+
+<Embed src="sims/context-window-sim.html" title="Context Window Visualizer" />
 
 ## Context Engineering, Not Prompt Engineering
 

@@ -4,6 +4,7 @@ title: 'Loop Engineering, Multi-Agent Ops, Economics'
 ---
 
 import Slides from '@site/src/components/Slides';
+import Embed from '@site/src/components/Embed';
 
 # Chapter 12: Loop Engineering, Multi-Agent Ops, Economics
 
@@ -67,6 +68,8 @@ system you built last week? Probably not, and that instinct is correct.
 loop against a precise stopping condition and a vague one, so you can watch the difference
 instead of just reading about it, plus a second panel putting this chapter's real
 token-economics numbers on a bar chart, advertised next to measured.
+
+<Embed src="sims/stopping-condition-sim.html" title="Stopping Condition + Economics Check" />
 
 Step 6 only works because of what came before it. A complete harness, from module eight,
 catches the mistakes a human would have caught. A real pipeline, from module nine, blocks what

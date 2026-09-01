@@ -4,6 +4,7 @@ title: 'Verifying AI-Generated Infrastructure'
 ---
 
 import Slides from '@site/src/components/Slides';
+import Embed from '@site/src/components/Embed';
 
 # Chapter 9: Verifying AI-Generated Infrastructure
 
@@ -118,6 +119,8 @@ There is a small, interactive tool that makes this concrete:
 fail, run the pipeline, and watch it stop exactly there, with every stage before it still
 counted as passed and everything after it never reached at all, including human approval.
 Toggle everything back off and run it again to see a clean pass reach `apply`.
+
+<Embed src="sims/pipeline-gate-sim.html" title="Pipeline Gate Walkthrough" />
 
 ## What Tier 1 Still Cannot Show You
 

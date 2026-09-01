@@ -4,6 +4,7 @@ title: 'Guardrails: Permissions, Hooks, Blast Radius'
 ---
 
 import Slides from '@site/src/components/Slides';
+import Embed from '@site/src/components/Embed';
 
 # Chapter 6: Guardrails: Permissions, Hooks, Blast Radius
 
@@ -77,6 +78,8 @@ There's a small, interactive tool that runs these three checks live:
 a single delete, a bulk delete, a shared VPC change, tune the policy, and watch which check
 actually trips. Try loosening `max-resources` until a bulk delete would pass on count alone, then
 notice the delete check still catches it, because the checks are independent, not a single score.
+
+<Embed src="sims/blast-radius-sim.html" title="Blast Radius Gate Visualizer" />
 
 None of those checks require the hook to know what your S3 bucket is for. That's the whole appeal.
 A mechanical check catches a mechanical property. It won't catch "this bucket name is wrong for

@@ -4,6 +4,7 @@ title: 'Agentic GitOps and Pipelines'
 ---
 
 import Slides from '@site/src/components/Slides';
+import Embed from '@site/src/components/Embed';
 
 # Chapter 11: Agentic GitOps and Pipelines
 
@@ -92,6 +93,8 @@ path, one stage at a time: propose, the automatic gate, the one human click, the
 sync, healthy. Click through to the end, then hit the tamper button and watch the
 controller self-heal a change made directly against the cluster, the same test this
 module's own lab ran for real.
+
+<Embed src="sims/gitops-loop-sim.html" title="The Full GitOps Loop" />
 
 ## Step 5, Precisely
 

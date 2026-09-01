@@ -4,6 +4,7 @@ title: 'From ClickOps to Agents'
 ---
 
 import Slides from '@site/src/components/Slides';
+import Embed from '@site/src/components/Embed';
 
 # Chapter 1: From ClickOps to Agents
 
@@ -258,6 +259,8 @@ Try the [Agent Classifier](pathname:///310-agentic-iac-site/sims/agent-classifie
 your own work. Toggle whether it loops, whether it decides from what it observes, whether
 it has a real stopping condition, then see whether it lands as autocomplete, automation, or
 a real agent, and if it's an agent, roughly which step of the ladder it sits on and why.
+
+<Embed src="sims/agent-classifier-sim.html" title="Agent Classifier" />
 
 ## Where the AI Infrastructure Industry Actually Stands
 

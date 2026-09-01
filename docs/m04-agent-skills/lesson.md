@@ -4,6 +4,7 @@ title: 'Agent Skills for IaC'
 ---
 
 import Slides from '@site/src/components/Slides';
+import Embed from '@site/src/components/Embed';
 
 # Chapter 4: Agent Skills for IaC
 
@@ -68,6 +69,8 @@ and watch it get checked against a few real `description` fields, including the 
 `terraform-best-practices` one above. Try "write an S3 bucket module" first, then try
 "clean up this codebase", a task specific enough for a human, vague enough that nothing
 fires.
+
+<Embed src="sims/skill-discoverability-sim.html" title="Skill Discoverability Simulator" />
 
 ## Skills Package House Convention
 

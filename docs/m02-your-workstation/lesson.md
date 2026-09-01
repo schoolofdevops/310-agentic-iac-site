@@ -4,6 +4,7 @@ title: 'Your Agentic IaC Workstation'
 ---
 
 import Slides from '@site/src/components/Slides';
+import Embed from '@site/src/components/Embed';
 
 # Chapter 2: Your Agentic IaC Workstation
 
@@ -105,6 +106,8 @@ pick which tools are allowed and a permission mode, then watch what actually
 happens when the agent attempts a read, a write, a `terraform apply`, and an
 arbitrary shell command. Every mode's behavior in the tool is checked against a
 real `claude --help` run, not guessed.
+
+<Embed src="sims/permission-mode-sim.html" title="Permission Mode Simulator" />
 
 ## Step 2: Draft
 

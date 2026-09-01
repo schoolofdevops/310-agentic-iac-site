@@ -3,6 +3,9 @@ sidebar_position: 1
 title: "Capstone: Propose, Don't Decide"
 ---
 
+import Embed from '@site/src/components/Embed';
+
+
 # Capstone: "Propose, Don't Decide"
 
 Every module from M03 to M12 built one piece. This is where they run together, on one
@@ -23,6 +26,8 @@ taught it first.
 
 Walk the whole course thesis pipeline, spec through apply through drift, one stage at a
 time: [Pipeline Tracer Simulator](pathname:///310-agentic-iac-site/sims/pipeline-tracer-sim.html).
+
+<Embed src="sims/pipeline-tracer-sim.html" title="Pipeline Tracer Simulator" />
 
 ## Required: Part 1, Tier 1 (Floci)
 

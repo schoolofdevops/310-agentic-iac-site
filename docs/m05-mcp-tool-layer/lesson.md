@@ -4,6 +4,7 @@ title: 'MCP and the Tool Layer'
 ---
 
 import Slides from '@site/src/components/Slides';
+import Embed from '@site/src/components/Embed';
 
 # Chapter 5: MCP and the Tool Layer
 
@@ -82,6 +83,8 @@ actual answer, sourced from the actual current state of a real system.
 
 Toggle the Terraform MCP server on and off against the real captured question above, plus two
 more in the same spirit: [Stale vs Live Lookup Simulator](pathname:///310-agentic-iac-site/sims/stale-vs-live-sim.html).
+
+<Embed src="sims/stale-vs-live-sim.html" title="Stale vs Live Lookup Simulator" />
 
 ## Opening a Pull Request Is Not Merging It
 
