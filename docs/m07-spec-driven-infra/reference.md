@@ -11,9 +11,9 @@ One page. Pin it above your desk.
 
 | Part | Answers | Example |
 |---|---|---|
-| Requirements | What must it do? | Versioning enabled |
-| Constraints | What must it never do? | No public bucket policy, ever |
-| Acceptance criteria | How will you check it, before you generate anything? | `aws_s3_bucket_versioning` status = `Enabled` |
+| Requirements | What must it do? | Survive a real cold boot, protect the newest release during scale-in |
+| Constraints | What must it never do? | No unbounded capacity ceiling, ever |
+| Success criteria | How will you check it, before you generate anything? | `health_check_grace_period` = `180` |
 
 A one-line intent has none of these written down. A spec has all three.
 

@@ -49,7 +49,8 @@
   <p class="sub">Module 7 &middot; Spec-Driven Infrastructure &middot; the real checkov results
     from this module's own lab. Same ask, two paths.</p>
 
-  <div class="ask"><strong>The ask:</strong> "Give me an S3 bucket for storing build artifacts."</div>
+  <div class="ask"><strong>The ask:</strong> "Give me an autoscaling web tier for our checkout
+    service."</div>
 
   <div class="path-row">
     <button class="path-btn spec" id="specBtn">Write a spec first</button>
@@ -68,32 +69,50 @@
 </div>
 
 <script>
-const SPEC_CODE = `resource "aws_s3_bucket" "artifacts" {
-  bucket = var.bucket_name
-  tags = { purpose = "build-artifacts", managed_by = "terraform" }  # FR-004
+const SPEC_CODE = `resource "aws_launch_template" "checkout_web" {
+  metadata_options {
+    http_tokens = "required"  # FR-005 / SC-005 / CKV_AWS_79
+  }
 }
-resource "aws_s3_bucket_versioning" "artifacts" {
-  versioning_configuration { status = "Enabled" }  # FR-001 / SC-001
+resource "aws_autoscaling_group" "checkout_web" {
+  health_check_grace_period = 180   # FR-001 / SC-001
+  min_size = 2
+  max_size = 4                      # FR-003 / SC-003
+  termination_policies = [
+    "OldestLaunchTemplate", "OldestInstance", "Default"
+  ]                                  # FR-002 / SC-002
+  default_cooldown = 90             # FR-004 / SC-004
 }
-resource "aws_s3_bucket_public_access_block" "artifacts" {
-  block_public_acls = true  # FR-002 / SC-002
-  ...
-}
-resource "aws_s3_bucket_server_side_encryption_configuration" "artifacts" {
-  ...  # FR-003 / SC-003
+resource "aws_autoscaling_policy" "checkout_web_cpu" {
+  target_tracking_configuration {
+    target_value = 55               # FR-004 / SC-004
+  }
 }`;
 
-const VIBE_CODE = `resource "aws_s3_bucket" "artifacts" {
-  bucket = "m07-build-artifacts-demo-vibe"
+const VIBE_CODE = `resource "aws_launch_template" "checkout_web" {
+  # no metadata_options block, IMDSv1 stays reachable
+}
+resource "aws_lb" "checkout" { ... }  # nobody asked for an ALB
+resource "aws_autoscaling_group" "checkout_web" {
+  health_check_grace_period = 60
+  min_size = 2
+  max_size = 6                      # arbitrary, not traced to a peak
+  # termination_policies left unset, AWS default applies
+}
+resource "aws_autoscaling_policy" "checkout_web_cpu" {
+  target_tracking_configuration {
+    target_value = 60
+    # default_cooldown left unset, 300s default applies
+  }
 }`;
 
 const CRITERIA = [
-  { key: 'versioning', label: 'Versioning enabled (SC-001, CKV_AWS_21)', specMet: true, vibeMet: false },
-  { key: 'access', label: 'Public access blocked (SC-002, CKV2_AWS_6)', specMet: true, vibeMet: false },
-  { key: 'encryption', label: 'Server-side encryption (SC-003, CKV_AWS_145)', specMet: true, vibeMet: false },
-  { key: 'tags', label: 'Required tags present (SC-004)', specMet: true, vibeMet: false },
-  { key: 'notifications', label: 'Event notifications configured (not in this spec)', specMet: false, vibeMet: false },
-  { key: 'logging', label: 'Access logging configured (not in this spec)', specMet: false, vibeMet: false },
+  { key: 'grace', label: 'health_check_grace_period = 180, survives a cold boot (SC-001)', specMet: true, vibeMet: false },
+  { key: 'term', label: 'termination_policies protects newest launch template (SC-002)', specMet: true, vibeMet: false },
+  { key: 'cap', label: 'max_size = 4, traced to a measured peak, not a guess (SC-003)', specMet: true, vibeMet: false },
+  { key: 'cooldown', label: 'default_cooldown = 90, reacts to a real spike (SC-004)', specMet: true, vibeMet: false },
+  { key: 'imds', label: 'IMDSv2 required, CKV_AWS_79 (SC-005 / SC-006)', specMet: true, vibeMet: false },
+  { key: 'tags', label: 'Launch template tags present, CKV_AWS_153 (not in this spec)', specMet: false, vibeMet: true },
 ];
 
 let path = null;
@@ -127,15 +146,16 @@ function render(){
   const summary = document.getElementById('summaryBox');
   if (path === 'spec') {
     summary.className = 'summary spec';
-    summary.innerHTML = '<strong>checkov: Passed checks: 11, Failed checks: 5.</strong> Every check ' +
-      'that traces back to a requirement passes. The 5 failures (event notifications, lifecycle, ' +
-      'logging, replication, KMS) are real too, this spec never named them, that\'s not a flaw in ' +
-      'spec-driven work, it\'s why the pipeline gate in M09 still runs after this.';
+    summary.innerHTML = '<strong>checkov: Passed checks: 7, Failed checks: 1.</strong> Passes ' +
+      'CKV_AWS_79 (IMDSv2), exactly what FR-005 asked for. The 1 failure, CKV_AWS_153 (tags), is ' +
+      'real too, this spec never named it, that\'s not a flaw in spec-driven work, it\'s why the ' +
+      'pipeline gate in M09 still runs after this.';
   } else {
     summary.className = 'summary vibe';
-    summary.innerHTML = '<strong>checkov: Passed checks: 5, Failed checks: 7.</strong> Fails exactly ' +
-      'what FR-001 through FR-003 would have caught: no versioning, no public access block, no ' +
-      'encryption. Nothing stopped this from applying. That\'s the real gap, not a strawman.';
+    summary.innerHTML = '<strong>checkov: Passed checks: 20, Failed checks: 14.</strong> Fails ' +
+      'CKV_AWS_79 (IMDSv1 left reachable), exactly what FR-005 would have caught, plus 9 more real ' +
+      'findings on the ALB nobody asked for: no deletion protection, no access logging, no WAF, ' +
+      'HTTP instead of HTTPS. Nothing stopped this from applying. That\'s the real gap, not a strawman.';
   }
 }
 

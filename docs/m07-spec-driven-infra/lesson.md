@@ -10,17 +10,20 @@ import Embed from '@site/src/components/Embed';
 
 <Slides src="decks/m07-spec-driven-infra.html" title="M7: Spec-Driven Infrastructure" />
 
+
 ## Recap: A One-Line Intent Was Enough, Once
 
 Module 1's lab handed you a single line: give me a local nginx container, serving a page you
 control, nothing exposed outside the machine. That was fine. It was a first exercise, small
 enough that one sentence carried the whole ask.
 
-Real work rarely comes in one sentence. It comes as a ticket. Something like: give me an S3
-bucket for storing build artifacts. Read that again. It says nothing about who can read the
-bucket, whether an overwritten file is recoverable, or whether anything in it is encrypted. It
+Real work rarely comes in one sentence. It comes as a ticket. Something like: give me an
+autoscaling web tier for our checkout service. Read that again. It says nothing about how long a
+slow-starting instance gets before it's assumed dead, which instance dies first when the tier
+scales in, how big "auto" is allowed to get, or how fast it should react to a real spike. It
 leaves almost everything for you to decide. That silence is normal. Most tickets look exactly
-like this, and it is exactly where this chapter starts.
+like this, and an autoscaling group has more places for that silence to turn into a real decision
+than a single resource ever did. It is exactly where this chapter starts.
 
 ## What a Spec Has That an Intent Doesn't
 
@@ -29,17 +32,17 @@ like this, and it is exactly where this chapter starts.
 A one-line intent has a goal and nothing else. A real spec has three separate parts, and each one
 does a different job.
 
-**Requirements** state what the thing must do. Versioned. Private. Tagged. Each one specific
-enough that you could check it later without asking the person who wrote it what they meant.
+**Requirements** state what the thing must do. Survive a real cold boot without being killed as
+unhealthy. Protect the newest release during a routine scale-in. Each one specific enough that you
+could check it later without asking the person who wrote it what they meant.
 
-**Constraints** state what the thing must never do. No public bucket policy, under any
-circumstance. No hardcoded account ID inside a resource block. A requirement says what to build.
-A constraint says what to refuse, even if it would be the easy path.
+**Constraints** state what the thing must never do. No hardcoded account ID inside a resource
+block. No unbounded capacity ceiling nobody measured against. A requirement says what to build. A
+constraint says what to refuse, even if it would be the easy path.
 
-**Acceptance criteria** state, before anything is generated, exactly how you will check the
-result. Not "does it look right." A specific, testable line: the versioning status equals
-`Enabled`. You could hand that line to someone who never read the ticket, and they could still
-check your work.
+**Success criteria** state, before anything is generated, exactly how you will check the result.
+Not "does it look right." A specific, testable line: `health_check_grace_period` equals `180`. You
+could hand that line to someone who never read the ticket, and they could still check your work.
 
 Write these three things down before you generate a single line of Terraform, and you have a
 spec. Skip them, and you have a guess with good intentions.
@@ -54,19 +57,23 @@ close enough.
 
 This is named here once, because it already failed on infrastructure, in a specific and
 checkable way, not because it's a technique worth weighing against spec-driven work. Here's what
-actually goes wrong. Generate a bucket from "give me somewhere to store build artifacts," with no
-requirements list in front of you, and you'll naturally stop at the first thing that satisfies
-the sentence: a bucket resource, one line, done.
-No versioning. No public access block. No encryption. It's not a strawman. It's what a fast,
-reasonable-looking first pass produces when nothing was written down to check it against.
+actually goes wrong. Generate an autoscaling tier from "give me an autoscaling web tier for our
+checkout service," with no requirements list in front of you, and you don't get a broken module.
+You get a competent-looking one: a load balancer, security groups, a launch template with real
+boot logic, an autoscaling group, a scaling policy. Nobody would flag it in a five-second glance
+at a PR. It just quietly picked a plausible-looking number for every real decision the ticket left
+open, a health check grace period too short for a real cold boot, a scale-in policy that can kill
+the newest code first, a capacity ceiling nobody measured against, a five-minute default cooldown
+built for a slower-moving workload than a flash sale.
 
 `terraform apply` doesn't know the difference between that and a careful, spec-driven module.
-Both are valid HCL. Both apply cleanly. The gap only shows up later, when a scanner catches a
-missing public-access-block on a bucket that's been live for months, or worse, when nobody
-catches it at all. Application code that's "close enough" usually gets a chance to be fixed in
-the next release. Infrastructure that's "close enough" is often already live, already holding
-real data, before anyone reads it carefully. That's M01's asymmetry again: no undo, and failure
-that stays quiet until someone goes looking.
+Both are valid HCL. Both apply cleanly. The gap only shows up later, when the tier thrashes
+because a healthy instance kept getting killed for booting too slowly, or a canary release gets
+scaled away on the very host it needed protected, or worse, when nobody catches it at all.
+Application code that's "close enough" usually gets a chance to be fixed in the next release.
+Infrastructure that's "close enough" is often already live, already serving real traffic, before
+anyone reads it carefully. That's M01's asymmetry again: no undo, and failure that stays quiet
+until someone goes looking.
 
 ## Spec Kit and Kiro Specs
 
@@ -91,23 +98,22 @@ your memory of what you meant.
 ![A spec document feeding into an agent, the agent generating a module, and the module being checked against each numbered acceptance criterion from the spec, one arrow per criterion, not one arrow labeled "looks right."](./diagrams/generate-against-spec.svg)
 
 Once the spec exists, generation is almost the boring part. Hand it to your agent, get a module
-back, and check it against the spec's own criteria, one by one. Did versioning end up `Enabled`?
-Check the state. Are all four public-access-block settings `true`? Check the state. Not "run it
-and see if it looks fine." A line-by-line pass against lines you wrote down before you saw any
-code.
+back, and check it against the spec's own criteria, one by one. Did the health check grace period
+end up `180`? Check the applied state. Did the scale-in policy end up protecting the newest launch
+template version? Check the applied state. Not "run it and see if it looks fine." A line-by-line
+pass against lines you wrote down before you saw any code.
 
-Here's the honest part, and it matters as much as the success. A spec's acceptance criteria only
-cover what its author thought to write down. Write a spec for a bucket with three requirements,
-and a scanner will very likely still find things outside those three: no access logging
-configured, no lifecycle rule, encryption set to a general algorithm instead of the specific one
-your org standardizes on. None of that is a failure of spec-driven work. It's the spec doing
-exactly what it promised, no more. A spec shapes what gets generated. It was never supposed to
-replace what checks it afterward.
+Here's the honest part, and it matters as much as the success. A spec's success criteria only
+cover what its author thought to write down. Write a spec for an autoscaling tier with five
+requirements, and a scanner will very likely still find things outside those five: missing tags on
+the launch configuration, no encrypted root volume, no detailed monitoring. None of that is a
+failure of spec-driven work. It's the spec doing exactly what it promised, no more. A spec shapes
+what gets generated. It was never supposed to replace what checks it afterward.
 
 ### Try it: spec-driven vs vibe-coded
 
-Pick a path for the same S3 bucket ask and watch the real checkov numbers from this module's own
-lab play out: [Spec-Driven vs Vibe-Coded Simulator](pathname:///310-agentic-iac-site/sims/spec-vs-vibe-sim.html).
+Pick a path for the same autoscaling-tier ask and watch the real checkov numbers from this
+module's own lab play out: [Spec-Driven vs Vibe-Coded Simulator](pathname:///310-agentic-iac-site/sims/spec-vs-vibe-sim.html).
 
 <Embed src="sims/spec-vs-vibe-sim.html" title="Spec-Driven vs Vibe-Coded Simulator" />
 
