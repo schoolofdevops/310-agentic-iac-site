@@ -168,7 +168,9 @@ footer, header, hgroup, main, menu, nav, section {
   <h2 class="t">The Three-Layer Symptom Test</h2>
   <p class="s">“can't get one task right at all” points here</p>
   <svg viewBox="0 0 820 420" role="img" aria-label="Three stacked layers, bottom to top: context, harness, loop, each with the symptom that points to it. Build bottom-up.">
-<g stroke="#1e1e1e" stroke-width="2" fill="white">
+<text x="410" y="34" text-anchor="middle" font-size="22" fill="#1e1e1e">The three layers</text>
+
+  <g stroke="#1e1e1e" stroke-width="2" fill="white">
     <rect x="80" y="270" width="330" height="80" filter="url(#rough)"/>
     <rect x="80" y="180" width="330" height="80" filter="url(#rough)"/>
     <rect x="80" y="90"  width="330" height="80" filter="url(#rough)"/>
@@ -210,7 +212,7 @@ footer, header, hgroup, main, menu, nav, section {
   <h2 class="t">The Context Window, a Fixed Box</h2>
   <p class="s">every token not spent on the task is a token wasted</p>
   <svg viewBox="0 0 800 400" role="img" aria-label="A fixed-size context window box divided into segments: task-relevant content, repository noise, and unused space, showing the window as a scarce, shared resource.">
-<g stroke="#1e1e1e" stroke-width="2.6" fill="none" filter="url(#rough)">
+  <g stroke="#1e1e1e" stroke-width="2.6" fill="none" filter="url(#rough)">
     <rect x="80" y="70" width="640" height="240"/>
   </g>
 
@@ -239,38 +241,85 @@ footer, header, hgroup, main, menu, nav, section {
 
 
 <section class="divider">
-  <h2 class="t">Context Engineering, Not Prompt Engineering</h2>
+  <h2 class="t">Context Engineering Is Three Disciplines</h2>
   <div class="pageno">M3&middot;06</div>
 </section>
 
 
 <section>
-  <h2 class="t">Context Engineering vs a Prompt</h2>
-  <p class="s">written once and true every run, or asked once and spent</p>
-  <svg viewBox="0 0 820 320" role="img" aria-label="Two panels compared: standing context that is reused on every run, versus a one-off prompt that is spent once and then gone.">
+  <h2 class="t">Reduce, Retain, Route</h2>
+  <p class="s">miss one and the other two don't save you</p>
+  <svg viewBox="0 0 900 360" role="img" aria-label="Three disciplines side by side: Reduce, filter noise at the input; Retain, store standing knowledge outside the window so it survives a reset; Route, externalize an in-progress plan to disk so a fresh session can pick it up exactly where the last one stopped.">
 <g>
-    <rect x="60" y="60" width="330" height="200" rx="10" fill="#d5e8d4" stroke="#1e1e1e" stroke-width="2.4" filter="url(#rough)"/><text x="225" y="130" text-anchor="middle" font-size="14" fill="#1e1e1e">AGENTS.md, repo shape,</text>
-    <text x="225" y="150" text-anchor="middle" font-size="14" fill="#1e1e1e">provider pins, policy text</text>
-    <text x="225" y="190" text-anchor="middle" font-size="14" fill="#1e1e1e">written once,</text>
-    <text x="225" y="210" text-anchor="middle" font-size="14" fill="#1e1e1e">true on every run</text>
+    <rect x="40" y="50" width="250" height="230" rx="10" fill="#dae8fc" stroke="#1e1e1e" stroke-width="2.4" filter="url(#rough)"/>
+    <text x="165" y="85" text-anchor="middle" font-size="20" fill="#1e1e1e">REDUCE</text>
+    <text x="165" y="115" text-anchor="middle" font-size="13" fill="#1e1e1e">what enters</text>
+    <text x="165" y="133" text-anchor="middle" font-size="13" fill="#1e1e1e">the window</text>
+    <text x="165" y="170" text-anchor="middle" font-size="12" fill="#1e1e1e">filter noisy tool</text>
+    <text x="165" y="188" text-anchor="middle" font-size="12" fill="#1e1e1e">output at the input</text>
+    <text x="165" y="225" text-anchor="middle" font-size="12" fill="#1e1e1e">checkov --compact</text>
+    <text x="165" y="243" text-anchor="middle" font-size="12" fill="#1e1e1e">85% smaller, same findings</text>
 
-    <rect x="430" y="60" width="330" height="200" rx="10" fill="#ffe6cc" stroke="#1e1e1e" stroke-width="2.4" filter="url(#rough)"/>
-    <text x="595" y="95" text-anchor="middle" font-size="19" fill="#1e1e1e">a prompt</text>
-    <text x="595" y="130" text-anchor="middle" font-size="14" fill="#1e1e1e">"build me a VPC</text>
-    <text x="595" y="150" text-anchor="middle" font-size="14" fill="#1e1e1e">with two subnets"</text>
-    <text x="595" y="190" text-anchor="middle" font-size="14" fill="#1e1e1e">asked once,</text>
-    <text x="595" y="210" text-anchor="middle" font-size="14" fill="#1e1e1e">spent, gone</text>
+    <rect x="325" y="50" width="250" height="230" rx="10" fill="#d5e8d4" stroke="#1e1e1e" stroke-width="2.4" filter="url(#rough)"/>
+    <text x="450" y="85" text-anchor="middle" font-size="20" fill="#1e1e1e">RETAIN</text>
+    <text x="450" y="115" text-anchor="middle" font-size="13" fill="#1e1e1e">what survives</text>
+    <text x="450" y="133" text-anchor="middle" font-size="13" fill="#1e1e1e">a reset</text>
+    <text x="450" y="170" text-anchor="middle" font-size="12" fill="#1e1e1e">standing facts, written</text>
+    <text x="450" y="188" text-anchor="middle" font-size="12" fill="#1e1e1e">once, read every run</text>
+    <text x="450" y="225" text-anchor="middle" font-size="12" fill="#1e1e1e">AGENTS.md</text>
+    <text x="450" y="243" text-anchor="middle" font-size="12" fill="#1e1e1e">pins, naming, never-do</text>
+
+    <rect x="610" y="50" width="250" height="230" rx="10" fill="#e1d5e7" stroke="#1e1e1e" stroke-width="2.4" filter="url(#rough)"/>
+    <text x="735" y="85" text-anchor="middle" font-size="20" fill="#1e1e1e">ROUTE</text>
+    <text x="735" y="115" text-anchor="middle" font-size="13" fill="#1e1e1e">where the plan</text>
+    <text x="735" y="133" text-anchor="middle" font-size="13" fill="#1e1e1e">actually lives</text>
+    <text x="735" y="170" text-anchor="middle" font-size="12" fill="#1e1e1e">in-progress state,</text>
+    <text x="735" y="188" text-anchor="middle" font-size="12" fill="#1e1e1e">on disk, not in chat</text>
+    <text x="735" y="225" text-anchor="middle" font-size="12" fill="#1e1e1e">STATE.md</text>
+    <text x="735" y="243" text-anchor="middle" font-size="12" fill="#1e1e1e">a fresh session reads it</text>
   </g>
 
-  <text x="410" y="295" text-anchor="middle" font-size="15" fill="#1e1e1e">context is what's true about the repo every time, a prompt is what's asked once</text>
+  <text x="450" y="330" text-anchor="middle" font-size="15" fill="#1e1e1e">miss one and the other two don't save you</text>
   </svg>
   <div class="pageno">M3&middot;07</div>
 </section>
 
 
 <section class="divider">
-  <h2 class="t">Anatomy of an AGENTS.md</h2>
+  <h2 class="t">Reduce: Filter Before It Enters</h2>
   <div class="pageno">M3&middot;08</div>
+</section>
+
+
+<section>
+  <h2 class="t">Same Scan, 85% Less to Read</h2>
+  <p class="s">checkov --compact on this course's own 21-resource module, real numbers</p>
+  <svg viewBox="0 0 820 320" role="img" aria-label="Real measured checkov output on the same 21-resource module: plain output is 25,605 characters, compact output is 3,881 characters, an 85% reduction, with the same 25 findings either way.">
+<g>
+    <rect x="60" y="50" width="320" height="200" rx="10" fill="#f8cecc" stroke="#1e1e1e" stroke-width="2.4" filter="url(#rough)"/>
+    <text x="220" y="85" text-anchor="middle" font-size="17" fill="#1e1e1e">checkov -d .</text>
+    <text x="220" y="115" text-anchor="middle" font-size="13" fill="#1e1e1e">60 passed + 25 failed,</text>
+    <text x="220" y="133" text-anchor="middle" font-size="13" fill="#1e1e1e">source lines repeated</text>
+    <text x="220" y="195" text-anchor="middle" font-size="24" fill="#1e1e1e">25,605</text>
+    <text x="220" y="220" text-anchor="middle" font-size="13" fill="#1e1e1e">characters</text>
+
+    <rect x="440" y="50" width="320" height="200" rx="10" fill="#d5e8d4" stroke="#1e1e1e" stroke-width="2.4" filter="url(#rough)"/>
+    <text x="600" y="85" text-anchor="middle" font-size="17" fill="#1e1e1e">checkov -d . --compact</text>
+    <text x="600" y="115" text-anchor="middle" font-size="13" fill="#1e1e1e">same 25 failed,</text>
+    <text x="600" y="133" text-anchor="middle" font-size="13" fill="#1e1e1e">nothing else printed</text>
+    <text x="600" y="195" text-anchor="middle" font-size="24" fill="#1e1e1e">3,881</text>
+    <text x="600" y="220" text-anchor="middle" font-size="13" fill="#1e1e1e">characters</text>
+  </g>
+
+  <text x="410" y="295" text-anchor="middle" font-size="15" fill="#1e1e1e">same 25 findings, 85% less to read</text>
+  </svg>
+  <div class="pageno">M3&middot;09</div>
+</section>
+
+
+<section class="divider">
+  <h2 class="t">Anatomy of an AGENTS.md</h2>
+  <div class="pageno">M3&middot;10</div>
 </section>
 
 
@@ -278,7 +327,9 @@ footer, header, hgroup, main, menu, nav, section {
   <h2 class="t">What Goes in an AGENTS.md</h2>
   <p class="s">provider pins, naming, module boundaries, a never-do list</p>
   <svg viewBox="0 0 820 460" role="img" aria-label="An annotated AGENTS.md file with four sections labeled: provider pins, naming convention, module boundaries, and a never-do list.">
-<g font-size="14" fill="#1e1e1e">
+<text x="410" y="34" text-anchor="middle" font-size="20" fill="#1e1e1e">AGENTS.md, annotated</text>
+
+  <g font-size="14" fill="#1e1e1e">
     <rect x="60" y="60" width="340" height="360" fill="white" stroke="#1e1e1e" stroke-width="2.2" filter="url(#rough)"/>
     <text x="80" y="90">provider "aws" { }</text>
     <text x="80" y="112">required_version = "~&gt; 1.9"</text>
@@ -312,13 +363,13 @@ footer, header, hgroup, main, menu, nav, section {
 
   <text x="410" y="445" text-anchor="middle" font-size="15" fill="#1e1e1e">what a new hire would get on day one, written down once</text>
   </svg>
-  <div class="pageno">M3&middot;09</div>
+  <div class="pageno">M3&middot;11</div>
 </section>
 
 
 <section class="divider">
   <h2 class="t">Repo Shape Is Retrieval</h2>
-  <div class="pageno">M3&middot;10</div>
+  <div class="pageno">M3&middot;12</div>
 </section>
 
 
@@ -326,7 +377,7 @@ footer, header, hgroup, main, menu, nav, section {
   <h2 class="t">The Retrieval Funnel</h2>
   <p class="s">an agent finds what a human would find, by the same names and paths</p>
   <svg viewBox="0 0 800 420" role="img" aria-label="A funnel from the whole repository, to the files relevant to the task, to what actually lands inside the context window, the same path a human would take.">
-<g stroke="#1e1e1e" stroke-width="2.4" fill="white" filter="url(#rough)">
+  <g stroke="#1e1e1e" stroke-width="2.4" fill="white" filter="url(#rough)">
     <path d="M100,80 L700,80 L560,190 L240,190 Z"/>
     <path d="M240,190 L560,190 L480,300 L320,300 Z"/>
     <path d="M320,300 L480,300 L440,380 L360,380 Z"/>
@@ -344,13 +395,13 @@ footer, header, hgroup, main, menu, nav, section {
 
   <text x="400" y="405" text-anchor="middle" font-size="15" fill="#1e1e1e">an agent finds what a human would find, by the same names and paths</text>
   </svg>
-  <div class="pageno">M3&middot;11</div>
+  <div class="pageno">M3&middot;13</div>
 </section>
 
 
 <section class="divider">
   <h2 class="t">The Information Gap</h2>
-  <div class="pageno">M3&middot;12</div>
+  <div class="pageno">M3&middot;14</div>
 </section>
 
 
@@ -358,7 +409,9 @@ footer, header, hgroup, main, menu, nav, section {
   <h2 class="t">11 of 14, Not 79%</h2>
   <p class="s">the fix was not a smarter model, it was a visible rule</p>
   <svg viewBox="0 0 800 340" role="img" aria-label="Fourteen policy failures shown as dots, eleven turn green once policy text is made visible to the agent, three stay red.">
-<g font-size="14" fill="#1e1e1e">
+<text x="400" y="34" text-anchor="middle" font-size="20" fill="#1e1e1e">the information gap</text>
+
+  <g font-size="14" fill="#1e1e1e">
     <text x="60" y="90">14 policy failures</text>
   </g>
   <g stroke="#1e1e1e" stroke-width="1.8" filter="url(#rough)">
@@ -379,13 +432,88 @@ footer, header, hgroup, main, menu, nav, section {
   <text x="400" y="240" text-anchor="middle" font-size="17" fill="#1e1e1e">11 of 14, not a rounded 79%</text>
   <text x="400" y="270" text-anchor="middle" font-size="14" fill="#1e1e1e">the fix was not a smarter agent, it was making the rule readable</text>
   </svg>
-  <div class="pageno">M3&middot;13</div>
+  <div class="pageno">M3&middot;15</div>
+</section>
+
+
+<section class="divider">
+  <h2 class="t">Route: Don't Trust What's Still in the Window</h2>
+  <div class="pageno">M3&middot;16</div>
+</section>
+
+
+<section>
+  <h2 class="t">The Plan Lives on Disk</h2>
+  <p class="s">a fresh session with zero memory reads STATE.md and continues correctly</p>
+  <svg viewBox="0 0 860 380" role="img" aria-label="A task's plan and progress written to a STATE.md file on disk instead of held only in the conversation, so a brand new session with zero memory reads the file and continues correctly.">
+<g>
+    <rect x="40" y="40" width="230" height="110" rx="10" fill="#f8cecc" stroke="#1e1e1e" stroke-width="2.4" filter="url(#rough)"/>
+    <text x="155" y="75" text-anchor="middle" font-size="15" fill="#1e1e1e">session 1</text>
+    <text x="155" y="98" text-anchor="middle" font-size="12" fill="#1e1e1e">decision made,</text>
+    <text x="155" y="116" text-anchor="middle" font-size="12" fill="#1e1e1e">context cleared</text>
+
+    <g stroke="#1e1e1e" stroke-width="2.2" filter="url(#rough)">
+      <line x1="270" y1="95" x2="345" y2="220" marker-end="url(#ah)"/>
+    </g>
+    <text x="270" y="170" font-size="11" fill="#1e1e1e">writes</text>
+
+    <rect x="315" y="215" width="230" height="110" rx="10" fill="#e1d5e7" stroke="#1e1e1e" stroke-width="2.4" filter="url(#rough)"/>
+    <text x="430" y="248" text-anchor="middle" font-size="15" fill="#1e1e1e">STATE.md</text>
+    <text x="430" y="271" text-anchor="middle" font-size="12" fill="#1e1e1e">what's done,</text>
+    <text x="430" y="289" text-anchor="middle" font-size="12" fill="#1e1e1e">the decision, next action</text>
+
+    <g stroke="#1e1e1e" stroke-width="2.2" filter="url(#rough)">
+      <line x1="545" y1="245" x2="620" y2="120" marker-end="url(#ah)"/>
+    </g>
+    <text x="555" y="170" font-size="11" fill="#1e1e1e">reads</text>
+
+    <rect x="590" y="40" width="230" height="110" rx="10" fill="#d5e8d4" stroke="#1e1e1e" stroke-width="2.4" filter="url(#rough)"/>
+    <text x="705" y="75" text-anchor="middle" font-size="15" fill="#1e1e1e">session 2</text>
+    <text x="705" y="98" text-anchor="middle" font-size="12" fill="#1e1e1e">zero memory,</text>
+    <text x="705" y="116" text-anchor="middle" font-size="12" fill="#1e1e1e">continues correctly</text>
+  </g>
+
+  <text x="430" y="360" text-anchor="middle" font-size="15" fill="#1e1e1e">the plan lives on disk, not in the conversation</text>
+  </svg>
+  <div class="pageno">M3&middot;17</div>
+</section>
+
+
+<section class="divider">
+  <h2 class="t">Context Engineering, Not Prompt Engineering</h2>
+  <div class="pageno">M3&middot;18</div>
+</section>
+
+
+<section>
+  <h2 class="t">Context Engineering vs a Prompt</h2>
+  <p class="s">written once and true every run, or asked once and spent</p>
+  <svg viewBox="0 0 820 320" role="img" aria-label="Two panels compared: standing context that is reused on every run, versus a one-off prompt that is spent once and then gone.">
+<g>
+    <rect x="60" y="60" width="330" height="200" rx="10" fill="#d5e8d4" stroke="#1e1e1e" stroke-width="2.4" filter="url(#rough)"/>
+    
+    <text x="225" y="130" text-anchor="middle" font-size="14" fill="#1e1e1e">AGENTS.md, repo shape,</text>
+    <text x="225" y="150" text-anchor="middle" font-size="14" fill="#1e1e1e">provider pins, policy text</text>
+    <text x="225" y="190" text-anchor="middle" font-size="14" fill="#1e1e1e">written once,</text>
+    <text x="225" y="210" text-anchor="middle" font-size="14" fill="#1e1e1e">true on every run</text>
+
+    <rect x="430" y="60" width="330" height="200" rx="10" fill="#ffe6cc" stroke="#1e1e1e" stroke-width="2.4" filter="url(#rough)"/>
+    <text x="595" y="95" text-anchor="middle" font-size="19" fill="#1e1e1e">a prompt</text>
+    <text x="595" y="130" text-anchor="middle" font-size="14" fill="#1e1e1e">"build me a VPC</text>
+    <text x="595" y="150" text-anchor="middle" font-size="14" fill="#1e1e1e">with two subnets"</text>
+    <text x="595" y="190" text-anchor="middle" font-size="14" fill="#1e1e1e">asked once,</text>
+    <text x="595" y="210" text-anchor="middle" font-size="14" fill="#1e1e1e">spent, gone</text>
+  </g>
+
+  <text x="410" y="295" text-anchor="middle" font-size="15" fill="#1e1e1e">context is what's true about the repo every time, a prompt is what's asked once</text>
+  </svg>
+  <div class="pageno">M3&middot;19</div>
 </section>
 
 
 <section class="divider">
   <h2 class="t">Before and After</h2>
-  <div class="pageno">M3&middot;14</div>
+  <div class="pageno">M3&middot;20</div>
 </section>
 
 
@@ -393,7 +521,7 @@ footer, header, hgroup, main, menu, nav, section {
   <h2 class="t">Same Intent, Minus vs Plus Context</h2>
   <p class="s">the convention violation from run one is gone in run two</p>
   <svg viewBox="0 0 820 340" role="img" aria-label="The same one-line intent into the same agent, minus context on the left produces a hardcoded secret, plus context on the right produces a sensitive variable set from the environment.">
-<g font-size="14" fill="#1e1e1e">
+  <g font-size="14" fill="#1e1e1e">
     <rect x="50" y="70" width="330" height="200" fill="#f8cecc" stroke="#1e1e1e" stroke-width="2.2" filter="url(#rough)"/>
     <text x="215" y="100" text-anchor="middle" font-size="16">no AGENTS.md</text>
     <text x="70" y="140">variable "key" {{</text>
@@ -413,13 +541,13 @@ footer, header, hgroup, main, menu, nav, section {
 
   <text x="410" y="300" text-anchor="middle" font-size="14" fill="#1e1e1e">the convention violation from the first run is gone in the second</text>
   </svg>
-  <div class="pageno">M3&middot;15</div>
+  <div class="pageno">M3&middot;21</div>
 </section>
 
 
 <section class="divider">
   <h2 class="t">Context, Harness, Loop: Where This Sits</h2>
-  <div class="pageno">M3&middot;16</div>
+  <div class="pageno">M3&middot;22</div>
 </section>
 
 
@@ -427,7 +555,9 @@ footer, header, hgroup, main, menu, nav, section {
   <h2 class="t">Context Done for Real</h2>
   <p class="s">harness is next, in M06, never build a loop on a broken layer below it</p>
   <svg viewBox="0 0 820 420" role="img" aria-label="The same three stacked layers from module one, context, harness, loop, with context highlighted and a note that harness is next, in module six.">
-<g stroke="#1e1e1e" stroke-width="2" fill="white">
+<text x="410" y="34" text-anchor="middle" font-size="22" fill="#1e1e1e">the three layers, context done for real</text>
+
+  <g stroke="#1e1e1e" stroke-width="2" fill="white">
     <rect x="80" y="270" width="330" height="80" fill="#d5e8d4" filter="url(#rough)"/>
     <rect x="80" y="180" width="330" height="80" filter="url(#rough)"/>
     <rect x="80" y="90"  width="330" height="80" filter="url(#rough)"/>
@@ -450,46 +580,48 @@ footer, header, hgroup, main, menu, nav, section {
   </g>
   <text x="245" y="395" text-anchor="middle" font-size="13" fill="#1e1e1e">build bottom-up, same rule as M01</text>
   </svg>
-  <div class="pageno">M3&middot;17</div>
+  <div class="pageno">M3&middot;23</div>
 </section>
 
 
 <section>
   <p class="kicker">MODULE 3 TAKEAWAYS</p>
-  <h2 class="t">Write It Down Once, Read It Every Run</h2>
-  <svg viewBox="0 0 1100 320" role="img" aria-label="Four key takeaways listed as numbered rows">
+  <h2 class="t">Reduce, Retain, Route</h2>
+  <svg viewBox="0 0 1100 320" role="img" aria-label="Five key takeaways listed as numbered rows">
     <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="2.4">
-      <circle cx="110" cy="50"  r="22" fill="#dae8fc"/>
-      <circle cx="110" cy="118" r="22" fill="#d5e8d4"/>
-      <circle cx="110" cy="186" r="22" fill="#ffe6cc"/>
-      <circle cx="110" cy="254" r="22" fill="#f8cecc"/>
+      <circle cx="110" cy="34"  r="20" fill="#dae8fc"/>
+      <circle cx="110" cy="90" r="20" fill="#d5e8d4"/>
+      <circle cx="110" cy="146" r="20" fill="#e1d5e7"/>
+      <circle cx="110" cy="202" r="20" fill="#ffe6cc"/>
+      <circle cx="110" cy="258" r="20" fill="#f8cecc"/>
     </g>
-    <g class="num" text-anchor="middle">
-      <text x="110" y="58">1</text><text x="110" y="126">2</text>
-      <text x="110" y="194">3</text><text x="110" y="262">4</text>
+    <g class="num" text-anchor="middle" font-size="20">
+      <text x="110" y="41">1</text><text x="110" y="97">2</text>
+      <text x="110" y="153">3</text><text x="110" y="209">4</text><text x="110" y="265">5</text>
     </g>
-    <g class="lbl" text-anchor="start">
-      <text x="158" y="58">"can't get one task right at all" is a context problem, not a bigger-model problem</text>
-      <text x="158" y="126">context is what's true every run, a prompt is what's asked once</text>
-      <text x="158" y="194">an agent retrieves the way a human would, by the same names and paths</text>
-      <text x="158" y="262">making a rule visible resolved 11 of 14 policy failures, not all of them</text>
+    <g class="lbl" text-anchor="start" font-size="16">
+      <text x="156" y="41">"can't get one task right at all" is a context problem, not a bigger-model problem</text>
+      <text x="156" y="97">reduce: filter noisy tool output before it enters the window, checkov --compact cut 85%</text>
+      <text x="156" y="153">retain: standing facts written once in AGENTS.md survive a session reset</text>
+      <text x="156" y="209">route: an in-progress plan lives on disk, so a fresh session can continue it</text>
+      <text x="156" y="265">making a rule visible resolved 11 of 14 policy failures, not all of them</text>
     </g>
   </svg>
   <p class="credit">Now open <b>Module 3 &middot; Lab</b>. &nbsp;&middot;&nbsp; <b>Gourav Shah</b> &middot; School of DevOps &amp; AI</p>
-  <div class="pageno">M3&middot;18</div>
+  <div class="pageno">M3&middot;24</div>
 </section>
 
 
 <section>
   <h2 class="t">Next: Open the Lab</h2>
-  <p class="s">run the same intent twice, once with context, once without</p>
-  <svg viewBox="0 0 840 190" role="img" aria-label="Six lab steps revealed one at a time: the intent, run 1 with no AGENTS.md, write AGENTS.md, run 2 with context, diff the two outputs, the exercise">
+  <p class="s">reduce, retain, route, three real exercises</p>
+  <svg viewBox="0 0 840 190" role="img" aria-label="Six lab steps revealed one at a time: reduce with checkov --compact, run 1 with no AGENTS.md, write AGENTS.md, run 2 with context, route with a fresh session reading STATE.md, the exercise">
     <g class="fragment" transform="translate(0,0)">
       <rect x="10" y="35" width="120" height="95" rx="10" fill="none" stroke="#1e1e1e" stroke-width="1.8" stroke-dasharray="6 5" filter="url(#rough)"/>
       <circle cx="70" cy="83" r="28" fill="#dae8fc" stroke="#1e1e1e" stroke-width="2" filter="url(#rough)"/>
       <path d="M55,85 L67,97 L88,70" stroke="#1e1e1e" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-      <text x="70" y="150" text-anchor="middle" class="lbl-sm">the intent</text>
-      <text x="70" y="166" text-anchor="middle" class="lbl-g" font-size="12">one-line prompt</text>
+      <text x="70" y="150" text-anchor="middle" class="lbl-sm">reduce</text>
+      <text x="70" y="166" text-anchor="middle" class="lbl-g" font-size="12">measure --compact, 85%</text>
     </g>
     <g class="fragment" transform="translate(140,0)">
       <rect x="10" y="35" width="120" height="95" rx="10" fill="none" stroke="#1e1e1e" stroke-width="1.8" stroke-dasharray="6 5" filter="url(#rough)"/>
@@ -516,18 +648,18 @@ footer, header, hgroup, main, menu, nav, section {
       <rect x="10" y="35" width="120" height="95" rx="10" fill="none" stroke="#1e1e1e" stroke-width="1.8" stroke-dasharray="6 5" filter="url(#rough)"/>
       <circle cx="70" cy="83" r="28" fill="#ffe6cc" stroke="#1e1e1e" stroke-width="2" filter="url(#rough)"/>
       <path d="M55,85 L67,97 L88,70" stroke="#1e1e1e" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-      <text x="70" y="150" text-anchor="middle" class="lbl-sm">diff</text>
-      <text x="70" y="166" text-anchor="middle" class="lbl-g" font-size="12">one var block</text>
+      <text x="70" y="150" text-anchor="middle" class="lbl-sm">route</text>
+      <text x="70" y="166" text-anchor="middle" class="lbl-g" font-size="12">STATE.md, fresh session</text>
     </g>
     <g class="fragment" transform="translate(700,0)">
       <rect x="10" y="35" width="120" height="95" rx="10" fill="none" stroke="#1e1e1e" stroke-width="1.8" stroke-dasharray="6 5" filter="url(#rough)"/>
       <circle cx="70" cy="83" r="28" fill="#dae8fc" stroke="#1e1e1e" stroke-width="2" filter="url(#rough)"/>
       <path d="M55,85 L67,97 L88,70" stroke="#1e1e1e" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
       <text x="70" y="150" text-anchor="middle" class="lbl-sm">the exercise</text>
-      <text x="70" y="166" text-anchor="middle" class="lbl-g" font-size="12">delete, re-run</text>
+      <text x="70" y="166" text-anchor="middle" class="lbl-g" font-size="12">your own STATE.md</text>
     </g>
   </svg>
-  <div class="pageno">M3&middot;19</div>
+  <div class="pageno">M3&middot;25</div>
 </section>
 
 
