@@ -1,0 +1,33 @@
+---
+sidebar_position: 5
+title: 'Quiz'
+---
+
+import Quiz from '@site/src/components/Quiz';
+
+# M11 Quiz: Agentic GitOps and Pipelines
+
+<Quiz questions={[
+  {
+    prompt:'What changed about the M09 pipeline\'s stages when they moved into GitHub Actions?',options:[{text:'The stages themselves changed to be CI-specific',correct:false,explanation:'The stages stayed the same.'},{text:'Nothing about the stages changed, only who runs them, automatically on every pull request instead of by hand',correct:true,explanation:'Same fmt, validate, trivy, checkov, same order. A pull request runs them now, instead of a person typing each command.'},{text:'Checkov can no longer run inside GitHub Actions',correct:false,explanation:'Checkov runs fine inside GitHub Actions, this module\'s own lab proves it.'},{text:'The pipeline gets faster because CI skips real scanning',correct:false,explanation:'CI runs the real scan, it doesn\'t skip it.'}]
+  },
+  {
+    prompt:'Which of the following is the most precise one-sentence definition of GitOps?',options:[{text:'Running Terraform inside a CI pipeline',correct:false,explanation:'That describes CI/CD generally, not GitOps specifically.'},{text:'The repo is the source of truth, and a controller keeps the cluster matching it',correct:true,explanation:'Plain CI/CD just runs commands on a trigger. GitOps means a controller continuously reconciles a live system against the repo, not a one-shot run.'},{text:'Storing YAML files in git instead of a database',correct:false,explanation:'Storage location alone isn\'t the point, continuous reconciliation is.'},{text:'Any workflow that uses kubectl and git together',correct:false,explanation:'Too vague, doesn\'t capture the continuous reconciliation that defines GitOps.'}]
+  },
+  {
+    prompt:'A resource shows SYNCED: True and HEALTHY: False. What does that combination actually mean?',options:[{text:'The cluster doesn\'t match the repo yet',correct:false,explanation:'Synced True means it does match.'},{text:'The cluster matches the repo exactly, but what\'s running isn\'t actually working',correct:true,explanation:'Synced and healthy are two separate questions. A resource can match the repo perfectly and still be broken, a crash-looping pod is the classic example.'},{text:'This combination is impossible',correct:false,explanation:'It\'s a real, common state, this module\'s own reference card calls it out as the trap.'},{text:'The controller crashed',correct:false,explanation:'The controller is working fine, it\'s the reconciled resource that\'s unhealthy.'}]
+  },
+  {
+    prompt:'Trace the full loop from this module. What is the one manual step in it?',options:[{text:'Writing the Terraform or Kubernetes manifest',correct:false,explanation:'Writing it can come from an agent, that\'s not the manual gate.'},{text:'Running the CI pipeline',correct:false,explanation:'The CI pipeline runs automatically, on its own.'},{text:'Reading and merging the pull request',correct:true,explanation:'The pipeline gates automatically, the controller reconciles automatically. The only manual step is reviewing and merging the pull request.'},{text:'Running the sync after merge',correct:false,explanation:'Sync after merge is automatic, that\'s the whole point of automated selfHeal.'}]
+  },
+  {
+    prompt:'Why is this module\'s loop called step 5, supervised autonomy, and not step 4, gated apply?',options:[{text:'Because no gates run at all',correct:false,explanation:'Gates run, automatically, every time.'},{text:'Because a human approves one specific action at a time, same as step 4',correct:false,explanation:'That\'s exactly what step 4 looks like, this module is different from that.'},{text:'Because the agent\'s work spans multiple automatic actions (the gate, the sync, the self-heal), and a human reviews the outcome rather than approving each one',correct:true,explanation:'Step 4 means one approved action at a time. Here multiple things happen on their own, and the human only reviews the pull request\'s outcome before merge.'},{text:'Because no human is involved anywhere in the loop',correct:false,explanation:'A human is involved, at exactly one point: reviewing and merging the PR.'}]
+  },
+  {
+    prompt:'Why doesn\'t this module claim to have closed the rollback and incident-response gap?',options:[{text:'Because those problems don\'t apply to GitOps',correct:false,explanation:'They apply directly, GitOps doesn\'t make them go away.'},{text:'Because Argo CD and Flux solve both automatically, no further work needed',correct:false,explanation:'Neither tool solves rollback or incident response by itself.'},{text:'Because they\'re genuinely real, separate practices with their own tooling and care, and pretending otherwise would be dishonest',correct:true,explanation:'Reconciling forward isn\'t the same as safely reverting, and a failing controller needs a real incident process. Naming both honestly beats implying they\'re solved.'},{text:'Because this course covers them in module 9 instead',correct:false,explanation:'Module 9 covers scanning and policy, not rollback or incident response.'}]
+  },
+  {
+    prompt:'What would move this module\'s loop from step 5 to step 6, unattended?',options:[{text:'Installing Flux instead of Argo CD',correct:false,explanation:'Swapping controllers doesn\'t change who approves the merge.'},{text:'Removing the human review and merge step itself',correct:true,explanation:'Every piece needed to remove the human from the merge already exists technically. Step 6 would mean actually doing that, and this course doesn\'t teach it as a default.'},{text:'Adding more scanners to the CI pipeline',correct:false,explanation:'More scanners strengthen the gate, they don\'t remove the human merge step.'},{text:'Making the reconcile loop run faster',correct:false,explanation:'Speed has nothing to do with who approves the merge.'}]
+  }
+
+]} />

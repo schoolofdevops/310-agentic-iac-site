@@ -114,6 +114,17 @@ const sidebars: SidebarsConfig = {
         'm10-agentic-kubernetes/quiz',
       ],
     },
+    {
+      type: 'category',
+      label: 'Module 11: Agentic GitOps and Pipelines',
+      items: [
+        'm11-agentic-gitops/lesson',
+        'm11-agentic-gitops/lab',
+        'm11-agentic-gitops/reference',
+        'm11-agentic-gitops/projects',
+        'm11-agentic-gitops/quiz',
+      ],
+    },
   ],
 };
 
