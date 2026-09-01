@@ -125,6 +125,17 @@ const sidebars: SidebarsConfig = {
         'm11-agentic-gitops/quiz',
       ],
     },
+    {
+      type: 'category',
+      label: 'Module 12: Loop Engineering, Multi-Agent Ops, Economics',
+      items: [
+        'm12-loop-multiagent-economics/lesson',
+        'm12-loop-multiagent-economics/lab',
+        'm12-loop-multiagent-economics/reference',
+        'm12-loop-multiagent-economics/projects',
+        'm12-loop-multiagent-economics/quiz',
+      ],
+    },
   ],
 };
 

@@ -1,0 +1,74 @@
+---
+sidebar_position: 5
+title: 'Quiz'
+---
+
+import Quiz from '@site/src/components/Quiz';
+
+# M12 Quiz: Loop Engineering, Multi-Agent Ops, Economics
+
+<Quiz questions={[
+  {
+    prompt: 'Which of the following is a real, machine-checkable stopping condition?',
+    options: [
+      { text: 'Stop when the infrastructure looks stable', correct: false, explanation: 'This requires a human to judge whether the loop should stop, which defeats the point of a loop.' },
+      { text: 'Stop when terraform plan shows zero changes and checkov exits clean', correct: true, explanation: 'A stopping condition has to be something a machine can check without asking a human, an exact rule, not a feeling.' },
+      { text: 'Stop when the team feels confident', correct: false, explanation: 'This requires a human to judge whether the loop should stop, which defeats the point of a loop.' },
+      { text: 'Stop after a reasonable amount of time', correct: false, explanation: 'This requires a human to judge whether the loop should stop, which defeats the point of a loop.' },
+    ],
+  },
+  {
+    prompt: 'A script runs a fixed sequence of Terraform commands once, produces useful output, and exits. Is this a loop?',
+    options: [
+      { text: 'Yes, because it did real work', correct: false, explanation: 'Whether it did useful work has nothing to do with whether it is a loop.' },
+      { text: 'No, it has neither a trigger to re-run it nor a stopping condition, it is a single run', correct: true, explanation: 'A loop needs both a trigger, what re-invokes it, and a stopping condition, when it quits. A single run with neither is not a loop.' },
+      { text: 'Yes, as long as it ran more than one command', correct: false, explanation: 'Running more than one command is not what makes something a loop.' },
+      { text: 'No, because it did not touch a real cloud account', correct: false, explanation: 'Whether it touched a cloud account has nothing to do with whether it is a loop.' },
+    ],
+  },
+  {
+    prompt: 'What has to already be true before step 6, unattended, is safe to attempt?',
+    options: [
+      { text: 'The team has used AI tools for at least six months', correct: false, explanation: 'Team tenure is not the precondition this module names.' },
+      { text: 'A complete harness (context, skills, hooks, verification) is already in place, catching the mistakes a human would catch', correct: true, explanation: 'A loop on top of a broken harness just repeats the harness\'s mistakes faster. Step 6 only makes sense once the harness underneath it is already catching what a human reviewer would have caught.' },
+      { text: 'The agent has a large enough context window', correct: false, explanation: 'Context window size is not the precondition this module names.' },
+      { text: 'Nothing, step 6 is safe by default once a stopping condition exists', correct: false, explanation: 'This is the exact mistake this module warns against, a stopping condition alone is not enough.' },
+    ],
+  },
+  {
+    prompt: 'What is the real difference between step 5 (supervised autonomy) and step 6 (unattended)?',
+    options: [
+      { text: 'Step 6 uses a bigger model', correct: false, explanation: 'Model size has nothing to do with the distinction between these two steps.' },
+      { text: 'Step 5, a human reviews every outcome; step 6, a human reviews only exceptions', correct: true, explanation: 'Step 5 means a human checks the result of every run. Step 6 means a human is only pulled in when something actually goes wrong.' },
+      { text: 'Step 5 requires a cloud account, step 6 does not', correct: false, explanation: 'Cloud account requirements have nothing to do with the distinction between these two steps.' },
+      { text: 'There is no real difference, they are the same step under different names', correct: false, explanation: 'The distinction is real and meaningful: who reviews what, and how often.' },
+    ],
+  },
+  {
+    prompt: 'Claude Code teams and Hermes are both mentioned in this module. What is the actual distinction this course draws between them?',
+    options: [
+      { text: 'Claude Code teams is the real, usable tool taught here; Hermes is named once as a reference point for where multi-agent orchestration is headed, and is not taught in this course', correct: true, explanation: 'Claude Code teams is the concrete, usable example this course actually works with. Hermes gets named once, deliberately, as a pointer to where the field is headed.' },
+      { text: 'They are two names for the exact same tool', correct: false, explanation: 'They are different things, one taught, one only named as a reference point.' },
+      { text: 'Hermes is taught in depth in this module, Claude Code teams is only mentioned in passing', correct: false, explanation: 'This reverses the actual roles the two names play in this module.' },
+      { text: 'Both are retired tools this course explicitly avoids', correct: false, explanation: 'Neither is presented as a retired tool.' },
+    ],
+  },
+  {
+    prompt: 'A tool advertises 60 to 90 percent savings on token usage. What does this module say you should do with that claim?',
+    options: [
+      { text: 'Trust it, vendors have no reason to round favorably', correct: false, explanation: 'This ignores the real, measured gap between advertised and actual savings this module documents.' },
+      { text: 'Treat it the same way you would treat any unverified vendor statistic: look for an independent, measured number before relying on it', correct: true, explanation: 'The real, measured comparison in this course found roughly 8.5 percent savings for one such tool, and an actual cost increase for another (rtk, at low reasoning effort), against advertised figures of 60 to 90 percent.' },
+      { text: 'Ignore token cost entirely, it does not matter for infrastructure work', correct: false, explanation: 'Token cost is a real constraint this module treats seriously, not something to ignore.' },
+      { text: 'Assume the real number is even higher than advertised', correct: false, explanation: 'The measured evidence points the other way, lower than advertised, or even a cost increase.' },
+    ],
+  },
+  {
+    prompt: 'Put the six steps of the autonomy ladder in order, from least to most autonomous.',
+    options: [
+      { text: 'Suggest, draft, propose with plan, gated apply, supervised autonomy, unattended', correct: true, explanation: 'Suggest (agent proposes text, human types it), draft (agent writes files, human reads every line), propose with plan (code and a plan together), gated apply (checks plus approval), supervised autonomy (agent loops, human reviews outcomes), unattended (human reviews only exceptions).' },
+      { text: 'Draft, suggest, gated apply, propose with plan, unattended, supervised autonomy', correct: false, explanation: 'This swaps several steps out of their real order.' },
+      { text: 'Unattended, supervised autonomy, gated apply, propose with plan, draft, suggest', correct: false, explanation: 'This reverses the whole ladder.' },
+      { text: 'Suggest, propose with plan, draft, gated apply, unattended, supervised autonomy', correct: false, explanation: 'This swaps several steps out of their real order.' },
+    ],
+  },
+]} />
