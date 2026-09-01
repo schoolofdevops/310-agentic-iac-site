@@ -34,14 +34,24 @@ something mechanical stops it.
 
 **Test-first.** Write a failing test before any production code. Not because tests are virtuous in
 the abstract, but because a test written after the fact tends to test what the code already does,
-not what it's supposed to do.
+not what it's supposed to do. This chapter's lab runs this for real against `CKV_AWS_145`, an S3
+default-encryption check: the test is written and run against the unfixed bucket first, it fails
+for that specific reason, only then does the fix get written. Refactor, the third step of the
+cycle, is honest to skip when there's genuinely nothing to clean up, five lines of HCL don't need
+it. Don't pad a lab with a refactor step that has no work behind it.
 
 **Verify before claiming.** Say something works only after you've actually run it and captured
 real output, not because it looks right, not because it should work. Would you trust "looks fine"
 from a colleague who never ran the thing? Then don't accept it from an agent either.
 
 **Root-cause debugging.** Fix the cause, not the symptom. A patch that makes an error message go
-away without explaining why it appeared is a patch that will reappear somewhere else.
+away without explaining why it appeared is a patch that will reappear somewhere else. This chapter's
+lab runs the discipline's own escalation rule for real: the **3-Fix Rule**. Three plausible, wrong
+fixes in a row (a version pin, a cache wipe, a misnamed-argument guess) are not wasted effort, they
+are evidence that rules out three wrong layers. After three failures on the same symptom, the rule
+says stop guessing and question the architecture, compare the broken config against a known-working
+example instead. That comparison is what actually finds the root cause: `endpoint_url` was never a
+real AWS-provider argument, no version or cache fix could have touched it.
 
 None of these are new ideas. What's new is treating them as things a harness can check
 mechanically, instead of habits you hope survive contact with a deadline.
@@ -118,7 +128,8 @@ supervised autonomy, has to stand on before it's safe to attempt at all.
 |---|---|
 | Harness | A skill, an MCP server, and a hook assembled around one real discipline, not three separate tools |
 | Superpowers pattern | Three disciplines: test-first, verify before claiming, root-cause debugging |
-| Test-first | A failing test written before any production code |
+| Test-first | A failing test written before any production code, verified RED for the right reason before the fix, verified GREEN after |
 | Verification-before-claiming | Real command evidence required before a "this works" claim is accepted |
 | Root-cause debugging | Fixing the cause of a problem, not the symptom that revealed it |
+| The 3-Fix Rule | After three failed fix attempts on the same symptom, stop guessing and question the architecture instead of trying a fourth fix |
 | Assembled harness | The state where a skill states a rule and a hook enforces it, together, as one system |
