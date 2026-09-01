@@ -14,8 +14,8 @@ description: What this skill is for and exactly when to use it.
 ---
 ```
 
-- `name` — short, kebab-case, matches the directory name
-- `description` — the matching key. Name the concrete trigger ("use whenever asked to
+- `name`: short, kebab-case, matches the directory name
+- `description`: the matching key. Name the concrete trigger ("use whenever asked to
   write, generate, or extend a Terraform module for an AWS resource"), not a vague
   category ("Terraform best practices")
 
@@ -35,8 +35,23 @@ description: What this skill is for and exactly when to use it.
 | Harness | Every run, enforced | The system, not the agent | A hook that blocks `apply` without a clean plan |
 | Loop | Across runs | What re-triggers, when it stops | A schedule, a webhook, a stopping condition |
 
+## Prose skill vs skill with a bundled script
+
+| | Prose-only skill | Skill with a bundled script |
+|---|---|---|
+| Carries | Judgment rules ("NAT gateway per AZ in prod") | Judgment rules AND computable facts |
+| Enforcement | Agent reads it, reasons, can still misjudge | The script exits 0 or 1, no reasoning involved |
+| Example, this module | `terraform-module-conventions`: pins, tags, secrets | `vpc-environment-scaffold`: design rules in prose, CIDR overlap in `scripts/check_cidr_overlap.py` |
+| Still voluntary | Yes, an agent can skip the whole skill | Yes, same voluntary limit, the script only runs if the agent reaches for the skill at all |
+
+A bundled script closes the "did the agent get the arithmetic right" gap. It does not close
+the "did the agent decide to use this skill at all" gap, that's still the harness's job, M06
+and M08.
+
 ## This module's lab, in one line
 
-Same intent, same agent, skill absent vs skill present: provider pin, required tags, and a
-hardcoded secret all get fixed on the first try, once the skill exists and its description
-is specific enough to trigger.
+Part I: same intent, same agent, skill absent vs skill present: provider pin, required tags,
+and a hardcoded secret all get fixed on the first try, once the skill exists and its
+description is specific enough to trigger. Part II: a skill bundling a real overlap-checker
+script catches a genuine CIDR collision across three materially different VPC environments,
+dev, staging, and prod, before `terraform apply` ever runs.

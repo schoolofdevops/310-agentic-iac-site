@@ -5,7 +5,7 @@ title: 'Exploratory projects'
 
 # M04 Projects: Agent Skills for IaC
 
-Stretch projects, hints not solutions. Pick one, or all three.
+Stretch projects, hints not solutions. Pick one, or all four.
 
 ## 1. Write a skill for your own team's convention
 
@@ -33,3 +33,15 @@ actually stops a violation from landing?
 
 *Hint: you'll need M06's guardrails material for the hook side of this, this project is a
 good reason to come back to it after that module.*
+
+## 4. Extend the VPC scaffolder skill with a second bundled script
+
+Part II's `vpc-environment-scaffold` skill ships one deterministic script, a CIDR overlap
+checker. Add a second one: a generator that scaffolds a brand new environment directory
+(`main.tf`, `variables.tf`, `provider.tf`, `terraform.tfvars`) from the shared module, given
+just a name, an AZ count, and a `nat_strategy`, instead of a human copy-pasting an existing
+environment and editing five values by hand.
+
+*Hint: the generator's job is to produce files identical in shape to `vpc/envs/dev` or
+`vpc/envs/prod`, not to invent a new structure. Diff its output against a hand-written
+environment to prove it.*

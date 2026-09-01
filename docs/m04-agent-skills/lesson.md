@@ -70,8 +70,6 @@ and watch it get checked against a few real `description` fields, including the 
 "clean up this codebase", a task specific enough for a human, vague enough that nothing
 fires.
 
-<Embed src="sims/skill-discoverability-sim.html" title="Skill Discoverability Simulator" />
-
 ## Skills Package House Convention
 
 The real payoff isn't any single rule. It's not retyping the same review comment for the
@@ -84,6 +82,32 @@ and every module an agent generates afterward carries them, without a human rety
 same three comments in every pull request. That's not a small thing on a team that
 generates a lot of small modules. The review conversation moves from "you forgot the tags
 again" to whatever the module is actually for.
+
+## A Skill That Ships Code, Not Just Prose
+
+Every skill so far in this module is pure prose: rules an agent reads and tries to follow. That
+works right up until the rule stops being a judgment call and becomes something you could just
+compute. "Do these two CIDR blocks overlap" isn't a style preference an agent weighs, it's
+`ipaddress` arithmetic with one right answer. Writing that as a paragraph and hoping the agent
+gets the arithmetic right on a bad day is strictly worse than writing the ten lines of Python
+that get it right every time and having the skill run them.
+
+![A skill's SKILL.md pointing two ways: prose instructions the agent reads and reasons about, and a bundled scripts/ directory the skill's own instructions tell the agent to execute, with a real exit code.](./diagrams/skill-ships-code.svg)
+
+A `SKILL.md` isn't limited to its own body text. It can live next to a `scripts/` directory, and
+its instructions can say "run this before you proceed," the same way a senior engineer's review
+comment might say "run the linter" instead of re-explaining every style rule from memory. The
+lab's `vpc-environment-scaffold` skill does exactly this: its prose carries the design rules that
+genuinely need judgment (why prod gets a NAT gateway per AZ and dev doesn't), and it hands the
+part that doesn't need judgment, whether two CIDR blocks collide, to a bundled script with a real
+exit code. Mixing both in one skill is normal. Confusing "the script checked this" with "the
+agent reasoned about this and I should double check" is the mistake worth watching for once a
+skill starts bundling real code.
+
+This is also the fix for the shallow version of this module's lab: a single S3 bucket and a
+three-rule prose skill teaches discoverability, but it doesn't teach the difference between a
+skill that suggests and a skill that verifies. A multi-environment VPC module, with a skill that
+bundles a real overlap checker, does.
 
 ## Skills vs Harness
 

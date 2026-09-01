@@ -307,8 +307,43 @@ footer, header, hgroup, main, menu, nav, section {
 
 
 <section class="divider">
-  <h2 class="t">Skill vs Harness</h2>
+  <h2 class="t">A Skill That Ships Code</h2>
   <div class="pageno">M4&middot;10</div>
+</section>
+
+
+<section>
+  <h2 class="t">Prose vs a Bundled Script</h2>
+  <p class="s">judgment the agent reasons about, arithmetic a script decides</p>
+  <svg viewBox="0 0 880 320" role="img" aria-label="A skill's SKILL.md pointing two ways: prose instructions the agent reads and reasons about, and a bundled scripts directory the skill's own instructions tell the agent to execute, with a real exit code.">
+<g>
+    <rect x="340" y="30" width="200" height="55" rx="8" fill="#e1d5e7" stroke="#1e1e1e" stroke-width="2.4" filter="url(#rough)"/>
+    <text x="440" y="63" text-anchor="middle" font-size="15" fill="#1e1e1e">SKILL.md</text>
+
+    <path d="M400,85 L230,150" stroke="#1e1e1e" stroke-width="2.2" marker-end="url(#ah)" filter="url(#rough)"/>
+    <path d="M480,85 L650,150" stroke="#1e1e1e" stroke-width="2.2" marker-end="url(#ah)" filter="url(#rough)"/>
+
+    <rect x="70" y="150" width="320" height="80" rx="8" fill="#dae8fc" stroke="#1e1e1e" stroke-width="2.2" filter="url(#rough)"/>
+    <text x="230" y="180" text-anchor="middle" font-size="14" fill="#1e1e1e">prose: "prod gets a NAT</text>
+    <text x="230" y="200" text-anchor="middle" font-size="14" fill="#1e1e1e">gateway per AZ"</text>
+    <text x="230" y="255" text-anchor="middle" font-size="12" fill="#1e1e1e">agent reads it, reasons about it,</text>
+    <text x="230" y="272" text-anchor="middle" font-size="12" fill="#1e1e1e">can still get it wrong</text>
+
+    <rect x="490" y="150" width="320" height="80" rx="8" fill="#d5e8d4" stroke="#1e1e1e" stroke-width="2.6" filter="url(#rough)"/>
+    <text x="650" y="180" text-anchor="middle" font-size="14" fill="#1e1e1e">scripts/check_cidr_overlap.py</text>
+    <text x="650" y="200" text-anchor="middle" font-size="14" fill="#1e1e1e">"run this before you proceed"</text>
+    <text x="650" y="255" text-anchor="middle" font-size="12" fill="#1e1e1e">plain ipaddress arithmetic,</text>
+    <text x="650" y="272" text-anchor="middle" font-size="12" fill="#1e1e1e">exit 0 or exit 1, no judgment call</text>
+  </g>
+  <text x="440" y="308" text-anchor="middle" font-size="14" fill="#1e1e1e">one skill, two kinds of rule: judgment the agent reasons about, arithmetic a script decides</text>
+  </svg>
+  <div class="pageno">M4&middot;11</div>
+</section>
+
+
+<section class="divider">
+  <h2 class="t">Skill vs Harness</h2>
+  <div class="pageno">M4&middot;12</div>
 </section>
 
 
@@ -337,13 +372,13 @@ footer, header, hgroup, main, menu, nav, section {
   </g>
   <text x="440" y="260" text-anchor="middle" font-size="14" fill="#1e1e1e">a skill can only ever suggest, a hook can actually stop the action</text>
   </svg>
-  <div class="pageno">M4&middot;11</div>
+  <div class="pageno">M4&middot;13</div>
 </section>
 
 
 <section class="divider">
   <h2 class="t">Where This Sits on the Ladder</h2>
-  <div class="pageno">M4&middot;12</div>
+  <div class="pageno">M4&middot;14</div>
 </section>
 
 
@@ -372,40 +407,43 @@ footer, header, hgroup, main, menu, nav, section {
   </g>
   <text x="380" y="335" text-anchor="middle" font-size="14" fill="#1e1e1e">the skill changed what got proposed, not who reads the plan before apply</text>
   </svg>
-  <div class="pageno">M4&middot;13</div>
+  <div class="pageno">M4&middot;15</div>
 </section>
 
 
 <section>
   <p class="kicker">MODULE 4 TAKEAWAYS</p>
   <h2 class="t">Write the Capability Once, Trigger It On Demand</h2>
-  <svg viewBox="0 0 1100 320" role="img" aria-label="Four key takeaways listed as numbered rows">
+  <svg viewBox="0 0 1100 380" role="img" aria-label="Five key takeaways listed as numbered rows">
     <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="2.4">
       <circle cx="110" cy="50"  r="22" fill="#dae8fc"/>
       <circle cx="110" cy="118" r="22" fill="#d5e8d4"/>
-      <circle cx="110" cy="186" r="22" fill="#ffe6cc"/>
-      <circle cx="110" cy="254" r="22" fill="#f8cecc"/>
+      <circle cx="110" cy="186" r="22" fill="#e1d5e7"/>
+      <circle cx="110" cy="254" r="22" fill="#ffe6cc"/>
+      <circle cx="110" cy="322" r="22" fill="#f8cecc"/>
     </g>
     <g class="num" text-anchor="middle">
       <text x="110" y="58">1</text><text x="110" y="126">2</text>
       <text x="110" y="194">3</text><text x="110" y="262">4</text>
+      <text x="110" y="330">5</text>
     </g>
     <g class="lbl" text-anchor="start">
       <text x="158" y="58">context is always loaded, a skill is loaded only when a task matches it</text>
       <text x="158" y="126">the description field is the whole match, a vague one never triggers</text>
-      <text x="158" y="194">a skill is voluntary, only a harness gate can actually block an action</text>
-      <text x="158" y="262">a better proposal is not more autonomy, this lab is still step 3</text>
+      <text x="158" y="194">a skill can bundle a real script, judgment stays prose, arithmetic doesn't</text>
+      <text x="158" y="262">a skill is voluntary, only a harness gate can actually block an action</text>
+      <text x="158" y="330">a better proposal is not more autonomy, this lab is still step 3</text>
     </g>
   </svg>
   <p class="credit">Now open <b>Module 4 &middot; Lab</b>. &nbsp;&middot;&nbsp; <b>Gourav Shah</b> &middot; School of DevOps &amp; AI</p>
-  <div class="pageno">M4&middot;14</div>
+  <div class="pageno">M4&middot;16</div>
 </section>
 
 
 <section>
   <h2 class="t">Next: Open the Lab</h2>
-  <p class="s">same intent, twice, once with the skill available</p>
-  <svg viewBox="0 0 840 190" role="img" aria-label="Six lab steps revealed one at a time: read the worked example, run 1 with no skill, write the skill, run 2 with the skill, apply and destroy against Floci, the exercise">
+  <p class="s">part I: a prose skill. part II: a skill that bundles a real script</p>
+  <svg viewBox="0 0 1040 190" role="img" aria-label="Eight lab steps revealed one at a time: read the worked example, run 1 with no skill, write the skill, run 2 with the skill, apply and destroy against Floci, then part two, bundle a real overlap-checker script, seed a real CIDR collision and watch the script catch it, apply and destroy a real multi-environment VPC against Floci">
     <g class="fragment" transform="translate(0,0)">
       <rect x="10" y="35" width="120" height="95" rx="10" fill="none" stroke="#1e1e1e" stroke-width="1.8" stroke-dasharray="6 5" filter="url(#rough)"/>
       <circle cx="70" cy="83" r="28" fill="#dae8fc" stroke="#1e1e1e" stroke-width="2" filter="url(#rough)"/>
@@ -413,43 +451,57 @@ footer, header, hgroup, main, menu, nav, section {
       <text x="70" y="150" text-anchor="middle" class="lbl-sm">read the example</text>
       <text x="70" y="166" text-anchor="middle" class="lbl-g" font-size="12">container-conventions</text>
     </g>
-    <g class="fragment" transform="translate(140,0)">
+    <g class="fragment" transform="translate(130,0)">
       <rect x="10" y="35" width="120" height="95" rx="10" fill="none" stroke="#1e1e1e" stroke-width="1.8" stroke-dasharray="6 5" filter="url(#rough)"/>
       <circle cx="70" cy="83" r="28" fill="#f8cecc" stroke="#1e1e1e" stroke-width="2" filter="url(#rough)"/>
       <path d="M55,68 L88,98" stroke="#1e1e1e" stroke-width="4" fill="none" stroke-linecap="round"/><path d="M88,68 L55,98" stroke="#1e1e1e" stroke-width="4" fill="none" stroke-linecap="round"/>
       <text x="70" y="150" text-anchor="middle" class="lbl-sm">run 1</text>
       <text x="70" y="166" text-anchor="middle" class="lbl-g" font-size="12">no skill</text>
     </g>
-    <g class="fragment" transform="translate(280,0)">
+    <g class="fragment" transform="translate(260,0)">
       <rect x="10" y="35" width="120" height="95" rx="10" fill="none" stroke="#1e1e1e" stroke-width="1.8" stroke-dasharray="6 5" filter="url(#rough)"/>
       <circle cx="70" cy="83" r="28" fill="#e1d5e7" stroke="#1e1e1e" stroke-width="2" filter="url(#rough)"/>
       <path d="M55,85 L67,97 L88,70" stroke="#1e1e1e" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
       <text x="70" y="150" text-anchor="middle" class="lbl-sm">write the skill</text>
       <text x="70" y="166" text-anchor="middle" class="lbl-g" font-size="12">pins + tags + secrets</text>
     </g>
-    <g class="fragment" transform="translate(420,0)">
+    <g class="fragment" transform="translate(390,0)">
       <rect x="10" y="35" width="120" height="95" rx="10" fill="none" stroke="#1e1e1e" stroke-width="1.8" stroke-dasharray="6 5" filter="url(#rough)"/>
       <circle cx="70" cy="83" r="28" fill="#d5e8d4" stroke="#1e1e1e" stroke-width="2" filter="url(#rough)"/>
       <path d="M55,85 L67,97 L88,70" stroke="#1e1e1e" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
       <text x="70" y="150" text-anchor="middle" class="lbl-sm">run 2</text>
       <text x="70" y="166" text-anchor="middle" class="lbl-g" font-size="12">skill available</text>
     </g>
-    <g class="fragment" transform="translate(560,0)">
+    <g class="fragment" transform="translate(520,0)">
       <rect x="10" y="35" width="120" height="95" rx="10" fill="none" stroke="#1e1e1e" stroke-width="1.8" stroke-dasharray="6 5" filter="url(#rough)"/>
       <circle cx="70" cy="83" r="28" fill="#ffe6cc" stroke="#1e1e1e" stroke-width="2" filter="url(#rough)"/>
       <path d="M55,85 L67,97 L88,70" stroke="#1e1e1e" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
       <text x="70" y="150" text-anchor="middle" class="lbl-sm">apply + destroy</text>
       <text x="70" y="166" text-anchor="middle" class="lbl-g" font-size="12">real floci bucket</text>
     </g>
-    <g class="fragment" transform="translate(700,0)">
+    <g class="fragment" transform="translate(650,0)">
       <rect x="10" y="35" width="120" height="95" rx="10" fill="none" stroke="#1e1e1e" stroke-width="1.8" stroke-dasharray="6 5" filter="url(#rough)"/>
       <circle cx="70" cy="83" r="28" fill="#dae8fc" stroke="#1e1e1e" stroke-width="2" filter="url(#rough)"/>
       <path d="M55,85 L67,97 L88,70" stroke="#1e1e1e" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-      <text x="70" y="150" text-anchor="middle" class="lbl-sm">the exercise</text>
-      <text x="70" y="166" text-anchor="middle" class="lbl-g" font-size="12">vague the description</text>
+      <text x="70" y="150" text-anchor="middle" class="lbl-sm">part II: bundle a script</text>
+      <text x="70" y="166" text-anchor="middle" class="lbl-g" font-size="12">CIDR overlap checker</text>
+    </g>
+    <g class="fragment" transform="translate(780,0)">
+      <rect x="10" y="35" width="120" height="95" rx="10" fill="none" stroke="#1e1e1e" stroke-width="1.8" stroke-dasharray="6 5" filter="url(#rough)"/>
+      <circle cx="70" cy="83" r="28" fill="#f8cecc" stroke="#1e1e1e" stroke-width="2" filter="url(#rough)"/>
+      <path d="M55,68 L88,98" stroke="#1e1e1e" stroke-width="4" fill="none" stroke-linecap="round"/><path d="M88,68 L55,98" stroke="#1e1e1e" stroke-width="4" fill="none" stroke-linecap="round"/>
+      <text x="70" y="150" text-anchor="middle" class="lbl-sm">seed a real bug</text>
+      <text x="70" y="166" text-anchor="middle" class="lbl-g" font-size="12">checker catches it</text>
+    </g>
+    <g class="fragment" transform="translate(910,0)">
+      <rect x="10" y="35" width="120" height="95" rx="10" fill="none" stroke="#1e1e1e" stroke-width="1.8" stroke-dasharray="6 5" filter="url(#rough)"/>
+      <circle cx="70" cy="83" r="28" fill="#d5e8d4" stroke="#1e1e1e" stroke-width="2" filter="url(#rough)"/>
+      <path d="M55,85 L67,97 L88,70" stroke="#1e1e1e" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      <text x="70" y="150" text-anchor="middle" class="lbl-sm">apply + destroy</text>
+      <text x="70" y="166" text-anchor="middle" class="lbl-g" font-size="12">real floci VPC, 12 resources</text>
     </g>
   </svg>
-  <div class="pageno">M4&middot;15</div>
+  <div class="pageno">M4&middot;17</div>
 </section>
 
 
