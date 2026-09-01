@@ -136,6 +136,14 @@ const sidebars: SidebarsConfig = {
         'm12-loop-multiagent-economics/quiz',
       ],
     },
+    {
+      type: 'category',
+      label: 'Capstone: Propose, Dont Decide',
+      items: [
+        'capstone/index',
+        'capstone/rubric',
+      ],
+    },
   ],
 };
 
