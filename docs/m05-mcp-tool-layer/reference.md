@@ -18,7 +18,7 @@ one-off integration to every tool.
 | What comes back | Nothing external | Pass or block | Real, current data |
 | Can it be skipped | Yes | No | Yes |
 
-## The two servers this module configures
+## The MCP servers this module configures, or tries to
 
 - **Terraform MCP server**, HashiCorp's official server. Docker image, run over stdio:
   `docker run --rm -i hashicorp/terraform-mcp-server:latest stdio`. Never the deprecated
@@ -26,6 +26,19 @@ one-off integration to every tool.
 - **GitHub MCP server**, the official, hosted server at
   `https://api.githubcopilot.com/mcp/`, HTTP transport, a bearer token in the
   `Authorization` header.
+- **`aws-iac-mcp-server`**, AWS Labs' official server (`uvx awslabs.aws-iac-mcp-server@latest`).
+  Real, installs cleanly, CloudFormation/CDK-scoped, never Terraform. Crashes on startup as
+  of this pass (`ModuleNotFoundError: fastmcp.server.proxy`). Verify a server actually
+  starts and actually covers your IaC tool before you plan a workflow around it.
+
+## What aws_db_parameter_group actually needs
+
+- `family` is the only required argument (Terraform MCP, verified live), for MySQL 8.0,
+  use `mysql8.0` (a naming-pattern inference, not a literal doc example, the agent said so)
+- each `parameter { name = ...; value = ... }` block needs both fields, `apply_method`
+  defaults to `immediate`
+- wire it to the instance with `parameter_group_name`, then verify the names actually match
+  with `terraform show -json`, not just by re-reading the HCL
 
 ## Register a server
 

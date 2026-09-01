@@ -86,6 +86,48 @@ more in the same spirit: [Stale vs Live Lookup Simulator](pathname:///310-agenti
 
 <Embed src="sims/stale-vs-live-sim.html" title="Stale vs Live Lookup Simulator" />
 
+## A Live Lookup Can Build the Real Thing, Not Just Answer a Question
+
+Everything so far has been a lookup: ask a question, get a real answer instead of a guess.
+That's useful, but it undersells what a live connection is for. The lab's flagship exercise
+goes one step further: use the Terraform MCP server to look up `aws_db_parameter_group`, a
+resource most people have never written by hand, and then actually build it, an RDS instance
+with a real, non-default parameter attached, applied against Floci and verified.
+
+The lookup and the build are two different disciplines. The lookup tells you `family` is
+the only required argument, and that the MySQL 8.0 family value follows a naming pattern the
+docs don't spell out literally (`mysql8.0`, inferred from `mysql5.6`/`mysql5.7` examples, not
+copied from a literal doc string). The build tells you whether the resource you wrote
+actually does what you meant: whether `aws_db_instance.app`'s `parameter_group_name` really
+matches the parameter group you created, not just sits next to it in the same file.
+Terraform will happily apply a module where those two names silently drift apart, nothing
+errors, the parameter group just never attaches. Checking `terraform show -json` after
+apply, not just after writing the HCL, is what catches that.
+
+![A real RDS instance wired to a real non-default parameter group: the MySQL 8.0 database points at a parameter group carrying slow query log turned on and a two second threshold, applied and verified against Floci, then destroyed.](./diagrams/param-group-build.svg)
+
+## Official Doesn't Mean Ready
+
+One more real result belongs in this chapter, because it's a genuinely useful lesson and it
+would be dishonest to leave it out just because it's inconvenient. `aws-iac-mcp-server` is
+named, in this course's own conventions, as the AWS-endorsed successor to the deprecated
+`awslabs/terraform-mcp-server`. It's real. `uvx awslabs.aws-iac-mcp-server@latest` really
+installs, 86 real packages, a real dependency tree including `cfn-lint` and `botocore`. Then
+it crashes on startup: `ModuleNotFoundError: No module named 'fastmcp.server.proxy'`.
+Pinning an older `fastmcp` doesn't fix it, it trades one crash for a different, real one, a
+`pydantic` incompatibility this time.
+
+Two facts sit side by side here, and a working engineer needs both. First: the server's
+documented tool list is real and would genuinely help if part of your stack is CloudFormation
+or CDK, `validate_cloudformation_template`, `check_cloudformation_template_compliance`,
+`search_cdk_documentation`, none of it Terraform-specific, all of it CFN/CDK-scoped. Second:
+it doesn't start, today, in a clean environment. "Official" describes who publishes a
+package. It says nothing about whether the package runs. Verify an MCP server actually
+connects, and actually covers the IaC tool you're using, before you build a workflow that
+assumes it will.
+
+![A real attempt to run aws-iac-mcp-server: it installs, eighty six real packages, then crashes on startup with a real module not found error. Its documented tools are CloudFormation and CDK only, never Terraform.](./diagrams/aws-iac-mcp-honest.svg)
+
 ## Opening a Pull Request Is Not Merging It
 
 The GitHub MCP server lets an agent do real things on a real repository: read files, open
@@ -131,3 +173,4 @@ instinct you'll formalize properly in module 6.
 | Resource | Data an MCP server exposes for an agent to read |
 | Terraform MCP server | HashiCorp's official server (GA June 2026), never the deprecated `awslabs/terraform-mcp-server` |
 | GitHub MCP server | The official MCP server for GitHub, used in this module to open a real pull request |
+| `aws-iac-mcp-server` | AWS Labs' official CloudFormation/CDK MCP server, real, never Terraform-scoped, and unstable at the time this module was built |

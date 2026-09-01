@@ -314,8 +314,78 @@ footer, header, hgroup, main, menu, nav, section {
 
 
 <section class="divider">
-  <h2 class="t">Opening a PR Is Not Merging It</h2>
+  <h2 class="t">Building the Real Thing: RDS with a Parameter Group</h2>
   <div class="pageno">M5&middot;09</div>
+</section>
+
+
+<section>
+  <h2 class="t">A Live Lookup, Then a Real Build</h2>
+  <p class="s">the wiring you'd normally have to look up, verified, not assumed</p>
+  <svg viewBox="0 0 880 320" role="img" aria-label="A real RDS instance wired to a real non-default parameter group: the MySQL 8.0 database points at a parameter group carrying slow query log turned on and a two second threshold, applied and verified against Floci, then destroyed.">
+<g>
+    <text x="440" y="30" text-anchor="middle" font-size="15" fill="#1e1e1e">aws_db_instance.app, wired to aws_db_parameter_group.app</text>
+
+    <rect x="80" y="60" width="290" height="150" rx="10" fill="#dae8fc" stroke="#1e1e1e" stroke-width="2.4" filter="url(#rough)"/>
+    <text x="225" y="90" text-anchor="middle" font-size="14" fill="#1e1e1e">aws_db_instance.app</text>
+    <text x="225" y="118" text-anchor="middle" font-size="12" fill="#1e1e1e">mysql 8.0, db.t3.micro</text>
+    <text x="225" y="140" text-anchor="middle" font-size="12" fill="#1e1e1e">parameter_group_name =</text>
+    <text x="225" y="158" text-anchor="middle" font-size="13" fill="#1e1e1e">"m05-mysql8-slowlog"</text>
+    <text x="225" y="188" text-anchor="middle" font-size="12" fill="#2e7d32">verified: names match</text>
+
+    <path d="M375,135 L500,137" stroke="#1e1e1e" stroke-width="2.4" marker-end="url(#ah2)"/>
+
+    <rect x="505" y="60" width="290" height="150" rx="10" fill="#d5e8d4" stroke="#1e1e1e" stroke-width="2.4" filter="url(#rough)"/>
+    <text x="650" y="90" text-anchor="middle" font-size="14" fill="#1e1e1e">aws_db_parameter_group.app</text>
+    <text x="650" y="118" text-anchor="middle" font-size="12" fill="#1e1e1e">family = "mysql8.0"</text>
+    <text x="650" y="140" text-anchor="middle" font-size="12" fill="#1e1e1e">slow_query_log = 1</text>
+    <text x="650" y="160" text-anchor="middle" font-size="12" fill="#1e1e1e">long_query_time = 2</text>
+    <text x="650" y="188" text-anchor="middle" font-size="12" fill="#2e7d32">a real, non-default setting</text>
+  </g>
+  <text x="440" y="250" text-anchor="middle" font-size="15" fill="#1e1e1e">Apply complete! Resources: 7 added, 0 changed, 0 destroyed</text>
+  <text x="440" y="280" text-anchor="middle" font-size="13" fill="#1e1e1e">real apply against Floci, real verification, real destroy, captured building this module</text>
+  </svg>
+  <div class="pageno">M5&middot;10</div>
+</section>
+
+
+<section class="divider">
+  <h2 class="t">Official Doesn't Mean Ready</h2>
+  <div class="pageno">M5&middot;11</div>
+</section>
+
+
+<section>
+  <h2 class="t">A Real, Live Disappointment</h2>
+  <p class="s">aws-iac-mcp-server installs, then crashes on startup, real output</p>
+  <svg viewBox="0 0 880 300" role="img" aria-label="A real attempt to run aws-iac-mcp-server: it installs, eighty six real packages, then crashes on startup with a real module not found error. Its documented tools are CloudFormation and CDK only, never Terraform.">
+<g>
+    <text x="440" y="30" text-anchor="middle" font-size="15" fill="#1e1e1e">uvx awslabs.aws-iac-mcp-server@latest --help</text>
+
+    <rect x="60" y="55" width="330" height="170" rx="10" fill="#ffe6cc" stroke="#1e1e1e" stroke-width="2.4" filter="url(#rough)"/>
+    <text x="225" y="85" text-anchor="middle" font-size="14" fill="#1e1e1e">real, official, installs fine</text>
+    <text x="225" y="112" text-anchor="middle" font-size="12" fill="#1e1e1e">86 packages, real deps:</text>
+    <text x="225" y="132" text-anchor="middle" font-size="12" fill="#1e1e1e">cfn-lint, botocore, cdk docs</text>
+    <text x="225" y="160" text-anchor="middle" font-size="12" fill="#1e1e1e">tools: validate/check CFN,</text>
+    <text x="225" y="180" text-anchor="middle" font-size="12" fill="#1e1e1e">search CDK docs, 7 more</text>
+    <text x="225" y="205" text-anchor="middle" font-size="12" fill="#c62828">none of them speak Terraform</text>
+
+    <rect x="490" y="55" width="330" height="170" rx="10" fill="#f8cecc" stroke="#1e1e1e" stroke-width="2.4" filter="url(#rough)"/>
+    <text x="655" y="85" text-anchor="middle" font-size="14" fill="#1e1e1e">but it doesn't start</text>
+    <text x="655" y="120" text-anchor="middle" font-size="13" fill="#1e1e1e">ModuleNotFoundError:</text>
+    <text x="655" y="142" text-anchor="middle" font-size="12" fill="#1e1e1e">fastmcp.server.proxy</text>
+    <text x="655" y="170" text-anchor="middle" font-size="12" fill="#1e1e1e">pinning an older fastmcp:</text>
+    <text x="655" y="190" text-anchor="middle" font-size="12" fill="#1e1e1e">a different real crash</text>
+  </g>
+  <text x="440" y="255" text-anchor="middle" font-size="15" fill="#1e1e1e">official does not mean stable. AWS-specific does not mean it speaks your IaC tool.</text>
+  </svg>
+  <div class="pageno">M5&middot;12</div>
+</section>
+
+
+<section class="divider">
+  <h2 class="t">Opening a PR Is Not Merging It</h2>
+  <div class="pageno">M5&middot;13</div>
 </section>
 
 
@@ -350,7 +420,7 @@ footer, header, hgroup, main, menu, nav, section {
   </g>
   <text x="440" y="255" text-anchor="middle" font-size="13" fill="#1e1e1e">the agent proposes, the pipeline decides, still true even through MCP</text>
   </svg>
-  <div class="pageno">M5&middot;10</div>
+  <div class="pageno">M5&middot;14</div>
 </section>
 
 
@@ -390,84 +460,101 @@ footer, header, hgroup, main, menu, nav, section {
   </g>
   <text x="440" y="300" text-anchor="middle" font-size="13" fill="#1e1e1e">a human still reads the plan either way, step 3 either way</text>
   </svg>
-  <div class="pageno">M5&middot;11</div>
+  <div class="pageno">M5&middot;15</div>
 </section>
 
 
 <section>
   <p class="kicker">MODULE 5 TAKEAWAYS</p>
   <h2 class="t">Real Data In, Still Step 3</h2>
-  <svg viewBox="0 0 1100 320" role="img" aria-label="Four key takeaways listed as numbered rows">
+  <svg viewBox="0 0 1100 380" role="img" aria-label="Five key takeaways listed as numbered rows">
     <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="2.4">
       <circle cx="110" cy="50"  r="22" fill="#dae8fc"/>
       <circle cx="110" cy="118" r="22" fill="#d5e8d4"/>
       <circle cx="110" cy="186" r="22" fill="#ffe6cc"/>
       <circle cx="110" cy="254" r="22" fill="#f8cecc"/>
+      <circle cx="110" cy="322" r="22" fill="#e1d5e7"/>
     </g>
     <g class="num" text-anchor="middle">
       <text x="110" y="58">1</text><text x="110" y="126">2</text>
       <text x="110" y="194">3</text><text x="110" y="262">4</text>
+      <text x="110" y="330">5</text>
     </g>
     <g class="lbl" text-anchor="start">
       <text x="158" y="58">MCP is one shared protocol, not another one-off integration</text>
       <text x="158" y="126">a skill is packaged instruction, a hook is enforced, MCP is a live call out</text>
       <text x="158" y="194">a live lookup beats a stale guess, we measured it, 4.5.0 vs a guess of 3.6.2</text>
-      <text x="158" y="262">opening a PR is not merging it, the human gate from module 1 still holds</text>
+      <text x="158" y="262">a live lookup can also build the real thing, a verified RDS parameter group, not a guess</text>
+      <text x="158" y="330">official doesn't mean ready, and AWS-specific doesn't mean it speaks your IaC tool</text>
     </g>
   </svg>
   <p class="credit">Now open <b>Module 5 &middot; Lab</b>. &nbsp;&middot;&nbsp; <b>Gourav Shah</b> &middot; School of DevOps &amp; AI</p>
-  <div class="pageno">M5&middot;12</div>
+  <div class="pageno">M5&middot;16</div>
 </section>
 
 
 <section>
   <h2 class="t">Next: Open the Lab</h2>
   <p class="s">the same question, twice, once with a live tool available</p>
-  <svg viewBox="0 0 840 190" role="img" aria-label="Six lab steps revealed one at a time: configure the terraform MCP server, ask without it, ask with it, configure the github MCP server, open a real pull request, close it without merging">
+  <svg viewBox="0 0 980 190" role="img" aria-label="Eight lab steps revealed one at a time: configure the terraform MCP server, ask without it, ask with it, build the RDS-with-parameter-group module, try aws-iac-mcp-server and watch it fail to start, configure the github MCP server, open a real pull request, close it without merging">
     <g class="fragment" transform="translate(0,0)">
-      <rect x="10" y="35" width="120" height="95" rx="10" fill="none" stroke="#1e1e1e" stroke-width="1.8" stroke-dasharray="6 5" filter="url(#rough)"/>
-      <circle cx="70" cy="83" r="28" fill="#dae8fc" stroke="#1e1e1e" stroke-width="2" filter="url(#rough)"/>
-      <path d="M55,85 L67,97 L88,70" stroke="#1e1e1e" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-      <text x="70" y="150" text-anchor="middle" class="lbl-sm">configure terraform MCP</text>
-      <text x="70" y="166" text-anchor="middle" class="lbl-g" font-size="12">official server, docker image</text>
+      <rect x="5" y="35" width="110" height="95" rx="10" fill="none" stroke="#1e1e1e" stroke-width="1.8" stroke-dasharray="6 5" filter="url(#rough)"/>
+      <circle cx="60" cy="83" r="26" fill="#dae8fc" stroke="#1e1e1e" stroke-width="2" filter="url(#rough)"/>
+      <path d="M46,85 L57,96 L76,71" stroke="#1e1e1e" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      <text x="60" y="150" text-anchor="middle" class="lbl-sm" font-size="11">configure terraform MCP</text>
+      <text x="60" y="166" text-anchor="middle" class="lbl-g" font-size="11">official server, docker image</text>
     </g>
-    <g class="fragment" transform="translate(140,0)">
-      <rect x="10" y="35" width="120" height="95" rx="10" fill="none" stroke="#1e1e1e" stroke-width="1.8" stroke-dasharray="6 5" filter="url(#rough)"/>
-      <circle cx="70" cy="83" r="28" fill="#f8cecc" stroke="#1e1e1e" stroke-width="2" filter="url(#rough)"/>
-      <path d="M55,68 L88,98" stroke="#1e1e1e" stroke-width="4" fill="none" stroke-linecap="round"/><path d="M88,68 L55,98" stroke="#1e1e1e" stroke-width="4" fill="none" stroke-linecap="round"/>
-      <text x="70" y="150" text-anchor="middle" class="lbl-sm">ask without MCP</text>
-      <text x="70" y="166" text-anchor="middle" class="lbl-g" font-size="12">a guess, low confidence</text>
+    <g class="fragment" transform="translate(120,0)">
+      <rect x="5" y="35" width="110" height="95" rx="10" fill="none" stroke="#1e1e1e" stroke-width="1.8" stroke-dasharray="6 5" filter="url(#rough)"/>
+      <circle cx="60" cy="83" r="26" fill="#f8cecc" stroke="#1e1e1e" stroke-width="2" filter="url(#rough)"/>
+      <path d="M47,70 L73,96" stroke="#1e1e1e" stroke-width="4" fill="none" stroke-linecap="round"/><path d="M73,70 L47,96" stroke="#1e1e1e" stroke-width="4" fill="none" stroke-linecap="round"/>
+      <text x="60" y="150" text-anchor="middle" class="lbl-sm" font-size="11">ask without MCP</text>
+      <text x="60" y="166" text-anchor="middle" class="lbl-g" font-size="11">a guess, low confidence</text>
     </g>
-    <g class="fragment" transform="translate(280,0)">
-      <rect x="10" y="35" width="120" height="95" rx="10" fill="none" stroke="#1e1e1e" stroke-width="1.8" stroke-dasharray="6 5" filter="url(#rough)"/>
-      <circle cx="70" cy="83" r="28" fill="#d5e8d4" stroke="#1e1e1e" stroke-width="2" filter="url(#rough)"/>
-      <path d="M55,85 L67,97 L88,70" stroke="#1e1e1e" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-      <text x="70" y="150" text-anchor="middle" class="lbl-sm">ask with MCP</text>
-      <text x="70" y="166" text-anchor="middle" class="lbl-g" font-size="12">real version, real args</text>
+    <g class="fragment" transform="translate(240,0)">
+      <rect x="5" y="35" width="110" height="95" rx="10" fill="none" stroke="#1e1e1e" stroke-width="1.8" stroke-dasharray="6 5" filter="url(#rough)"/>
+      <circle cx="60" cy="83" r="26" fill="#d5e8d4" stroke="#1e1e1e" stroke-width="2" filter="url(#rough)"/>
+      <path d="M46,85 L57,96 L76,71" stroke="#1e1e1e" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      <text x="60" y="150" text-anchor="middle" class="lbl-sm" font-size="11">ask with MCP</text>
+      <text x="60" y="166" text-anchor="middle" class="lbl-g" font-size="11">real version, real args</text>
     </g>
-    <g class="fragment" transform="translate(420,0)">
-      <rect x="10" y="35" width="120" height="95" rx="10" fill="none" stroke="#1e1e1e" stroke-width="1.8" stroke-dasharray="6 5" filter="url(#rough)"/>
-      <circle cx="70" cy="83" r="28" fill="#e1d5e7" stroke="#1e1e1e" stroke-width="2" filter="url(#rough)"/>
-      <path d="M55,85 L67,97 L88,70" stroke="#1e1e1e" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-      <text x="70" y="150" text-anchor="middle" class="lbl-sm">configure github MCP</text>
-      <text x="70" y="166" text-anchor="middle" class="lbl-g" font-size="12">against a scratch branch</text>
+    <g class="fragment" transform="translate(360,0)">
+      <rect x="5" y="35" width="110" height="95" rx="10" fill="none" stroke="#1e1e1e" stroke-width="1.8" stroke-dasharray="6 5" filter="url(#rough)"/>
+      <circle cx="60" cy="83" r="26" fill="#d5e8d4" stroke="#1e1e1e" stroke-width="2" filter="url(#rough)"/>
+      <path d="M46,85 L57,96 L76,71" stroke="#1e1e1e" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      <text x="60" y="150" text-anchor="middle" class="lbl-sm" font-size="11">build the RDS module</text>
+      <text x="60" y="166" text-anchor="middle" class="lbl-g" font-size="11">real apply, real destroy</text>
     </g>
-    <g class="fragment" transform="translate(560,0)">
-      <rect x="10" y="35" width="120" height="95" rx="10" fill="none" stroke="#1e1e1e" stroke-width="1.8" stroke-dasharray="6 5" filter="url(#rough)"/>
-      <circle cx="70" cy="83" r="28" fill="#dae8fc" stroke="#1e1e1e" stroke-width="2" filter="url(#rough)"/>
-      <path d="M55,85 L67,97 L88,70" stroke="#1e1e1e" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-      <text x="70" y="150" text-anchor="middle" class="lbl-sm">open a real PR</text>
-      <text x="70" y="166" text-anchor="middle" class="lbl-g" font-size="12">through the MCP tool</text>
+    <g class="fragment" transform="translate(480,0)">
+      <rect x="5" y="35" width="110" height="95" rx="10" fill="none" stroke="#1e1e1e" stroke-width="1.8" stroke-dasharray="6 5" filter="url(#rough)"/>
+      <circle cx="60" cy="83" r="26" fill="#f8cecc" stroke="#1e1e1e" stroke-width="2" filter="url(#rough)"/>
+      <path d="M47,70 L73,96" stroke="#1e1e1e" stroke-width="4" fill="none" stroke-linecap="round"/><path d="M73,70 L47,96" stroke="#1e1e1e" stroke-width="4" fill="none" stroke-linecap="round"/>
+      <text x="60" y="150" text-anchor="middle" class="lbl-sm" font-size="11">try aws-iac-mcp-server</text>
+      <text x="60" y="166" text-anchor="middle" class="lbl-g" font-size="11">real, official, crashes on start</text>
     </g>
-    <g class="fragment" transform="translate(700,0)">
-      <rect x="10" y="35" width="120" height="95" rx="10" fill="none" stroke="#1e1e1e" stroke-width="1.8" stroke-dasharray="6 5" filter="url(#rough)"/>
-      <circle cx="70" cy="83" r="28" fill="#ffe6cc" stroke="#1e1e1e" stroke-width="2" filter="url(#rough)"/>
-      <path d="M55,85 L67,97 L88,70" stroke="#1e1e1e" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-      <text x="70" y="150" text-anchor="middle" class="lbl-sm">close, don't merge</text>
-      <text x="70" y="166" text-anchor="middle" class="lbl-g" font-size="12">human decision, not the agent's</text>
+    <g class="fragment" transform="translate(600,0)">
+      <rect x="5" y="35" width="110" height="95" rx="10" fill="none" stroke="#1e1e1e" stroke-width="1.8" stroke-dasharray="6 5" filter="url(#rough)"/>
+      <circle cx="60" cy="83" r="26" fill="#e1d5e7" stroke="#1e1e1e" stroke-width="2" filter="url(#rough)"/>
+      <path d="M46,85 L57,96 L76,71" stroke="#1e1e1e" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      <text x="60" y="150" text-anchor="middle" class="lbl-sm" font-size="11">configure github MCP</text>
+      <text x="60" y="166" text-anchor="middle" class="lbl-g" font-size="11">against a scratch branch</text>
+    </g>
+    <g class="fragment" transform="translate(720,0)">
+      <rect x="5" y="35" width="110" height="95" rx="10" fill="none" stroke="#1e1e1e" stroke-width="1.8" stroke-dasharray="6 5" filter="url(#rough)"/>
+      <circle cx="60" cy="83" r="26" fill="#dae8fc" stroke="#1e1e1e" stroke-width="2" filter="url(#rough)"/>
+      <path d="M46,85 L57,96 L76,71" stroke="#1e1e1e" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      <text x="60" y="150" text-anchor="middle" class="lbl-sm" font-size="11">open a real PR</text>
+      <text x="60" y="166" text-anchor="middle" class="lbl-g" font-size="11">through the MCP tool</text>
+    </g>
+    <g class="fragment" transform="translate(840,0)">
+      <rect x="5" y="35" width="110" height="95" rx="10" fill="none" stroke="#1e1e1e" stroke-width="1.8" stroke-dasharray="6 5" filter="url(#rough)"/>
+      <circle cx="60" cy="83" r="26" fill="#ffe6cc" stroke="#1e1e1e" stroke-width="2" filter="url(#rough)"/>
+      <path d="M46,85 L57,96 L76,71" stroke="#1e1e1e" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      <text x="60" y="150" text-anchor="middle" class="lbl-sm" font-size="11">close, don't merge</text>
+      <text x="60" y="166" text-anchor="middle" class="lbl-g" font-size="11">human decision, not the agent's</text>
     </g>
   </svg>
-  <div class="pageno">M5&middot;13</div>
+  <div class="pageno">M5&middot;17</div>
 </section>
 
 
