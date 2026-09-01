@@ -252,6 +252,13 @@ safety, with step 5's level of exposure, and that is worse, not better. Every mo
 this course that moves you a step up this ladder also teaches you the gate that has to
 exist first, before you are allowed to climb it.
 
+### Try it: is this an agent?
+
+Try the [Agent Classifier](pathname:///310-agentic-iac-site/sims/agent-classifier-sim.html) on a workflow from
+your own work. Toggle whether it loops, whether it decides from what it observes, whether
+it has a real stopping condition, then see whether it lands as autocomplete, automation, or
+a real agent, and if it's an agent, roughly which step of the ladder it sits on and why.
+
 ## Where the AI Infrastructure Industry Actually Stands
 
 It is worth being honest about the gap between what agentic infrastructure can technically

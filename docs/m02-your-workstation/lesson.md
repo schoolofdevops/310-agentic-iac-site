@@ -59,17 +59,52 @@ devcontainer config.
 The autonomy ladder from module 1 has six steps. This lab puts you on the first
 two, felt directly rather than just read about.
 
-Step 1 is suggest: the agent proposes text, you type it. You give the agent the
-same one-line intent from module 1's lab, the local nginx container with a static
-page kept on disk, and instead of letting it touch any file, you ask it to just
-tell you what it would write. Then you type that suggestion into a file yourself,
-by hand.
+Step 1 is suggest: the agent proposes text, you decide what lands in the repo.
+You give the agent the same one-line intent from module 1's lab, the local nginx
+container with a static page kept on disk, and instead of letting it touch any
+file, you ask it to just tell you what it would write. You then move that answer
+into your repo yourself, copy it, paste it, redirect it, whatever's fastest, the
+same way you'd move a suggestion out of a chat window or a code review comment.
 
 ![Step 1, suggest: an agent chat bubble proposes Terraform text, an arrow crosses to a person icon who types it into a file by hand, showing the agent never touches the file directly.](./diagrams/step1-suggest.svg)
 
 Nothing about this step is slower for the sake of being slower. It is the step
-where you keep full, physical control of what lands in your repo. Every keystroke
-is yours, even though the words came from the agent.
+where you keep full control of what lands in your repo. The words came from the
+agent, but nothing reaches disk without you deciding it should.
+
+Day to day, this isn't a CLI flag you'd reach for either. You'd just ask, in an
+ordinary interactive session, and not let the agent touch a file yet. The lab
+uses a scripted, non-interactive form of the same thing, `--allowedTools ""`,
+because a lab has to give the same result every time you run it, an interactive
+back-and-forth can't be scripted that way. The next section is about that real,
+day-to-day control surface.
+
+### Two real dials: which tools, and how much permission
+
+Claude Code gives you two separate controls over an agent session: which tools it
+may call at all, and how much it can do with them before stopping to ask. Day to
+day you set both interactively, Shift+Tab cycles the session's permission mode
+right there in the prompt, and `/permissions` opens the actual allow/deny list.
+Want a session where nothing stops to ask at all? That's
+`claude --dangerously-skip-permissions`, reached for with your eyes open, the
+CLI's own help text says plainly it's meant for sandboxes with no internet
+access, not daily driving.
+
+The lab's scripted steps use the non-interactive equivalents of both dials,
+`--allowedTools` and `--permission-mode`, precisely so each step is
+copy-pasteable and gives the same result every time. Six real permission-mode
+values exist: `manual`/`auto` (the interactive default), `acceptEdits`, `plan`,
+`dontAsk`, and `bypassPermissions`. `plan` mode is the real mechanism behind step
+3 on the ladder, propose with plan, previewed in this module's lab and properly
+taught starting M04.
+
+### Try it: the permission mode simulator
+
+Try the [Permission Mode Simulator](pathname:///310-agentic-iac-site/sims/permission-mode-sim.html):
+pick which tools are allowed and a permission mode, then watch what actually
+happens when the agent attempts a read, a write, a `terraform apply`, and an
+arbitrary shell command. Every mode's behavior in the tool is checked against a
+real `claude --help` run, not guessed.
 
 ## Step 2: Draft
 

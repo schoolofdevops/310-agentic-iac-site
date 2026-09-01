@@ -61,6 +61,14 @@ against. The skill sits in the repo, correctly written, completely unused. A ski
 agent ever triggers is worse than no skill at all, because it gives a team false confidence
 that the rule is enforced somewhere.
 
+### Try it: the skill discoverability simulator
+
+Type a task into the [Skill Discoverability Simulator](pathname:///310-agentic-iac-site/sims/skill-discoverability-sim.html)
+and watch it get checked against a few real `description` fields, including the vague
+`terraform-best-practices` one above. Try "write an S3 bucket module" first, then try
+"clean up this codebase", a task specific enough for a human, vague enough that nothing
+fires.
+
 ## Skills Package House Convention
 
 The real payoff isn't any single rule. It's not retyping the same review comment for the
