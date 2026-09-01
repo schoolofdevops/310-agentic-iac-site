@@ -3,7 +3,7 @@ sidebar_position: 4
 title: 'Exploratory projects'
 ---
 
-# M11 Projects: Agentic GitOps and Pipelines
+# M11 Projects: Safe Agentic Delivery to Production
 
 Stretch projects. Hints, not solutions.
 

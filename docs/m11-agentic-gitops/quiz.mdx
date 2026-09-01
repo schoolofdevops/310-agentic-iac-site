@@ -5,7 +5,7 @@ title: 'Quiz'
 
 import Quiz from '@site/src/components/Quiz';
 
-# M11 Quiz: Agentic GitOps and Pipelines
+# M11 Quiz: Safe Agentic Delivery to Production
 
 <Quiz questions={[
   {
@@ -28,6 +28,12 @@ import Quiz from '@site/src/components/Quiz';
   },
   {
     prompt:'What would move this module\'s loop from step 5 to step 6, unattended?',options:[{text:'Installing Flux instead of Argo CD',correct:false,explanation:'Swapping controllers doesn\'t change who approves the merge.'},{text:'Removing the human review and merge step itself',correct:true,explanation:'Every piece needed to remove the human from the merge already exists technically. Step 6 would mean actually doing that, and this course doesn\'t teach it as a default.'},{text:'Adding more scanners to the CI pipeline',correct:false,explanation:'More scanners strengthen the gate, they don\'t remove the human merge step.'},{text:'Making the reconcile loop run faster',correct:false,explanation:'Speed has nothing to do with who approves the merge.'}]
+  },
+  {
+    prompt:'In the lab, an agent opened a real pull request with a hardcoded key in it, and its own output noted the mistake in passing without stopping itself. What actually caught it?',options:[{text:'The agent caught its own mistake and refused to commit',correct:false,explanation:'It noticed and said so, but committed and pushed anyway.'},{text:'Nothing caught it, the flaw shipped',correct:false,explanation:'It didn\'t ship, the pipeline blocked it before merge.'},{text:'The CI pipeline\'s checkov stage, automatically, on the pull request',correct:true,explanation:'Noticing isn\'t the same as stopping. What actually blocked the change was the automated pipeline catching CKV_SECRET_2 and failing the check, a gate after the agent instead of trusting the agent\'s own judgment.'},{text:'A human reviewed the diff before it was pushed and caught it',correct:false,explanation:'Nobody reviewed the diff before it went out, that\'s the point.'}]
+  },
+  {
+    prompt:'This chapter names four separate jobs in a safe agentic delivery chain: propose, automated review, human merge, apply. Which one does GitOps actually do?',options:[{text:'GitOps does all four',correct:false,explanation:'GitOps only reconciles a cluster to match a merged repo.'},{text:'GitOps is the "apply" step only, the other three already had to happen first',correct:true,explanation:'GitOps says nothing about whether a change was safe to merge. That\'s steps 1-3: an agent proposing, a pipeline reviewing automatically, a human reading the outcome before merge. GitOps is the last link, not the whole chain.'},{text:'GitOps replaces the need for automated review',correct:false,explanation:'GitOps runs after merge, it can\'t review what already merged.'},{text:'GitOps is the "propose" step, since Argo CD watches the repo for changes',correct:false,explanation:'Watching for a merged change to reconcile is apply, not propose.'}]
   }
 
 ]} />

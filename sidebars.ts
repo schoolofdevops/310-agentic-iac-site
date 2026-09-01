@@ -116,7 +116,7 @@ const sidebars: SidebarsConfig = {
     },
     {
       type: 'category',
-      label: 'Module 11: Agentic GitOps and Pipelines',
+      label: 'Module 11: Safe Agentic Delivery to Production',
       items: [
         'm11-agentic-gitops/lesson',
         'm11-agentic-gitops/lab',

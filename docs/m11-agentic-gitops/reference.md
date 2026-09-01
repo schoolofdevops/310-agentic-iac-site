@@ -3,7 +3,7 @@ sidebar_position: 3
 title: 'Reference card'
 ---
 
-# M11 Reference Card: Agentic GitOps and Pipelines
+# M11 Reference Card: Safe Agentic Delivery to Production
 
 ## The full loop, in order
 

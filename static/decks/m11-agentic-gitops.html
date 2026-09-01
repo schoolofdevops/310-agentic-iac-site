@@ -3,12 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Agentic Infrastructure as Code — Module 11: Agentic GitOps and Pipelines</title>
+<title>Agentic Infrastructure as Code — Module 11: Safe Agentic Delivery to Production</title>
 
 <!-- ============================================================
      CourseSmith whiteboard deck skeleton (self-contained).
      Style contract: templates/deck/whiteboard-style-guide.md
-     Tokens: Agentic Infrastructure as Code 11 Agentic GitOps and Pipelines
+     Tokens: Agentic Infrastructure as Code 11 Safe Agentic Delivery to Production
              A human reviews an outcome now, not a step M11 (e.g. M1)
      Zero external requests: reveal.js 5.x runtime + Patrick Hand
      woff2 are inlined below. Keep it that way.
@@ -139,7 +139,7 @@ footer, header, hgroup, main, menu, nav, section {
 
 <section data-auto-animate>
   <p class="kicker">MODULE 11 &nbsp;&middot;&nbsp; AGENTIC INFRASTRUCTURE AS CODE</p>
-  <h2 class="t" style="font-size:1.7em">Agentic GitOps and Pipelines</h2>
+  <h2 class="t" style="font-size:1.7em">Safe Agentic Delivery to Production</h2>
   <p class="s" style="font-size:1em">A human reviews an outcome now, not a step</p>
   <svg viewBox="0 0 900 260" role="img" aria-label="A merged pull request feeding into a reconcile loop, drawn as one continuous path">
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.6">
@@ -245,6 +245,8 @@ footer, header, hgroup, main, menu, nav, section {
   <p class="s">two different questions, watch both</p>
   <svg viewBox="0 0 900 320" role="img" aria-label="Two independent states, synced-vs-out-of-sync on one axis and healthy-vs-degraded on the other, shown as a small grid rather than a single checkmark.">
 <g>
+    <text x="450" y="30" text-anchor="middle" font-size="14" fill="#1e1e1e">synced and healthy are two different questions</text>
+
     <text x="330" y="75" text-anchor="middle" font-size="11" fill="#1e1e1e">synced</text>
     <text x="560" y="75" text-anchor="middle" font-size="11" fill="#1e1e1e">out of sync</text>
     <text x="150" y="140" text-anchor="middle" font-size="11" fill="#1e1e1e">healthy</text>
@@ -370,7 +372,7 @@ footer, header, hgroup, main, menu, nav, section {
 
 <section>
   <p class="kicker">MODULE 11 TAKEAWAYS</p>
-  <h2 class="t">Automatic Gate, Automatic Sync, One Human Step</h2>
+  <h2 class="t">Propose, Review, Merge, Apply, GitOps Is the Last One</h2>
   <svg viewBox="0 0 1100 320" role="img" aria-label="Four key takeaways listed as numbered rows">
     <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="2.4">
       <circle cx="110" cy="50"  r="22" fill="#dae8fc"/>
@@ -383,10 +385,10 @@ footer, header, hgroup, main, menu, nav, section {
       <text x="110" y="194">3</text><text x="110" y="262">4</text>
     </g>
     <g class="lbl" text-anchor="start">
-      <text x="158" y="58">the m09 pipeline runs in CI now, on every pull request, automatically</text>
-      <text x="158" y="126">gitops: the repo is truth, a controller reconciles the cluster to match, forever</text>
-      <text x="158" y="194">synced and healthy are different questions, watch both</text>
-      <text x="158" y="262">step 5: a human reviews the pr's outcome, not each gate or sync event</text>
+      <text x="158" y="58">an agent proposed a real PR, its own hardcoded key noted but not stopped</text>
+      <text x="158" y="126">the m09 pipeline caught it in CI, automatically, on the pull request</text>
+      <text x="158" y="194">a second agent fixed the real cause from the real CI failure, not a guess</text>
+      <text x="158" y="262">a human merged one outcome, gitops applied it, unattended, correctly</text>
     </g>
   </svg>
   <p class="credit">Now open <b>Module 11 &middot; Lab</b>. &nbsp;&middot;&nbsp; <b>Gourav Shah</b> &middot; School of DevOps &amp; AI</p>
@@ -403,21 +405,21 @@ footer, header, hgroup, main, menu, nav, section {
       <circle cx="70" cy="83" r="28" fill="#dae8fc" stroke="#1e1e1e" stroke-width="2" filter="url(#rough)"/>
       <path d="M55,85 L67,97 L88,70" stroke="#1e1e1e" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
       <text x="70" y="150" text-anchor="middle" class="lbl-sm">ci workflow</text>
-      <text x="70" y="166" text-anchor="middle" class="lbl-g" font-size="12">gate on every pull request</text>
+      <text x="70" y="166" text-anchor="middle" class="lbl-g" font-size="12">trivy + checkov gate on every pull request</text>
     </g>
     <g class="fragment" transform="translate(140,0)">
       <rect x="10" y="35" width="120" height="95" rx="10" fill="none" stroke="#1e1e1e" stroke-width="1.8" stroke-dasharray="6 5" filter="url(#rough)"/>
       <circle cx="70" cy="83" r="28" fill="#f8cecc" stroke="#1e1e1e" stroke-width="2" filter="url(#rough)"/>
       <path d="M55,68 L88,98" stroke="#1e1e1e" stroke-width="4" fill="none" stroke-linecap="round"/><path d="M88,68 L55,98" stroke="#1e1e1e" stroke-width="4" fill="none" stroke-linecap="round"/>
-      <text x="70" y="150" text-anchor="middle" class="lbl-sm">real pr, real flaw</text>
-      <text x="70" y="166" text-anchor="middle" class="lbl-g" font-size="12">checkov catches a hardcoded secret</text>
+      <text x="70" y="150" text-anchor="middle" class="lbl-sm">agent proposes</text>
+      <text x="70" y="166" text-anchor="middle" class="lbl-g" font-size="12">opens a real pr, checkov catches a hardcoded key</text>
     </g>
     <g class="fragment" transform="translate(280,0)">
       <rect x="10" y="35" width="120" height="95" rx="10" fill="none" stroke="#1e1e1e" stroke-width="1.8" stroke-dasharray="6 5" filter="url(#rough)"/>
       <circle cx="70" cy="83" r="28" fill="#d5e8d4" stroke="#1e1e1e" stroke-width="2" filter="url(#rough)"/>
       <path d="M55,85 L67,97 L88,70" stroke="#1e1e1e" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-      <text x="70" y="150" text-anchor="middle" class="lbl-sm">fix, re-push</text>
-      <text x="70" y="166" text-anchor="middle" class="lbl-g" font-size="12">the same run goes green</text>
+      <text x="70" y="150" text-anchor="middle" class="lbl-sm">agent fixes it</text>
+      <text x="70" y="166" text-anchor="middle" class="lbl-g" font-size="12">a second session, given the real ci failure, fixes the real cause</text>
     </g>
     <g class="fragment" transform="translate(420,0)">
       <rect x="10" y="35" width="120" height="95" rx="10" fill="none" stroke="#1e1e1e" stroke-width="1.8" stroke-dasharray="6 5" filter="url(#rough)"/>

@@ -1,14 +1,38 @@
 ---
 sidebar_position: 1
-title: 'Agentic GitOps and Pipelines'
+title: 'Safe Agentic Delivery to Production'
 ---
 
 import Slides from '@site/src/components/Slides';
 import Embed from '@site/src/components/Embed';
 
-# Chapter 11: Agentic GitOps and Pipelines
+# Chapter 11: Safe Agentic Delivery to Production
 
-<Slides src="decks/m11-agentic-gitops.html" title="M11: Agentic GitOps and Pipelines" />
+<Slides src="decks/m11-agentic-gitops.html" title="M11: Safe Agentic Delivery to Production" />
+
+## This Chapter Is Not Really About GitOps
+
+Say that plainly, up front, because the lab has Argo CD in it and it would be easy to
+walk away thinking that's the subject. It isn't. GitOps is the last link in a chain this
+chapter is actually about: **what has to be true for an agent's production change to be
+safe to ship without a human reading every line it wrote.** Four things, each doing one
+job, none of them optional:
+
+1. **Propose.** An agent makes a change and opens a pull request. Nobody reviewed it
+   before it went out.
+2. **Automated review.** A pipeline runs on that pull request, on its own, and catches
+   what the agent didn't.
+3. **Human merge.** One person reads one outcome, a passing or failing pull request, and
+   decides.
+4. **Apply.** Whatever merged lands on the target, correctly, without anyone typing
+   `kubectl apply` or `terraform apply` by hand.
+
+GitOps is step 4. It's real, it's useful, and this chapter builds it for real. But it is
+the easy 25% of the chain. The hard part, the part that actually makes an agent trusted
+with production, is steps 1 through 3, and the lab spends most of its time there on
+purpose: an agent proposes a real change with a real mistake in it, a real pipeline
+catches the mistake and says why, a second agent fixes the real cause, and a human merges
+the outcome. Only then does GitOps take over.
 
 ## Recap: A Pipeline You Ran by Hand
 
@@ -16,12 +40,13 @@ Module 9 built a real pipeline: fmt and validate first, then Trivy and Checkov, 
 policy check, then a cost check, then a human approval, then apply. You ran every one of
 those stages yourself, by typing a command. Module 6 built a hook that ran automatically,
 but only when your own agent tried to act. Neither one runs on its own, on a repo nobody
-is currently sitting at.
+is currently sitting at, catching a change an agent proposed while nobody was watching.
 
-This chapter is where that changes. The exact same pipeline gets wired into GitHub
-Actions, so it runs on every pull request, whether or not anyone is watching. And on the
-other side of a merge, a real controller keeps a real cluster matching whatever's in the
-repo, continuously, without anyone running `kubectl apply`.
+This chapter is where that changes. The same shape of pipeline gets wired into GitHub
+Actions, so it runs on every pull request, whether or not anyone is watching, whether the
+change came from a human or an agent. And on the other side of a merge, a real controller
+keeps a real cluster matching whatever's in the repo, continuously, without anyone running
+`kubectl apply`.
 
 ## From Plan and Apply to Reconcile, in CI
 
@@ -71,14 +96,18 @@ about whether the thing you asked for actually works. Watch both, not just one.
 ## The Full Loop, Traced End to End
 
 Put the last few modules together and trace the whole path a change takes, start to
-finish:
+finish. This isn't hypothetical, it's what the lab actually runs:
 
-An agent proposes a change and opens a pull request. The CI pipeline, the one this
-chapter builds, runs automatically: fmt, validate, scan, whatever gates the team has
-wired in. If it fails, nothing else happens until it's fixed. If it passes, a human
-reviews the pull request itself, not each individual command, and merges it. The moment
-that merge lands on the branch the controller watches, reconciliation kicks in on its own
-and the cluster converges to match, with nobody typing `kubectl apply`.
+An agent proposes a change and opens a pull request, in the lab's case, a Terraform
+variable with a hardcoded key baked into its default, the kind of thing a developer in a
+hurry writes without thinking twice. The CI pipeline, the one this chapter builds, runs
+automatically: fmt, validate, Trivy, Checkov. It fails, for a real and specific reason,
+`CKV_SECRET_2`, a hardcoded AWS-style key. Nothing merges until that's fixed. A second
+agent, given nothing but the real CI failure as context, finds the actual cause and fixes
+it, marking the value sensitive instead of guessing at a workaround. CI goes green. A
+human reads the pull request, not each individual gate, and merges it. The moment that
+merge lands on the branch the controller watches, reconciliation kicks in on its own and
+the cluster converges to match, with nobody typing `kubectl apply`.
 
 ![The full loop drawn as one continuous path: propose, automatic gate, human merge, automatic reconcile, no other manual step anywhere on the path.](./diagrams/full-loop.svg)
 
@@ -136,8 +165,11 @@ worse than saying plainly that it doesn't.
 
 | Term | Meaning |
 |---|---|
+| Propose | An agent makes a change and opens a pull request, unreviewed |
+| Automated review | A pipeline runs on the pull request on its own and catches what the agent didn't |
+| Human merge | One person reads one outcome, a passing or failing pull request, and decides |
 | CI pipeline | The M09 pipeline's stages, wired to run automatically on every pull request |
-| GitOps | The repo is the source of truth, a controller keeps the cluster matching it |
+| GitOps | The repo is the source of truth, a controller keeps the cluster matching it; the "apply" step in propose/review/merge/apply |
 | Argo CD / Flux | Real controllers that reconcile a cluster against a git repo |
 | Synced | The cluster currently matches what the repo says |
 | Healthy | What's running is actually working, independent of whether it's synced |
