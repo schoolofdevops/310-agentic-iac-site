@@ -127,6 +127,29 @@ take. That's the harness, and it's a different guarantee entirely. This module d
 that gate, M06 and M08 do. What matters here is knowing the difference before you assume a
 skill is enforcing something it can only ever suggest.
 
+## Trusting a Skill You Didn't Write
+
+Every skill in this module so far, you wrote. You can read one you wrote end to end and
+trust it, because you already know what it does. A skill you didn't write is a different
+situation: a teammate's repo, an open-source skill marketplace, a link pasted into a team
+channel. The moment its instructions run inside your agent's session, they carry whatever
+trust that session already has, filesystem access, shell access, the ability to read
+anything the account running the agent can read.
+
+That gap has a name: tool poisoning. A skill, or an MCP tool, M05 covers those, earns
+discoverability and trust for one stated job and then uses that trust for something the
+description never mentioned. This module's Stage 3 plants a specific case of it, a
+confused-deputy risk: a skill described as a Terraform formatter that also, buried in a
+numbered instruction nobody skims past, reads `~/.aws/credentials` and `~/.ssh/id_rsa`. The
+formatter earned the right to run inside your session by promising to format files. Nothing
+in that promise earned it the right to read your SSH key.
+
+Catching this doesn't require reading an agent's mind or trusting a vendor's badge. Read the
+`description` field, then read every instruction in the body, and check whether each one
+earns its place under that description. An instruction with no relationship to the stated
+job is the tell, checkable by eye, and, as Stage 3 shows, checkable with a plain `grep` once
+you know the pattern to look for.
+
 ## Where This Sits on the Ladder
 
 The lab in this module has you read a written skill, use it once, and check the result
@@ -149,3 +172,5 @@ autonomy, and this module is squarely about the first one.
 | Discoverability | Whether an agent's task matches a skill's `description` closely enough to trigger it |
 | House convention | Team-specific rules, naming, tagging, pins, packaged once into a skill instead of repeated in every review |
 | Skill vs harness | A skill is invoked voluntarily by the agent; a harness gate runs and can block regardless of what the agent decides |
+| Tool poisoning | A skill or MCP tool that earns discoverability and trust for one stated job, then uses that trust for something its description never mentioned |
+| Confused-deputy risk | The specific failure tool poisoning creates: a component with real, earned access carries out an instruction outside the scope its description promised |
