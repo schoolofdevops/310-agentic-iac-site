@@ -18,9 +18,24 @@ cd 310-agentic-iac-labs
 
 ## Open the devcontainer
 
-If you use VS Code, open the folder and accept the "Reopen in Container" prompt. If
-you use another editor, any devcontainer-compatible tool (the `devcontainer` CLI,
-GitHub Codespaces) reads the same `.devcontainer/devcontainer.json`.
+If you use VS Code, open the folder and accept the "Reopen in Container" prompt.
+
+VS Code is not required. The devcontainer is just a JSON spec plus a Dockerfile, and
+the standalone `devcontainer` CLI builds and runs it with no editor at all:
+
+```
+npm install -g @devcontainers/cli
+devcontainer up --workspace-folder .
+devcontainer exec --workspace-folder . claude
+```
+
+`devcontainer up` builds and starts the container. `devcontainer exec` runs any
+command inside it, terminal-only, same pinned Terraform/Checkov/Trivy/Docker-socket
+setup as the VS Code path. Run it again with `codex` instead of `claude`, or with
+`bash` to just get a shell inside the container.
+
+GitHub Codespaces reads the same `.devcontainer/devcontainer.json` too, if you want
+a browser-only path with no local install at all.
 
 The devcontainer:
 
@@ -38,9 +53,9 @@ Run these three checks before starting module 1. All three should succeed:
 
 ```
 terraform version    # 1.16.0
-tofu version          # 1.12.2
-checkov --version     # 3.3.16
-docker info           # reachable at /var/run/docker.sock
+tofu version         # 1.12.2
+checkov --version    # 3.3.16
+docker info          # reachable at /var/run/docker.sock
 ```
 
 If `docker info` hangs or errors, stop and fix Docker before anything else, every
