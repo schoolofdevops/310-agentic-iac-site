@@ -124,6 +124,26 @@ Toggle everything back off and run it again to see a clean pass reach `apply`.
 
 <Embed src="sims/pipeline-gate-sim.html" title="Pipeline Gate Walkthrough" />
 
+## Verifying the Infrastructure Is Not Verifying the Agent
+
+Every gate built so far in this chapter asks the same kind of question: is this
+*infrastructure* safe. Trivy and Checkov ask it about known misconfigurations, Conftest
+asks it about your own org's rules, Infracost asks it about cost. None of them ask whether
+the agent actually did what it was told.
+
+That second question needs a different kind of check: a rubric, plain code, that grades
+the agent's own output against a fixed, written expectation, with no model involved in the
+grading. Module eight already gave you the discipline behind this, verification-before-claiming: a
+claim only counts once real evidence backs it up. This chapter's eval rubric is that same
+discipline turned on the agent's Terraform output specifically, checking a concrete rule
+(M04's required tags: `Environment`, `Owner`, `ManagedBy`) rather than trusting the agent's
+own account of what it wrote.
+
+Run both kinds of check, and for a different reason each time. The scan-and-policy pipeline
+still decides whether the resulting infrastructure is safe to apply. The eval rubric decides
+whether the agent's output actually matches what was asked, a distinct question one can pass
+while the other fails.
+
 ## What Tier 1 Still Cannot Show You
 
 Be honest about the limits of what you just built. Floci gives you a real, API shaped
