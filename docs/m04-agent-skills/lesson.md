@@ -22,6 +22,10 @@ No, that gets noisy fast, and noise is exactly what Module 3 warned you a contex
 punishes. A skill solves a narrower problem: package a capability once, and let the agent
 decide, task by task, whether this is the moment to reach for it.
 
+This module's lab builds one real project around that idea: a shared VPC module used
+identically across dev, staging, and prod, scaffolded and mechanically checked by a skill
+that carries its own script instead of asking an agent to eyeball the numbers.
+
 ## Context vs Skill vs Prompt
 
 Three different things, and they get confused constantly because all three end up as text
