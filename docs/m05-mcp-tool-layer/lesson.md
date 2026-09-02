@@ -162,6 +162,11 @@ token with write access to every repository you own is a different risk than one
 a single throwaway repository. Configure the narrowest scope that does the job, the same
 instinct you'll formalize properly in module 6.
 
+This module's lab builds one real project with these three servers: a real RDS database
+with a non-default parameter group, built through the Terraform MCP server, checked against
+a second AWS-specific server that turns out not to be ready, and shipped through a real
+pull request opened by the GitHub MCP server, closed by a human, not merged.
+
 ## Vocabulary
 
 | Term | Meaning |
