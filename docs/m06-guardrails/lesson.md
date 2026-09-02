@@ -9,6 +9,11 @@ import Slides from '@site/src/components/Slides';
 
 <Slides src="decks/m06-guardrails.html" title="M6: Guardrails: Permissions, Hooks, Blast Radius" />
 
+This module builds around one small, real project: a storage system an agent could delete by
+mistake, protected three different ways, a mechanical gate, a structural boundary, and a
+human-approval harness, so you can compare what each guardrail actually catches on the same real
+delete. The lab builds it, this chapter explains why each piece works.
+
 ## Recap: A Skill Can Only Ever Suggest
 
 Module 4 gave an agent a skill, a packaged bit of capability it reaches for on its own when a
