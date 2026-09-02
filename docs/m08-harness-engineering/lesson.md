@@ -17,7 +17,9 @@ gave you MCP: a live connection to a real system, instead of a guess from traini
 gave you a hook: a check that runs whether or not the agent wants it to. Three separate lessons,
 three separate lab exercises.
 
-This chapter is where they stop being separate. A **harness** is what you get when a skill, an
+This chapter is where they stop being separate. This module's project is concrete: a real
+verification harness for an S3 bucket module, a skill and a hook assembled around one real
+discipline, proven against three real superpowers exercises. A **harness** is what you get when a skill, an
 MCP server, and a hook are assembled around one real discipline, not three unrelated tools sitting
 next to each other in a repo.
 
