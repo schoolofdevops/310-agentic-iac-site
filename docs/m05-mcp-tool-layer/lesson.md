@@ -106,6 +106,11 @@ apply, not just after writing the HCL, is what catches that.
 
 ![A real RDS instance wired to a real non-default parameter group: the MySQL 8.0 database points at a parameter group carrying slow query log turned on and a two second threshold, applied and verified against Floci, then destroyed.](./diagrams/param-group-build.svg)
 
+**Seeded failure:** `storage_encrypted` set to `false` on `aws_db_instance.app`. **Caught
+by:** Checkov's `CKV_AWS_16`, run against the module's HCL directly. **Fixed by:** setting
+`storage_encrypted` back to `true`. The lab walks this same instance in full: seed it in a
+scratch copy, watch Checkov fail, fix it, watch Checkov pass.
+
 ## Official Doesn't Mean Ready
 
 One more real result belongs in this chapter, because it's a genuinely useful lesson and it
