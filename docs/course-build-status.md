@@ -1,27 +1,31 @@
 ---
-sidebar_position: 2
+sidebar_position: 5
 title: Build Status
 ---
 
 # Build status
 
-This course is being built module by module, in the open. Here's what's live today.
+This course was built module by module, in the open. All twelve modules and the
+capstone are live.
 
 | # | Module | Type | Status |
 |---|---|---|---|
 | 01 | From ClickOps to Agents | conceptual | **Live** |
-| 02 | Your Agentic IaC Workstation | hands-on | Planned |
+| 02 | Your Agentic IaC Workstation | hands-on | **Live** |
 | 03 | Context Engineering for Infrastructure | hands-on | **Live** |
-| 04 | Agent Skills for IaC | hands-on | Planned |
-| 05 | MCP and the Tool Layer | hands-on | Planned |
-| 06 | Guardrails: Permissions, Hooks, Blast Radius | hands-on | Planned |
-| 07 | Spec-Driven Infrastructure | hands-on | Planned |
-| 08 | Harness Engineering | hands-on | Planned |
-| 09 | Verifying AI-Generated Infrastructure | hands-on | Planned |
-| 10 | Agentic Kubernetes and Platform IaC | hands-on | Planned |
-| 11 | Agentic GitOps and Pipelines | hands-on | Planned |
-| 12 | Loop Engineering, Multi-Agent Ops, Economics | conceptual | Planned |
-| CAP | Capstone: Propose, Don't Decide | project | Planned |
+| 04 | Agent Skills for IaC | hands-on | **Live** |
+| 05 | MCP and the Tool Layer | hands-on | **Live** |
+| 06 | Guardrails: Permissions, Hooks, Blast Radius | hands-on | **Live** |
+| 07 | Spec-Driven Infrastructure | hands-on | **Live** |
+| 08 | Harness Engineering | hands-on | **Live** |
+| 09 | Verifying AI-Generated Infrastructure | hands-on | **Live** |
+| 10 | Agentic Kubernetes and Platform IaC | hands-on | **Live** |
+| 11 | Agentic GitOps and Pipelines | hands-on | **Live** |
+| 12 | Loop Engineering, Multi-Agent Ops, Economics | conceptual | **Live** |
+| CAP | Capstone: Ship Infrastructure Through a Propose-Verify-Approve-Apply Pipeline | project | **Live** |
 
-Modules 01, 03, 04, 06, and 09 build first, they're the most differentiated and the
-most durable. Then 02, 05, 07, 08, 10, 11, 12, and the capstone.
+Every module ships the full set: explainer deck, hands-on lab with a real `run.sh`
+validation script, standalone reading chapter, reference cheat sheet, quiz, and
+stretch projects. Most modules also carry an interactive simulator, embedded inline
+in the lesson page. See the [Course Plan](./course-plan.md) for what each module's
+real project actually is.

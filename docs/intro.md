@@ -19,9 +19,15 @@ DevOps, platform, SRE, and cloud engineers who already write infrastructure as c
 want a repeatable, guarded way to bring AI agents into that work, not just faster
 autocomplete.
 
-## Program at a glance
+## Before you start
 
-See [Build Status](./course-build-status.md) for what's live today.
+- [Prerequisites](./prerequisites.md): what you should already know, and what you do
+  not need.
+- [Environment Setup](./environment-setup.md): the devcontainer, pinned tool
+  versions, and a checklist to verify before module 1.
+- [Course Plan](./course-plan.md): the full twelve-module arc and every real project
+  you build.
+- [Build Status](./course-build-status.md): what's live today.
 
 ## How to use this course
 
