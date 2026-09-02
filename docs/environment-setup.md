@@ -38,6 +38,7 @@ Run these three checks before starting module 1. All three should succeed:
 
 ```
 terraform version    # 1.16.0
+tofu version          # 1.12.2
 checkov --version     # 3.3.16
 docker info           # reachable at /var/run/docker.sock
 ```

@@ -147,6 +147,15 @@ still fine for a throwaway exercise, a Tier 0 sandbox, something nobody but you 
 at again. The moment a real reviewer or a real consequence enters the picture, the ticket you got
 handed deserves the three extra sections this chapter just walked through.
 
+## One Language, Two Runtimes
+
+Terraform is BUSL-licensed. OpenTofu, the Linux Foundation fork, is MPL-2.0. The
+lab's Step 6 applies the exact same spec-driven module twice, once with each
+binary, no changes to the `.tf` files, and both runs produce the same three
+resources with the same values. For a module with no provider-specific
+Terraform-only features, the choice between them is a license and tooling
+decision, not a different infrastructure outcome.
+
 ## Vocabulary
 
 | Term | Plain definition |
