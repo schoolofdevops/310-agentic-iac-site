@@ -25,6 +25,14 @@ instruction in the same prompt.
 This chapter is about the part that doesn't depend on the agent deciding anything: a hook. A hook
 runs at a fixed point, every time, whether or not the agent wants it to.
 
+## A Task Contract Names the Rules Before Any Mechanism Runs
+
+A task contract, naming allowed tools, forbidden actions, required evidence, and a stop
+condition, is the artifact that makes "what should this agent be allowed to do" explicit before
+any mechanism runs. Writing it down is necessary but not sufficient: the mechanical gate this
+chapter builds next enforces exactly one of those four fields, mechanically, every time, and the
+other three stay true only because someone reads the contract.
+
 ## Permissions: What the Agent Is Even Allowed to Touch
 
 Before a hook ever runs, there's a simpler question. What can the agent read, write, or execute in
