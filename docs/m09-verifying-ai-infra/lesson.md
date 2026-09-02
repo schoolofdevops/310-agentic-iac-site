@@ -22,7 +22,7 @@ real tools, run in a fixed order, against that project.
 ## The Opening Demo: Same Code, Two Answers
 
 Here is a fact worth sitting with. Take one Terraform module, twenty one resources, a
-real three tier shape with a VPC, an EC2 instance, and an RDS database. Scan it with
+real three tier module with a VPC, an EC2 instance, and an RDS database. Scan it with
 Trivy. Then scan the exact same files with Checkov. You would expect roughly the same
 answer, would you not? You do not get one.
 
@@ -147,7 +147,7 @@ while the other fails.
 
 ## What Tier 1 Still Cannot Show You
 
-Be honest about the limits of what you just built. Floci gives you a real, API shaped
+Be honest about the limits of what you just built. Floci gives you a real, API level
 emulation, good enough to run real scanners against real plans and get real answers. It
 cannot show you a real cloud bill, real IAM enforcement, or infrastructure that drifts
 over months of real traffic. Those stay out of reach until module ten's Tier 2 labs and
@@ -166,3 +166,4 @@ the capstone's optional Tier 3.
 | Rego | The policy language OPA and Conftest policies are written in |
 | Cost check | This chapter's Infracost stage: runs the real estimate if you have a key, skips honestly if you do not, fails only on a broken CLI run, not a crossed threshold. The FinOps gate in M12 is the one wired to actually fail past a real threshold |
 | Plan-diff review | The human step where a person reads what a plan would actually change, after every automated gate has already passed |
+| Eval rubric | A deterministic, model-free check that grades an agent's own output against a fixed rule, separate from whether the resulting infrastructure passes the scan-and-policy pipeline |

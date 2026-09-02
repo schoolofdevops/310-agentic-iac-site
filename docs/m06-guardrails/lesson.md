@@ -167,3 +167,4 @@ specific bucket, is actually the right call.
 | Blast radius (mechanical) | A property read directly from a `terraform plan -json`: delete actions present, resource count, high-radius resource types touched |
 | Gate | A check whose caller actually stops on a non-zero exit code, as opposed to one that only prints a warning |
 | Step 4, gated apply | Automated checks and human approval together, neither one alone |
+| Task contract | A written statement of what an agent is and is not allowed to do before it touches anything, real only where a mechanism actually enforces it |
