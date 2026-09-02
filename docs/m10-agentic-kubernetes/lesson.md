@@ -10,6 +10,13 @@ import Embed from '@site/src/components/Embed';
 
 <Slides src="decks/m10-agentic-kubernetes.html" title="M10: Agentic Kubernetes and Platform IaC" />
 
+This chapter's lab builds one real project: a way for a team to get a Postgres database on
+demand, on a real Kubernetes cluster, no ticket to a platform team required. You build it
+three times, each a step up in how self-service it is: raw manifests you can read end to
+end, a Helm chart anyone can install without touching YAML, and a Crossplane custom resource
+that turns the whole thing into a five-line request. The rest of this chapter is what you
+need to understand before that build makes sense.
+
 ## From Plan and Apply to Reconcile
 
 Every module before this one ran against Terraform. Local providers in the early modules,
