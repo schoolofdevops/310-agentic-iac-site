@@ -14,8 +14,10 @@ import Embed from '@site/src/components/Embed';
 
 Since module one you have carried one sentence around: the agent proposes, the pipeline
 decides. Module six built the first real piece of that pipeline, a hook that could block
-an unsafe apply. This chapter builds the rest of it. By the end, "the pipeline decides"
-stops being a slogan and becomes four real tools, run in a fixed order, on a real module.
+an unsafe apply. This chapter builds the rest of it, and applies it to one real project: a
+small S3 module for a reports-and-backups service, two buckets, one of them deliberately
+left unhardened. By the end, "the pipeline decides" stops being a slogan and becomes four
+real tools, run in a fixed order, against that project.
 
 ## The Opening Demo: Same Code, Two Answers
 
