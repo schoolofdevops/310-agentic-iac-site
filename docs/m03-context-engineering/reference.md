@@ -53,8 +53,8 @@ existing rule readable at the moment the agent needed it.
 ## The rule
 
 An agent finds files the way a human does: by name, by path, by what looks
-relevant. Shape your repo for a human reader first, and you have mostly shaped
-it for an agent too.
+relevant. Organize your repo for a human reader first, and you have mostly
+organized it for an agent too.
 
 ## Route: the state-file pattern
 

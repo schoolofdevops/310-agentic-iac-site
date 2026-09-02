@@ -65,7 +65,7 @@ land with what you gave it.
 
 ## Context Engineering Is Three Disciplines, Not One
 
-Here is the whole chapter in one shape, and it is worth learning by name because
+Here is the whole chapter in one picture, and it is worth learning by name because
 you will use these three words for the rest of this course:
 
 ![Three disciplines side by side: Reduce, filter noise at the input; Retain, store standing knowledge outside the window so it survives a reset; Route, externalize an in-progress plan to disk so a fresh session can pick it up exactly where the last one stopped.](./diagrams/three-r.svg)
@@ -111,7 +111,7 @@ snippets it will never need again. Hand it the compact version, and the window
 has room left for the part of the job that actually matters: fixing the 25
 things that failed.
 
-This is the general shape of Reduce, not a one-off trick: raw tool output, a full
+This is the general pattern of Reduce, not a one-off trick: raw tool output, a full
 `terraform plan`, a verbose `kubectl describe`, an entire CI log, is not the same
 thing as the information inside it that's relevant to the task. Filter at the
 input, before it enters the window, not after. Prefer a tool's own quiet/compact
@@ -147,7 +147,7 @@ pattern down once, and every resource an agent creates follows it, instead of yo
 correcting the name in every single review.
 
 **Module boundaries.** One module per concern, `networking/`, `compute/`,
-`data/`, whatever your team's actual shape is. An agent that does not know your
+`data/`, whatever your team's actual structure is. An agent that does not know your
 boundaries will happily put a database resource inside your networking module,
 because nothing told it not to.
 
@@ -160,7 +160,7 @@ None of this is exotic. It is exactly what you would tell a new engineer joining
 your team this week, written down so you only have to say it once, and so it is
 still there after this session ends and the next one starts blank.
 
-### Repo Shape Is Retrieval
+### Repo Layout Is Retrieval
 
 Here is a fact that surprises people the first time they hear it: an agent finds
 files the same way a human does, by name, by path, by what looks relevant. There
@@ -175,8 +175,8 @@ found by name and by path. At the bottom, whatever finally lands inside the
 context window and gets used. A repo with clear, predictable names narrows that
 funnel fast. A repo where everything is called `main.tf` and `variables.tf`,
 scattered across a dozen folders with no obvious pattern, forces the agent to
-guess, the same way it would force a new hire to guess. Shape your repo for a
-human reader first, and you have mostly shaped it for an agent too.
+guess, the same way it would force a new hire to guess. Organize your repo for a
+human reader first, and you have mostly organized it for an agent too.
 
 ### The Information Gap
 
