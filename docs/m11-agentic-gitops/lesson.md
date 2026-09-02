@@ -34,6 +34,10 @@ purpose: an agent proposes a real change with a real mistake in it, a real pipel
 catches the mistake and says why, a second agent fixes the real cause, and a human merges
 the outcome. Only then does GitOps take over.
 
+The lab in this module builds exactly this, one real pipeline, end to end: an agent opens a
+real pull request against this course's own public labs repo, a real GitHub Actions workflow
+gates it, and a real Argo CD install reconciles a real `kind` cluster once it merges.
+
 ## Recap: A Pipeline You Ran by Hand
 
 Module 9 built a real pipeline: fmt and validate first, then Trivy and Checkov, then a
