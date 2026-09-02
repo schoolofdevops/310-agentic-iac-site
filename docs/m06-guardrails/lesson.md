@@ -72,13 +72,13 @@ list and ask three narrow questions:
 
 - Is a `delete` action present anywhere in this plan?
 - Does the total number of resource changes exceed a threshold your team picked?
-- Does this plan touch a resource type your team already agreed is dangerous by shape, an IAM
+- Does this plan touch a resource type your team already agreed is dangerous by kind, an IAM
   role, a shared VPC, a policy, regardless of how small the diff looks?
 
 ### Try it: the blast radius gate visualizer
 
 There's a small, interactive tool that runs these three checks live:
-[Blast Radius Gate Visualizer](pathname:///310-agentic-iac-site/sims/blast-radius-sim.html). Pick a real plan shape,
+[Blast Radius Gate Visualizer](pathname:///310-agentic-iac-site/sims/blast-radius-sim.html). Pick a real plan kind,
 a single delete, a bulk delete, a shared VPC change, tune the policy, and watch which check
 actually trips. Try loosening `max-resources` until a bulk delete would pass on count alone, then
 notice the delete check still catches it, because the checks are independent, not a single score.
@@ -103,8 +103,8 @@ exit code is not a gate either, it's theater.
 
 ## Two More Ways to Stop the Same Delete
 
-The gate above catches a dangerous plan by reading it. That's one guardrail, not the only shape a
-guardrail can take. This module's lab builds two more, on purpose, so the difference is concrete
+The gate above catches a dangerous plan by reading it. That's one guardrail, not the only kind
+a guardrail can take. This module's lab builds two more, on purpose, so the difference is concrete
 rather than a taxonomy exercise.
 
 **Structural: remove the ability, don't just check the plan.** A gate has to be right every time
@@ -126,11 +126,11 @@ approval step doesn't quietly work, `apply_with_approval.sh` refuses outright wi
 present. This is what step 4, gated apply, looks like as a script you actually own, not a
 description of what "gated apply" means in the abstract.
 
-![Three guardrails against the same dangerous apply: a mechanical gate reading the plan's shape, a structural guardrail that never gives the agent apply access, and a procedural harness requiring an explicit human approval marker between two separate agent runs.](./diagrams/three-guardrails.svg)
+![Three guardrails against the same dangerous apply: a mechanical gate reading the plan's content, a structural guardrail that never gives the agent apply access, and a procedural harness requiring an explicit human approval marker between two separate agent runs.](./diagrams/three-guardrails.svg)
 
 Notice what these three don't do: agree on one mechanism and call it done. A mechanical gate is
 fast and consistent but only as good as the checks someone wrote into it. A structural guardrail
-is strong but changes your whole delivery shape, which is real cost, not free. A procedural harness
+is strong but changes your whole delivery process, which is real cost, not free. A procedural harness
 adds a human in the loop but depends on that human actually reading the plan, not just clicking
 approve. Real infrastructure teams run more than one of these at once, for the same reason a
 building has a lock on the door, a guard at the desk, and a badge system, none of the three alone.
@@ -145,7 +145,7 @@ an abstract row in a table and becomes a script you wrote yourself.
 
 Notice what step 4 is not. It is not "the hook approved it, so it's safe to skip the human." It is
 not "a human looked at it, so the hook is redundant." Both have to say yes. The hook catches the
-mechanical, blast-radius-shaped mistakes fast and consistently, every single time, something a
+mechanical, blast-radius mistakes fast and consistently, every single time, something a
 tired human reviewing their fortieth plan of the day will eventually miss. The human catches the
 things no mechanical check can, whether this specific delete, at this specific moment, in this
 specific bucket, is actually the right call.

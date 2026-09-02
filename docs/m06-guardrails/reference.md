@@ -35,11 +35,11 @@ specific resource is for.
 | Permission boundary (this module) | Before the run starts | The system | Yes, denies before a plan even exists |
 | Hook / gate (this module) | Every attempted `apply` | The system, not the agent | Yes, blocks a specific plan |
 
-## Three guardrail shapes, side by side
+## Three kinds of guardrail, side by side
 
-| Shape | How it stops the action | Built where |
+| Kind | How it stops the action | Built where |
 |---|---|---|
-| Mechanical | Reads `terraform plan -json`, exits non-zero on a bad shape | This module's `hooks/blast_radius_gate.sh` |
+| Mechanical | Reads `terraform plan -json`, exits non-zero on a bad plan | This module's `hooks/blast_radius_gate.sh` |
 | Structural | Removes `apply` access from the agent entirely, PR + GitOps applies | Previewed here, real build in M11 |
 | Procedural | Explicit human approval marker required between two separate agent runs | This module's `harness/` scripts |
 
