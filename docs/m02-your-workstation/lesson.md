@@ -15,9 +15,11 @@ import Embed from '@site/src/components/Embed';
 Module 1 gave you the vocabulary: the seven eras, what an agent actually is, the
 autonomy ladder, and the thesis that the agent proposes while the pipeline decides.
 None of that needed a single install. This chapter is where that changes. By the
-end of it, your own machine is an agentic IaC workstation, and you will have run
-the exact same one-line intent from module 1's lab through a real agent twice, once
-as a suggestion you typed yourself, once as a file the agent wrote directly.
+end of it, your own machine is an agentic IaC workstation, and this module's lab has
+you build one real project on it, a local nginx test module, running the exact same
+one-line intent from module 1's lab through a real agent five separate times, once
+as a suggestion you typed yourself, once as a file the agent wrote directly, then
+extended, audited, and finally wired into a one-word check of its own.
 
 ## A Workstation, Not One Tool
 

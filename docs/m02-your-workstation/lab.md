@@ -8,10 +8,20 @@ title: 'Lab 2: Your Agentic IaC Workstation'
 **Tier 0** · ~15 min · no cloud account, no `terraform apply` required. Claude Code (or Codex),
 Terraform, and Checkov, all already in the devcontainer.
 
+## The project
+
+You are building one real thing in this lab: a local nginx test module, a container that
+serves a static page you control, its rendered HTML kept on disk so you can diff it in git,
+extended later with a second page and a health-check endpoint. You build the same module
+five times over in this lab, and the intent never changes. What changes each time is how much
+of the work you hand to the agent, and how much permission it runs with. By the end you'll
+have a working module, a real bug you catch twice on your own, an audit run by a subagent, and
+this module's own check floor turned into a one-word slash command.
+
 Lab 1 had you run a generate-verify-fix loop by hand, no agent involved. This lab hands the
-first half of that loop, just the generating, to a real agent, twice, on the same intent, so
-you feel the difference between step 1 and step 2 on the autonomy ladder instead of only
-reading about it.
+first half of that loop, just the generating, to a real agent, on the same intent, so you feel
+the difference between step 1 and step 2 on the autonomy ladder instead of only reading about
+it.
 
 ## Pre Requisites
 
@@ -269,7 +279,7 @@ only `terraform plan` did. Both were yours to have caught either way.
 
 ## Step 2: draft, the agent writes it
 
-**Open** a fresh `claude` session in a new directory, same intent, and this time when the
+Same project, same intent, more trust. **Open** a fresh `claude` session in a new directory, same intent, and this time when the
 permission prompt appears asking to write `main.tf`, **approve** it. That's the whole
 mechanism, you didn't need a flag, you just said yes at the prompt instead of no:
 
@@ -358,8 +368,9 @@ lesson.
 
 ## Preview: what plan mode actually does
 
-Step 2 let the agent write a file straight away. There's a real middle setting between "just
-talk" and "just write." **Open** `claude` in a fresh directory and press **Shift+Tab** until
+A third posture, on a throwaway file, not the project itself. Step 2 let the agent write a
+file straight away. There's a real middle setting between "just talk" and "just write."
+**Open** `claude` in a fresh directory and press **Shift+Tab** until
 the mode indicator at the bottom of the prompt reads `plan mode`, then ask it a small throwaway
 thing:
 
@@ -525,7 +536,9 @@ Checkov coverage, so a clean exit here means "found nothing to flag," not "audit
 
 ## `acceptEdits`: the agent extends it while you watch
 
-Step 2 approved one file write, once. `acceptEdits` mode keeps every future edit in this session
+Back to the real project, now grown, not rebuilt: this step takes step 2's fixed module and
+extends it. Step 2 approved one file write, once. `acceptEdits` mode keeps every future edit
+in this session
 approved automatically, no more per-file prompts, while you still watch each one happen, turn by
 turn, in the transcript. **Open** a fresh session in a copy of your fixed `step2-drafted` module
 and press **Shift+Tab** until the mode indicator reads `accept edits`:
@@ -608,7 +621,8 @@ prompt, it does not remove the need to actually run the thing.
 
 ## Delegating a bounded task to a subagent
 
-Not everything you'd check is worth doing inline. A subagent runs in its own isolated context,
+Auditing the project you just built, not adding to it. Not everything you'd check is worth
+doing inline. A subagent runs in its own isolated context,
 good for a bounded, well-defined check you want an answer to without spending your main
 session's context on it, and without giving it more reach than the one task needs. **Open**
 `claude` in `step3-acceptedits/` and ask it to delegate:
@@ -653,7 +667,9 @@ into a formal gate.
 
 ## A slash command for this module's own floor
 
-You've now typed `fmt`, `init`, `validate`, `plan` by hand four times in this lab. A custom slash
+One last thing the project's own repo can carry: its own check floor, as a command anyone
+opening it can run. You've now typed `fmt`, `init`, `validate`, `plan` by hand four times in
+this lab. A custom slash
 command turns a sequence you run often into one word. **Create** this file:
 
 `file: ~/m02-lab/step3-acceptedits/.claude/commands/tf-check.md`
@@ -719,10 +735,12 @@ Keep the file, same as Lab 1's note, you'll compare it against your capstone ans
 
 #### Summary
 
-You stood up a real agentic IaC workstation and ran the same intent through it three times:
-typed as a suggestion, written as a draft, then extended under `acceptEdits` while you watched.
-All three are on the autonomy ladder from module 1, steps 1 and 2, the ones where you keep the
-most direct control. Along the way you found a real bug two independent agent sessions both
+You built one project, the local nginx test module, five times over: typed as a suggestion,
+written as a draft, extended under `acceptEdits` while you watched, audited by a subagent, and
+finally given its own one-word check floor. Same intent throughout, only the posture changed.
+The core three, suggest, draft, `acceptEdits`, are on the autonomy ladder from module 1, steps
+1 and 2, the ones where you keep the most direct control. Along the way you found a real bug
+two independent agent sessions both
 made the same way, one `terraform validate` couldn't see and only `terraform plan` caught, which
 is the actual argument for running your whole floor, every time, not just the parts that feel
 like they'd catch something. You also delegated a bounded check to a subagent and watched its
