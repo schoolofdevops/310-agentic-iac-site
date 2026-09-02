@@ -13,6 +13,10 @@ import Embed from '@site/src/components/Embed';
 
 ## Recap: A One-Line Intent Was Enough, Once
 
+**The project this chapter builds:** a real autoscaling web tier for a checkout service, built
+twice from the same one-line ticket, once with a written spec first and once by feel, then
+compared against the same real, applied infrastructure.
+
 Module 1's lab handed you a single line: give me a local nginx container, serving a page you
 control, nothing exposed outside the machine. That was fine. It was a first exercise, small
 enough that one sentence carried the whole ask.
