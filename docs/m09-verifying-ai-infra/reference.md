@@ -50,7 +50,7 @@ confirmed by direct test against checkov 3.3.16 in this course's own environment
 flag `--skip-check CKV_XXX,CKV_YYY` did work, reliably. Verify a suppression actually
 suppressed the finding, don't assume the syntax alone did it.
 
-## Cost gate, no fabrication
+## Cost check, no fabrication
 
 `infracost auth login` once, free, no card, before the cost stage can run for real. A
 pipeline script should detect a missing key and skip that stage with a clear message,

@@ -68,24 +68,24 @@ own built in rules.
 This chapter's lab has you write exactly this policy, watch it fail on a real,
 unfixed module, fix the module, and watch it pass.
 
-## Cost as a Gate, Not a Report
+## A Cost Check, Wired Honestly
 
 Most teams that use **Infracost** use it the way you would use a smoke detector that
 never rings, they read the estimate once, and move on. That is a report, not a gate. A
 gate is a check that can actually stop a plan, the same way Checkov's exit code stops
 `apply` when it fails.
 
-Set a real threshold, an instance type ceiling, a monthly dollar figure, whatever your
-team actually cares about, and fail the pipeline when a plan crosses it, exactly the way
-a scanner failure would. The plan that quietly adds three `db.r5.4xlarge` instances
-should stop at the same gate as the plan with an open security group, not sail through
-because nobody reads cost reports carefully on a Friday.
+This chapter does not build that gate yet. Its pipeline wires Infracost in honestly: run
+the real estimate if you have a key, or skip the stage with a clear message if you do
+not, never a guessed number. It fails only if the Infracost CLI itself errors, not
+because a plan crossed a dollar figure or an instance type ceiling. Module 12 builds the
+piece this chapter leaves out, a FinOps check that reads a real plan and fails the
+pipeline for real once a threshold is crossed, the same way Checkov's exit code already
+does here.
 
 Infracost's own CLI needs a one-time, free account to fetch live pricing, no credit card,
-just a signup and a device login. If you have not set that up yet, this chapter's
-pipeline script detects that and skips the cost stage cleanly, with an honest message
-instead of a guessed number. Set up your own key before the lab if you want to see this
-stage run for real.
+just a signup and a device login. Set up your own key before the lab if you want to see
+this stage run for real.
 
 ## Order Matters
 
@@ -126,10 +126,11 @@ Toggle everything back off and run it again to see a clean pass reach `apply`.
 
 ## Verifying the Infrastructure Is Not Verifying the Agent
 
-Every gate built so far in this chapter asks the same kind of question: is this
+Every check built so far in this chapter asks a version of the same question: is this
 *infrastructure* safe. Trivy and Checkov ask it about known misconfigurations, Conftest
-asks it about your own org's rules, Infracost asks it about cost. None of them ask whether
-the agent actually did what it was told.
+asks it about your own org's rules, the cost check asks about price, though this
+chapter's version only fails on a broken Infracost run, not a crossed threshold. None of
+them ask whether the agent actually did what it was told.
 
 That second question needs a different kind of check: a rubric, plain code, that grades
 the agent's own output against a fixed, written expectation, with no model involved in the
@@ -163,5 +164,5 @@ the capstone's optional Tier 3.
 | OPA | Open Policy Agent, a general purpose policy engine for rules generic scanners do not encode |
 | Conftest | The command line tool that runs OPA policies against structured input like a Terraform plan |
 | Rego | The policy language OPA and Conftest policies are written in |
-| Cost gate | A cost check wired to actually fail the pipeline past a real threshold, not just print a number |
+| Cost check | This chapter's Infracost stage: runs the real estimate if you have a key, skips honestly if you do not, fails only on a broken CLI run, not a crossed threshold. The FinOps gate in M12 is the one wired to actually fail past a real threshold |
 | Plan-diff review | The human step where a person reads what a plan would actually change, after every automated gate has already passed |
