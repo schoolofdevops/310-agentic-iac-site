@@ -51,7 +51,7 @@ command.
 
 ## A Real Cluster, Not an Emulated One
 
-Tier 1 in this course ran against Floci, an AWS-API-shaped emulator. That was the right
+Tier 1 in this course ran against Floci, an emulator built to the AWS API. That was the right
 choice there: Terraform's providers speak to a cloud API, and emulating the API is enough
 to teach the discipline safely, for free, on a laptop.
 
@@ -104,13 +104,13 @@ separates teams. Crossplane v2 just stopped duplicating that boundary with a sec
 Three pieces make up the platform layer, and they map cleanly onto what you already know
 from Terraform.
 
-![XRD, Composition, and XR mapped against Terraform's provider, module, and resource, the same generate-verify-fix shape under different names.](./diagrams/xrd-composition-xr.svg)
+![XRD, Composition, and XR mapped against Terraform's provider, module, and resource, the same generate-verify-fix pattern under different names.](./diagrams/xrd-composition-xr.svg)
 
 A `CompositeResourceDefinition` (an XRD) is the schema, what fields a request can carry,
 the same job a Terraform provider's resource schema does. A `Composition` is the recipe,
 what actually gets created when someone asks, playing the same role a Terraform module
 plays. The XR itself, the object a team applies, is the request, the same role a Terraform
-resource block plays. Different names, the same three-layer shape: define the contract,
+resource block plays. Different names, the same three layers: define the contract,
 write the recipe, request the thing.
 
 ## The Same Authority Boundary, a New Substrate
@@ -150,6 +150,20 @@ it.
 
 ### Composing a Built-In Kind Is Not Like Composing a Provider
 
+The database Composition patches a generated name onto a `Secret`, a `Service`, and a
+`StatefulSet` using a string transform, and every version of `function-patch-and-transform`
+this course pins requires that transform to carry an explicit `string.type: Format` field.
+Drop it, and the function itself refuses the whole pipeline before touching a single
+Kubernetes object, `invalid Function input: resources[0].patches[1].transforms[0].string.type:
+Required value`.
+
+**Seeded failure:** the `metadata.name` to `POSTGRES_DB` secret-name transform omits its
+required `string.type: Format` field. **Caught by:** the composition function rejecting the
+pipeline input outright, an error `lab/run.sh` regression-tests for real by applying a scratch
+copy of the Composition with that field stripped and confirming the exact `string.type:
+Required value` message reappears. **Fixed by:** putting `type: Format` back on the transform's
+`string` block.
+
 Crossplane's earliest, most common use composes resources through a provider, `provider-aws`
 or similar, authenticating to a cloud API with its own credentials. Composing a native
 Kubernetes kind directly, a `Secret`, a `Service`, a `StatefulSet`, has no separate credential
@@ -160,13 +174,28 @@ grant for exactly what it composes. The default `crossplane` `ClusterRole` grant
 failed waiting for *unstructured.Unstructured Informer to sync`, when the real cause is a
 permission Crossplane never had.
 
-Readiness has the same trap in a different shape. A `Deployment` and most provider-managed
+**Seeded failure:** the `crossplane` `ServiceAccount` carries no RBAC grant on
+`apps/statefulsets`. **Caught by:** `kubectl get events` showing a real forbidden error the
+moment Crossplane tries to create the composed `StatefulSet`, confirmed as a `lab/run.sh`
+regression check that applies the Composition before `db-composer-rbac.yaml` and asserts that
+exact event fires. **Fixed by:** `lab/solution/db-composer-rbac.yaml`, a `ClusterRole` and
+`ClusterRoleBinding` granting the `crossplane` `ServiceAccount` full CRUD on
+`apps/statefulsets`.
+
+Readiness has the same trap for a different reason. A `Deployment` and most provider-managed
 resources carry `status.conditions`, so `MatchCondition` reads them cleanly. A `StatefulSet`
 carries `status.readyReplicas` instead, no `Ready` condition at all. `MatchInteger` against
 that field looks like the right fix and hits a real number-parsing bug in this function
 version. The actual fix is the same one the module's own `ConfigMap` warm-up already used,
 `readinessChecks: [{type: None}]`, then check real readiness with `kubectl` the way you would
 for any workload. Same workaround, two different real reasons to reach for it.
+
+**Seeded failure:** the `db-statefulset` readiness check reads `status.readyReplicas` with
+`MatchInteger`. **Caught by:** the composed resource's readiness check erroring outright,
+`cannot run readiness check at index 0: status.readyReplicas: not a (int64) number`, an error
+`lab/run.sh` regression-tests for real against a scratch copy of the Composition carrying that
+`MatchInteger` check. **Fixed by:** `readinessChecks: [{type: None}]`, verifying real readiness
+with `kubectl` instead of a status field Crossplane can watch.
 
 ## Vocabulary
 
