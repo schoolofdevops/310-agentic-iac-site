@@ -127,7 +127,8 @@ judgment calls: health check grace period, scale-in termination policy, capacity
 cooldown, and IMDSv2. **Caught by:** real `terraform plan` values compared line by line between
 the two modules, plus checkov, which passes `CKV_AWS_79` on the spec-driven module and fails it,
 plus nine more findings on an unrequested ALB, on the vibe-coded one. **Resolved by:** applying
-the spec-driven module and checking its live state against every success criterion written into
+the spec-driven module and checking its live state against SC-001 through SC-004, with SC-005 and
+SC-006 verified separately by checkov earlier in the same lab, every one of the six written into
 `spec.md` before any code existed.
 
 ## Spec vs Gate vs Policy: Three Different Jobs
