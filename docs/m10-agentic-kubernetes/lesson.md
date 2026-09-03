@@ -157,8 +157,9 @@ Drop it, and the function itself refuses the whole pipeline before touching a si
 Kubernetes object, `invalid Function input: resources[0].patches[1].transforms[0].string.type:
 Required value`.
 
-**Seeded failure:** the `metadata.name` to `POSTGRES_DB` secret-name transform omits its
-required `string.type: Format` field. **Caught by:** the composition function rejecting the
+**Seeded failure:** the `db-secret` resource's `metadata.name` to `metadata.name` transform,
+the one that generates the Secret's own object name (`%s-postgres-creds`), omits its required
+`string.type: Format` field. **Caught by:** the composition function rejecting the
 pipeline input outright, an error `lab/run.sh` regression-tests for real by applying a scratch
 copy of the Composition with that field stripped and confirming the exact `string.type:
 Required value` message reappears. **Fixed by:** putting `type: Format` back on the transform's
