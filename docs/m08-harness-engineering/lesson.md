@@ -42,6 +42,12 @@ for that specific reason, only then does the fix get written. Refactor, the thir
 cycle, is honest to skip when there's genuinely nothing to clean up, five lines of HCL don't need
 it. Don't pad a lab with a refactor step that has no work behind it.
 
+**Seeded failure:** `tdd/main.tf`'s S3 bucket ships with no default encryption, `CKV_AWS_145`
+failing on purpose. **Caught by:** `test_encryption.sh`, run RED first and confirmed failing for
+that exact check before any fix exists. **Fixed by:** adding an
+`aws_s3_bucket_server_side_encryption_configuration` resource to the same file, the identical
+script then rerun GREEN.
+
 **Verify before claiming.** Say something works only after you've actually run it and captured
 real output, not because it looks right, not because it should work. Would you trust "looks fine"
 from a colleague who never ran the thing? Then don't accept it from an agent either.
@@ -54,6 +60,13 @@ are evidence that rules out three wrong layers. After three failures on the same
 says stop guessing and question the architecture, compare the broken config against a known-working
 example instead. That comparison is what actually finds the root cause: `endpoint_url` was never a
 real AWS-provider argument, no version or cache fix could have touched it.
+
+**Seeded failure:** `debug/main.tf`'s provider block uses `endpoint_url`, never a real
+AWS-provider argument. **Caught by:** `terraform validate`, failing the same way across three real
+wrong fix attempts, a version pin, a cache wipe, a misnamed-argument guess. **Fixed by:** comparing
+the block against `labs/shared/floci-spike/provider.tf` and rewriting it as a structured
+`endpoints {}` block in the same file, after which `validate`, `apply`, and `destroy` all succeed
+against real Floci.
 
 None of these are new ideas. What's new is treating them as things a harness can check
 mechanically, instead of habits you hope survive contact with a deadline.

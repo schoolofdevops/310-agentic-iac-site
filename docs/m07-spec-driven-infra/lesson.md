@@ -121,6 +121,15 @@ module's own lab play out: [Spec-Driven vs Vibe-Coded Simulator](pathname:///310
 
 <Embed src="sims/spec-vs-vibe-sim.html" title="Spec-Driven vs Vibe-Coded Simulator" />
 
+**Seeded divergence:** the same one-line ticket, give me an autoscaling web tier for our checkout
+service, built twice, once vibe-coded and once from a written spec, diverging on five real
+judgment calls: health check grace period, scale-in termination policy, capacity ceiling, scaling
+cooldown, and IMDSv2. **Caught by:** real `terraform plan` values compared line by line between
+the two modules, plus checkov, which passes `CKV_AWS_79` on the spec-driven module and fails it,
+plus nine more findings on an unrequested ALB, on the vibe-coded one. **Resolved by:** applying
+the spec-driven module and checking its live state against every success criterion written into
+`spec.md` before any code existed.
+
 ## Spec vs Gate vs Policy: Three Different Jobs
 
 ![The M01 authority-boundary line, now with three real stages marked on it: a spec box shaping the intent before generation, a gate box (M06) blocking apply, and a policy box (M09) checking the plan, each labeled with what it does and what it does not do.](./diagrams/spec-gate-policy.svg)

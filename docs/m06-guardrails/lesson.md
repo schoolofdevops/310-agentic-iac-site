@@ -95,6 +95,12 @@ None of those checks require the hook to know what your S3 bucket is for. That's
 A mechanical check catches a mechanical property. It won't catch "this bucket name is wrong for
 our naming convention," that's still a skill's job, or a scanner's job, coming in M09.
 
+**Seeded failure:** an ungated `terraform apply` deletes the `logs` bucket and destroys a real log
+object inside it for good. **Caught by:** `hooks/blast_radius_gate.sh`, reading the identical
+delete's plan JSON and refusing it before `apply` runs. **Fixed by:** the gate's non-zero exit
+stops the second, identical delete from ever reaching Terraform, so the bucket and its object stay
+intact.
+
 ## A Gate That Actually Gates
 
 Would every check that runs before `apply` count as a hook, in the sense this chapter means? Not

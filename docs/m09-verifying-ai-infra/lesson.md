@@ -68,6 +68,15 @@ own built in rules.
 This chapter's lab has you write exactly this policy, watch it fail on a real,
 unfixed module, fix the module, and watch it pass.
 
+**Seeded failure:** `module/main.tf` ships both buckets with no versioning, encryption, or
+public access block, and only `backups` carries a tags block, leaving `reports` untagged.
+**Caught by:** Trivy and Checkov scanning the module directly, 16 and 14 real findings across
+both buckets, plus a hand-written OPA policy, `required_tags.rego`, failing conftest on
+`aws_s3_bucket.reports` by name for its missing `Owner` tag. **Fixed by:** switching to
+`solution/main.tf`, the same module with tags, versioning, a public access block, and KMS
+encryption added to both buckets, which clears Trivy and Checkov in `pipeline.sh` and passes
+conftest clean.
+
 ## A Cost Check, Wired Honestly
 
 Most teams that use **Infracost** use it the way you would use a smoke detector that
