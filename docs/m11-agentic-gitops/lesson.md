@@ -116,8 +116,9 @@ the cluster converges to match, with nobody typing `kubectl apply`.
 **Seeded failure:** the agent-opened pull request commits a hardcoded AWS-style access key as
 the default for a new `signing_key_id` Terraform variable. **Caught by:** the CI gate's
 Checkov stage, `CKV_SECRET_2`, failing on the agent's own commit while Trivy's stage passes
-clean. **Fixed by:** a second, independent agent session, given nothing but the real CI
-failure text, removing the default and marking `signing_key_id` `sensitive = true`.
+clean. **Fixed by:** a second, separate agent session, prompted with the CI failure text plus the
+pre-diagnosed cause and prescribed fix, removing the default and marking `signing_key_id`
+`sensitive = true`.
 
 ![The full loop drawn as one continuous path: propose, automatic gate, human merge, automatic reconcile, no other manual step anywhere on the path.](./diagrams/full-loop.svg)
 
