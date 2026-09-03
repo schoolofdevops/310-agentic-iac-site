@@ -48,6 +48,13 @@ run that happened once. Miss the stopping condition and you have a trigger with 
 process that runs forever or until someone notices and kills it by hand. You need both, every
 time, or don't call it a loop.
 
+**Seeded failure:** the same hardcoded AWS key in `log_shipper_key`'s Terraform default from
+Project 01, reused unfixed. **Caught by:** the loop's stopping condition, `checkov -d .`
+exiting nonzero on the first of three runs against the same working copy. **Fixed by:** the
+loop's own fix step, stripping the hardcoded default and marking the variable
+`sensitive = true`, confirmed by the second and third runs both exiting 0 and printing
+`STOPPED`.
+
 ## Step 6, Unattended
 
 Here's where the autonomy ladder from module one finally closes. Step 5, supervised autonomy,
@@ -113,6 +120,32 @@ answers on the same code. Token-cost tooling deserves the exact same skepticism.
 measurement, not the marketing page. Run your own paired comparison before you standardize a
 team on any tool that claims to save you money by changing how it talks to a model.
 
+## The FinOps Gate, Not a Cost Report
+
+Module 9 put a cost stage in the pipeline, backed by Infracost, and named the distinction that
+matters: a gate, not a report. Infracost's own CLI still needs a one-time, free account to fetch
+live pricing.
+
+This project's lab adds a second, smaller check, worth naming separately from both that Infracost
+stage and from this chapter's own token-economics numbers above. Call it the FinOps gate: a
+deterministic policy check on `terraform show -json`, reading resource count, tags, and instance
+type straight off the plan already on disk. It needs no account and no API key, because it checks
+policy against numbers Terraform already computed, not live pricing. Too many resources, a
+missing `Owner` tag, an instance type outside an allowed list, all three fail the gate the same
+way Trivy or Checkov fail a plan on a security finding: deterministically, before anything
+applies.
+
+The lab's own module is Tier 0, `local_file` resources only, so the tag and instance-type checks
+run there against illustrative fixtures instead of the module itself. Resource count is the one
+dimension that applies to any resource type, and that one runs for real against the module's own
+plan.
+
+**Seeded failure:** the `plan-over-budget.json` fixture's `aws_instance.worker[0]`, an
+`m5.24xlarge` instance type outside the allowed list and missing its `Owner`/`ManagedBy` tags.
+**Caught by:** `lab/finops/gate.py`, reading `terraform show -json` directly and failing on
+both violations. **Fixed by:** the `plan-in-budget.json` fixture, correcting the instance type
+to `t3.small` and adding the missing tags, which the same gate accepts.
+
 ## Closing the Ladder
 
 Six steps, one more time, together, before the capstone.
@@ -141,3 +174,4 @@ project, end to end.
 | Claude Code teams | The real, usable tool this course points to for multi-agent work today |
 | Hermes | A name for where multi-agent orchestration is headed, referenced once, not taught here |
 | Token economics | What running agentic work actually costs, measured, not advertised |
+| FinOps gate | A deterministic policy check on `terraform show -json`, no paid API required |

@@ -113,6 +113,12 @@ human reads the pull request, not each individual gate, and merges it. The momen
 merge lands on the branch the controller watches, reconciliation kicks in on its own and
 the cluster converges to match, with nobody typing `kubectl apply`.
 
+**Seeded failure:** the agent-opened pull request commits a hardcoded AWS-style access key as
+the default for a new `signing_key_id` Terraform variable. **Caught by:** the CI gate's
+Checkov stage, `CKV_SECRET_2`, failing on the agent's own commit while Trivy's stage passes
+clean. **Fixed by:** a second, independent agent session, given nothing but the real CI
+failure text, removing the default and marking `signing_key_id` `sensitive = true`.
+
 ![The full loop drawn as one continuous path: propose, automatic gate, human merge, automatic reconcile, no other manual step anywhere on the path.](./diagrams/full-loop.svg)
 
 Count the manual steps in that loop. There's exactly one: the human reading the pull
