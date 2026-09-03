@@ -121,10 +121,12 @@ skill that suggests and a skill that verifies. A multi-environment VPC module, w
 bundles a real overlap checker, does.
 
 **Seeded failure:** a real CIDR collision, staging's `10.11.0.0/16` shrunk to
-`10.10.128.0/17`, overlapping dev's `10.10.0.0/16`. **Caught by:** the skill's bundled
-`check_cidr_overlap.py` script, plain `ipaddress` arithmetic that exits nonzero on a real
-overlap, not an agent's judgment call about whether two ranges happen to share addresses.
-**Fixed by:** correcting staging's CIDR block back to a range that doesn't collide.
+`10.10.128.0/17`, overlapping dev's `10.10.0.0/16`, seeded only in a scratch copy under
+`/tmp/m04-overlap-test`. **Caught by:** the skill's bundled `check_cidr_overlap.py`
+script, plain `ipaddress` arithmetic that exits nonzero on a real overlap, not an
+agent's judgment call about whether two ranges happen to share addresses. **Fixed by:**
+discarding the scratch copy, `rm -rf /tmp/m04-overlap-test`, the shipped staging CIDR
+was never actually altered.
 
 ## Skills vs Harness
 
