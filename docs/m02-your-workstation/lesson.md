@@ -154,6 +154,12 @@ gap, between a file that type-checks and a file that is actually safe to run,
 is the whole reason this course keeps a real syntax-and-plan floor under every
 lab, not just a syntax floor.
 
+**Seeded failure:** a `docker_container` volume's `host_path` built from a relative,
+`path.module`-derived reference. **Caught by:** `terraform plan`, not `terraform
+validate`, the only step that actually evaluates the docker provider's absolute-path
+requirement. **Fixed by:** wrapping the reference in `abspath()` at the point Docker
+needs it.
+
 ## `acceptEdits`, Delegating to a Subagent, and a Slash Command
 
 Step 2 asked you to approve one file write, once. `acceptEdits` mode keeps

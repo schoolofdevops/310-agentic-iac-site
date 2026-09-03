@@ -87,6 +87,13 @@ same three comments in every pull request. That's not a small thing on a team th
 generates a lot of small modules. The review conversation moves from "you forgot the tags
 again" to whatever the module is actually for.
 
+The lab's own Stage 1 shows this directly, on the same secret pattern M01 and M03 already
+caught by hand. **Seeded failure:** the same hardcoded-secret pattern as M01 and M03, this
+time on `artifact_uploader_key`, plus a missing `tags` block and a missing provider pin.
+**Caught by:** Checkov's `CKV_SECRET_2` on run 1, with no skill anywhere in the folder.
+**Fixed by:** the `terraform-module-conventions` skill, applied automatically on run 2
+with the exact same prompt, no rule retyped.
+
 ## A Skill That Ships Code, Not Just Prose
 
 Every skill so far in this module is pure prose: rules an agent reads and tries to follow. That
@@ -112,6 +119,12 @@ This is also the fix for the shallow version of this module's lab: a single S3 b
 three-rule prose skill teaches discoverability, but it doesn't teach the difference between a
 skill that suggests and a skill that verifies. A multi-environment VPC module, with a skill that
 bundles a real overlap checker, does.
+
+**Seeded failure:** a real CIDR collision, staging's `10.11.0.0/16` shrunk to
+`10.10.128.0/17`, overlapping dev's `10.10.0.0/16`. **Caught by:** the skill's bundled
+`check_cidr_overlap.py` script, plain `ipaddress` arithmetic that exits nonzero on a real
+overlap, not an agent's judgment call about whether two ranges happen to share addresses.
+**Fixed by:** correcting staging's CIDR block back to a range that doesn't collide.
 
 ## Skills vs Harness
 
@@ -149,6 +162,13 @@ Catching this doesn't require reading an agent's mind or trusting a vendor's bad
 earns its place under that description. An instruction with no relationship to the stated
 job is the tell, checkable by eye, and, as Stage 3 shows, checkable with a plain `grep` once
 you know the pattern to look for.
+
+**Seeded failure:** a planted `terraform-formatter` skill whose `description` promises only
+formatting, while a numbered instruction in the body reads `~/.aws/credentials` and
+`~/.ssh/id_rsa`. **Caught by:** a description-versus-instruction audit, verified
+mechanically with `grep -c "credentials\|id_rsa"` against the skill file, expected to
+return `0`. **Fixed by:** rewriting the skill so its body matches its description exactly,
+the credential read removed entirely.
 
 ## Where This Sits on the Ladder
 

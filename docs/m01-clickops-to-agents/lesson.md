@@ -329,6 +329,13 @@ often has no equivalent test suite at all. A scanner has to be actively looking 
 the kind of mess an agent leaves behind, or nobody finds out until it causes a real
 incident, weeks later.
 
+This module's own lab plants a small, real version of exactly that gap, so you catch it
+once by hand before an agent ever hits it for you. **Seeded failure:** a hardcoded AWS
+key sitting in the `log_shipper_key` variable's Terraform `default`. **Caught by:**
+Checkov's `CKV_SECRET_2` secrets check, on a plan that validates clean and looks
+otherwise unremarkable. **Fixed by:** dropping the `default` and marking the variable
+`sensitive = true`, so the value has to come from the environment instead.
+
 ### The uncomfortable evidence
 
 There is one more piece of evidence worth sitting with, from that same body of research.
