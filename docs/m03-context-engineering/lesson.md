@@ -295,8 +295,8 @@ exact comparison yourself in the lab.
 
 **Seeded failure:** the same hardcoded `log_shipper_key` default from M01, run again
 here with no `AGENTS.md` in the folder. **Caught by:** the same Checkov `CKV_SECRET_2`
-finding, on run 1's output. **Fixed by:** not a one-off edit this time, writing the
-never-put-a-secret-in-a-default rule into a standing `AGENTS.md`, so run 2 produces a
+finding, on run 1's output. **Fixed by:** writing the never-put-a-secret-in-a-default rule
+into a standing `AGENTS.md` convention instead of a one-off edit, so run 2 produces a
 `sensitive` variable unprompted, on the first try.
 
 ## Vocabulary

@@ -176,12 +176,13 @@ failed waiting for *unstructured.Unstructured Informer to sync`, when the real c
 permission Crossplane never had.
 
 **Seeded failure:** the `crossplane` `ServiceAccount` carries no RBAC grant on
-`apps/statefulsets`. **Caught by:** `kubectl get events` showing a real forbidden error the
-moment Crossplane tries to create the composed `StatefulSet`, confirmed as a `lab/run.sh`
-regression check that applies the Composition before `db-composer-rbac.yaml` and asserts that
-exact event fires. **Fixed by:** `lab/solution/db-composer-rbac.yaml`, a `ClusterRole` and
-`ClusterRoleBinding` granting the `crossplane` `ServiceAccount` full CRUD on
-`apps/statefulsets`.
+`apps/statefulsets`. **Caught by:** the XR's own status still shows the misleading Informer
+timeout, `kubectl get events` is where the real forbidden error actually surfaces the moment
+Crossplane tries to create the composed `StatefulSet`, and that gap between the two is the
+lesson, confirmed as a `lab/run.sh` regression check that applies the Composition before
+`db-composer-rbac.yaml` and asserts that exact event fires. **Fixed by:**
+`lab/solution/db-composer-rbac.yaml`, a `ClusterRole` and `ClusterRoleBinding` granting the
+`crossplane` `ServiceAccount` full CRUD on `apps/statefulsets`.
 
 Readiness has the same trap for a different reason. A `Deployment` and most provider-managed
 resources carry `status.conditions`, so `MatchCondition` reads them cleanly. A `StatefulSet`

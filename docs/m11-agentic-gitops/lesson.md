@@ -107,8 +107,8 @@ variable with a hardcoded key baked into its default, the kind of thing a develo
 hurry writes without thinking twice. The CI pipeline, the one this chapter builds, runs
 automatically: fmt, validate, Trivy, Checkov. It fails, for a real and specific reason,
 `CKV_SECRET_2`, a hardcoded AWS-style key. Nothing merges until that's fixed. A second
-agent, given nothing but the real CI failure as context, finds the actual cause and fixes
-it, marking the value sensitive instead of guessing at a workaround. CI goes green. A
+agent, prompted with the CI failure text plus the pre-diagnosed cause and prescribed fix,
+applies it, marking the value sensitive instead of guessing at a workaround. CI goes green. A
 human reads the pull request, not each individual gate, and merges it. The moment that
 merge lands on the branch the controller watches, reconciliation kicks in on its own and
 the cluster converges to match, with nobody typing `kubectl apply`.
