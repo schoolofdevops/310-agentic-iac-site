@@ -23,8 +23,8 @@ autocomplete.
 
 - [Prerequisites](./prerequisites.md): what you should already know, and what you do
   not need.
-- [Environment Setup](./environment-setup.md): the devcontainer, pinned tool
-  versions, and a checklist to verify before module 1.
+- [Environment Setup](./environment-setup.md): pinned tool versions and real install
+  commands, and a checklist to verify before module 1.
 - [Course Plan](./course-plan.md): the full twelve-module arc and every real project
   you build.
 - [Build Status](./course-build-status.md): what's live today.

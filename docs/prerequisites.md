@@ -38,6 +38,7 @@ module. Tier 3 (real AWS) appears once, in the capstone, and it is always option
   ```
 - **Git** and a terminal you are comfortable in.
 
-Everything else, exact versions of Terraform, Checkov, Trivy, `kind`, and Helm, comes
-from the devcontainer, see [Environment Setup](./environment-setup.md). You do not
-install those yourself.
+Everything else, exact versions of Terraform, Checkov, Trivy, `kind`, and Helm, you
+install directly on your own machine, one time, before module 1. See
+[Environment Setup](./environment-setup.md) for the exact versions and real install
+commands.

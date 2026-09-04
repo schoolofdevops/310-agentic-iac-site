@@ -34,8 +34,8 @@ buckets, both deliberately left unhardened.
 docker info
 ```
 
-- `trivy`, `checkov`, and `conftest` on your `PATH`. If you're in the devcontainer they're
-  already there. Check with:
+- `trivy`, `checkov`, and `conftest` on your `PATH`, installed per Environment Setup.
+  Check with:
 
 ```
 trivy --version

@@ -5,9 +5,11 @@ title: Environment Setup
 
 # Environment Setup
 
-Every lab in this course runs inside a pinned devcontainer, so your Terraform version
-is the same one this course was written against. Set it up once, use it for every
-module.
+Every command in this course was run against one exact set of tool versions, and every
+`[ Expected output ]` block you will read was captured from a real run against those
+versions. If your own Terraform, Checkov, or Trivy is a different version, your output
+can genuinely differ from the lab's. Install these exact versions once, directly on
+your own machine, and every module after this one just works.
 
 ## Get the labs repo
 
@@ -16,79 +18,124 @@ git clone https://github.com/schoolofdevops/310-agentic-iac-labs.git
 cd 310-agentic-iac-labs
 ```
 
-## What the devcontainer is for, and what it is not for
+## Install the pinned tools
 
-The devcontainer pins the **infra tooling only**: Terraform, OpenTofu, Checkov, Trivy,
-`kind`, Helm, the GitHub CLI. It does not install Claude Code or Codex, and it is not
-where you run them. Those are your own subscription-based tools, already installed
-and authenticated on your host, and they stay there.
+Run this on macOS or Linux (including WSL2 on Windows, see below). It detects your OS
+and CPU architecture, downloads the exact pinned binary for each tool from its
+official release, and installs it to `/usr/local/bin`:
 
-The devcontainer mounts this same repo folder, so a file `claude` or `codex` edits on
-your host is instantly visible inside the container, and a `terraform apply` you run
-inside the container is instantly visible to your agent on the host. Two terminals,
-one shared folder: your normal host terminal for the agent, the devcontainer for the
-pinned commands the labs actually check your output against.
+```bash
+OS="$(uname -s | tr '[:upper:]' '[:lower:]')"
+ARCH="$(uname -m)"
+case "$ARCH" in
+  x86_64) ARCH_TF="amd64"; ARCH_TRIVY="64bit"; ARCH_K8S="amd64" ;;
+  arm64|aarch64) ARCH_TF="arm64"; ARCH_TRIVY="ARM64"; ARCH_K8S="arm64" ;;
+  *) echo "Unrecognized architecture: $ARCH"; exit 1 ;;
+esac
+[ "$OS" = "darwin" ] && OS_TRIVY="macOS" || OS_TRIVY="Linux"
 
-## Open the devcontainer
+TERRAFORM_VERSION=1.16.0
+OPENTOFU_VERSION=1.12.2
+TRIVY_VERSION=0.74.0
+CHECKOV_VERSION=3.3.16
+KIND_VERSION=0.32.0
+HELM_VERSION=4.0.0
+KUBECTL_VERSION=1.34.0
+INFRACOST_VERSION=0.10.44
+CONFTEST_VERSION=0.68.2
 
-If you use VS Code, open the folder and accept the "Reopen in Container" prompt. Its
-integrated terminal gives you the pinned tools; open a second, ordinary terminal on
-your host, in the same folder, for `claude`/`codex`.
+# Terraform and OpenTofu, one language, two runtimes
+curl -fsSL "https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_${OS}_${ARCH_TF}.zip" -o /tmp/tf.zip \
+  && unzip -oq /tmp/tf.zip -d /usr/local/bin && rm /tmp/tf.zip
+curl -fsSL "https://github.com/opentofu/opentofu/releases/download/v${OPENTOFU_VERSION}/tofu_${OPENTOFU_VERSION}_${OS}_${ARCH_TF}.zip" -o /tmp/tofu.zip \
+  && unzip -oq /tmp/tofu.zip -d /tmp/tofu && mv /tmp/tofu/tofu /usr/local/bin/ && rm -rf /tmp/tofu*
 
-VS Code is not required. The devcontainer is just a JSON spec plus a Dockerfile, and
-the standalone `devcontainer` CLI builds and runs it with no editor at all:
+# Trivy and Checkov, always both
+curl -fsSL "https://github.com/aquasecurity/trivy/releases/download/v${TRIVY_VERSION}/trivy_${TRIVY_VERSION}_${OS_TRIVY}-${ARCH_TRIVY}.tar.gz" \
+  | tar xz -C /usr/local/bin trivy
+pip install --user "checkov==${CHECKOV_VERSION}"
+
+# OPA policy checks and cost gates (module 9 onward)
+curl -fsSL "https://github.com/open-policy-agent/conftest/releases/download/v${CONFTEST_VERSION}/conftest_${CONFTEST_VERSION}_$([ "$OS" = "darwin" ] && echo Darwin || echo Linux)_${ARCH}.tar.gz" \
+  | tar xz -C /usr/local/bin conftest
+curl -fsSL "https://github.com/infracost/infracost/releases/download/v${INFRACOST_VERSION}/infracost-${OS}-${ARCH_TF}.tar.gz" \
+  | tar xz -C /tmp && mv "/tmp/infracost-${OS}-${ARCH_TF}" /usr/local/bin/infracost
+
+# Kubernetes tools, needed from module 10 onward
+curl -fsSLo /usr/local/bin/kind "https://kind.sigs.k8s.io/dl/v${KIND_VERSION}/kind-${OS}-${ARCH_TF}" && chmod +x /usr/local/bin/kind
+curl -fsSLo /usr/local/bin/kubectl "https://dl.k8s.io/release/v${KUBECTL_VERSION}/bin/${OS}/${ARCH_TF}/kubectl" && chmod +x /usr/local/bin/kubectl
+curl -fsSL "https://get.helm.sh/helm-v${HELM_VERSION}-${OS}-${ARCH_TF}.tar.gz" \
+  | tar xz -C /tmp && mv "/tmp/${OS}-${ARCH_TF}/helm" /usr/local/bin/ && rm -rf "/tmp/${OS}-${ARCH_TF}"
+```
+
+`/usr/local/bin` usually needs `sudo` to write to on macOS and most Linux distros. If
+any `mv`/`unzip -d` step above fails on a permissions error, re-run that one line with
+`sudo` in front of it, or point the installs at a directory already on your `PATH` that
+you own (e.g. `~/.local/bin`, with `export PATH="$HOME/.local/bin:$PATH"` in your
+shell profile).
+
+## Install the GitHub CLI
+
+Module 11 opens a real pull request, `gh` needs to already be there by then:
 
 ```
-npm install -g @devcontainers/cli
-devcontainer up --workspace-folder .
-devcontainer exec --workspace-folder . bash
+# macOS
+brew install gh
+
+# Linux (Debian/Ubuntu)
+curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg \
+  | sudo dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" \
+  | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null
+sudo apt update && sudo apt install gh
 ```
 
-`devcontainer up` builds and starts the container. `devcontainer exec ... bash` opens
-a shell inside it, with the pinned Terraform/Checkov/Trivy/Docker-socket setup, for
-running the lab's own commands. Run `claude` or `codex` in a separate, ordinary
-terminal on your host, in the same cloned folder, not inside this shell.
+Then authenticate once: `gh auth login`.
 
-GitHub Codespaces reads the same `.devcontainer/devcontainer.json` too, if you want
-a browser-only path for the infra tooling. Its own terminal is still a container
-shell, same rule applies: run the agent from wherever you'd normally run it, pointed
-at your Codespace's synced folder if your setup supports that, or fall back to typing
-suggestions in by hand for that session.
+## Install Docker
 
-The devcontainer:
+This was already host-side either way, Floci and `kind` both run as real Docker
+containers on your machine:
 
-- Mounts your host's Docker socket (`/var/run/docker.sock`) into the container,
-  rather than installing Docker inside it. This is required, not optional, Floci and
-  `kind` both need it. If a Tier 1 lab hangs on `terraform apply`, this is the first
-  thing to check.
-- Pins Terraform 1.16.0, Checkov 3.3.16, and Trivy 0.74.0.
-- Forwards port 4566 (Floci) and 8080, for labs that expose a local service.
-- Installs the GitHub CLI, for modules that open a real pull request.
+- **macOS / Windows**: install [Docker Desktop](https://www.docker.com/products/docker-desktop/).
+- **Linux**: `curl -fsSL https://get.docker.com | sh`, then add your user to the
+  `docker` group (`sudo usermod -aG docker $USER`, log out and back in) so you do not
+  need `sudo` for every `docker` command.
 
-None of this is mandatory. Every tool the devcontainer pins can be installed directly
-on your own workstation instead, matching the same versions, if you'd rather skip the
-container entirely. The devcontainer buys you one thing: nobody has to debug a version
-mismatch between your machine and this course's.
+## Windows
+
+Every command on this page assumes a Unix-like shell. Install
+[WSL2](https://learn.microsoft.com/windows/wsl/install), then run every command on
+this page inside your WSL2 Linux distribution, exactly as written for Linux.
 
 ## Verify it worked
 
-Run these three checks before starting module 1. All three should succeed:
+Run these before starting module 1. All should succeed and print the pinned versions:
 
 ```
-terraform version    # 1.16.0
-tofu version         # 1.12.2
-checkov --version    # 3.3.16
-docker info          # reachable at /var/run/docker.sock
+terraform version     # 1.16.0
+tofu version           # 1.12.2
+checkov --version      # 3.3.16
+trivy --version         # 0.74.0
+kind version             # 0.32.0
+helm version --short      # v4.0.0
+kubectl version --client   # 1.34.0
+gh --version                # any recent version
+docker info                  # reachable, no version pin required
 ```
+
+If any version printed does not match the pinned one, your lab output can genuinely
+differ from what this course shows. Fix the version before continuing, do not assume
+"close enough" is close enough.
 
 If `docker info` hangs or errors, stop and fix Docker before anything else, every
 Tier 1 lab in this course depends on it.
 
 ## Tier 2 and Tier 3 tools
 
-You do not need `kind` or Helm until module 10. You do not need an AWS account until
-the optional Tier 3 part of the capstone. Both are covered in their own module's
-Pre Requisites section when you get there, not upfront.
+You do not need `kind` or Helm working until module 10. You do not need an AWS
+account until the optional Tier 3 part of the capstone. Both are covered again, in
+more depth, in their own module's Pre Requisites section when you get there.
 
 ## The four lab tiers
 
