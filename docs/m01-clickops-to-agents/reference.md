@@ -67,4 +67,4 @@ confidence in it.
   *Firefly State of IaC 2026, a vendor survey.*
 - AI-generated infra code: roughly **3 to 4x** the vulnerability density of human-written
   code at matched resource counts, worst at **~4.9x** on single-resource templates,
-  falling to **~1.4x** at 20+ resources. *August 2026 preprint, single author.*
+  falling to **~1.4x** at 20+ resources. *Shaw, arXiv:2608.28021, Aug 2026, single author.*

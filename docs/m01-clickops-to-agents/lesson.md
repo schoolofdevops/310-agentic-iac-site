@@ -319,10 +319,11 @@ that network, all at once. Infrastructure changes tend to have a blast radius th
 larger, and much harder to predict just by reading the change on its own, than the
 equivalent change in application code would have.
 
-**Silent failure.** This is the one that catches teams off guard the most. A 2026 preprint
-studying agent behavior on infrastructure tasks found that agents can "achieve short-term
-objectives while leaving non-durable changes, broken invariants, and uncleaned state"
-behind them. In plain words: the task the agent was given gets done, the agent reports
+**Silent failure.** This is the one that catches teams off guard the most. Gao et al.'s
+"InfraBench: Evaluating Infrastructure Agents Across Layers, Lifecycle, and Risk"
+(arXiv:2608.11234, Jul 2026) found that agents can "routinely satisfy short-term
+objectives while leaving non-durable changes, broken distributed invariants...and
+uncleaned state" behind them. In plain words: the task the agent was given gets done, the agent reports
 success, and something sitting right next to that task quietly breaks, or gets left half
 finished. A test suite catches most silent failures in application code. Infrastructure
 often has no equivalent test suite at all. A scanner has to be actively looking for exactly
@@ -338,11 +339,13 @@ be reading closely to catch. **Fixed by:** dropping the `default` and marking th
 
 ### The uncomfortable evidence
 
-There is one more piece of evidence worth sitting with, from that same body of research.
-At matched resource counts, AI-generated infrastructure code showed roughly **3 to 4
-times** the vulnerability density of human-written code doing the same job. Worst on the
-smallest snippets, about **4.9 times** on single-resource templates. It fell as the
-snippets got bigger, down to around **1.4 times** at twenty or more resources.
+There is one more piece of evidence worth sitting with, from a separate 2026 study. Shaw's
+"Compared to What? A Human-Anchored Security Benchmark for LLM-Generated
+Infrastructure-as-Code" (arXiv:2608.28021, Aug 2026) found that, at matched resource
+counts, AI-generated infrastructure code showed roughly **3 to 4 times** the vulnerability
+density of human-written code doing the same job. Worst on the smallest snippets, about
+**4.9 times** on single-resource templates. It fell as the snippets got bigger, down to
+around **1.4 times** at twenty or more resources.
 
 ![A line chart: vulnerability density multiplier starts near 4.9x at one resource and falls to about 1.4x at twenty or more resources, worst on the smallest snippets.](./diagrams/vulnerability-density.svg)
 
