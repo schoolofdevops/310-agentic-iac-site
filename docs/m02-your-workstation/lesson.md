@@ -37,25 +37,28 @@ does not change based on which CLI is running it.
 
 ![Two CLI panels, Claude Code and Codex, both pointed with an arrow at the same shared repository box in the middle, showing one workstation used with either tool.](./diagrams/two-clis-one-workstation.svg)
 
-## The Devcontainer Floor
+## Pinned Versions, Installed Once
 
 Here is a question worth asking before you install anything: whose Terraform
 version runs your lab, yours or the one this course was written against? If those
 two answers can differ, you will spend more time debugging your environment than
-the actual lesson. That is what a devcontainer fixes.
+the actual lesson. That is what Environment Setup fixes.
 
-This course's devcontainer pins Terraform 1.16.0, Checkov 3.3.16, Trivy 0.74.0, and
-mounts the Docker socket rather than installing Docker inside the container. Every
-learner who opens it gets the same floor to stand on. "It works on my machine" is
-not a debugging step here, it is a bug, because your machine and the course's
-machine are, for the length of a lab, the same machine.
+Before module 1, you installed Terraform 1.16.0, Checkov 3.3.16, and Trivy 0.74.0
+directly on your own machine, at the exact versions this course was written and
+captured against, following Environment Setup. Docker runs on your machine too,
+reachable at `/var/run/docker.sock`, the same socket every lab in this course,
+this one included, talks to directly. "It works on my machine" is not a
+debugging step here, it is a bug, because your machine and the course's machine
+are running the exact same tool versions.
 
-![A wide floor labeled devcontainer, with four pinned tool boxes standing on it: Terraform, Checkov, Trivy, and the Docker socket, each version-pinned, showing one shared starting point everyone gets.](./diagrams/devcontainer-floor.svg)
+![Four pinned tool boxes, Terraform, Checkov, Trivy, and the Docker socket, each version-pinned, installed directly on one machine, showing one shared starting point everyone gets.](./diagrams/pinned-tool-versions.svg)
 
-The Docker socket mount matters more than it looks. Module 1's troubleshooting
-note about `aws_db_instance` hanging forever without it applies here too, any lab
-that touches a real or emulated container depends on that one line in the
-devcontainer config.
+That same Docker socket matters more than it looks. Module 1's troubleshooting
+note about `aws_db_instance` hanging forever without it applies here too. Starting
+module 4, the Floci container itself needs that socket mounted in, exactly the way
+Environment Setup and this course's shared `docker-compose.floci.yml` set it up, so
+confirm `docker info` works now, before any lab depends on it.
 
 ## Step 1: Suggest
 
@@ -216,7 +219,7 @@ them the moment module 3 asks you to fill them in.
 
 | Term | Meaning |
 |---|---|
-| Devcontainer | A pinned, shared development environment, so every learner starts from the same tool versions |
+| Pinned tool version | The exact Terraform, Checkov, and Trivy version this course was written and captured against, installed directly on your machine per Environment Setup |
 | Claude Code | An agent CLI taught in this course, one of two |
 | Codex CLI | An agent CLI taught in this course, the other of the two |
 | `CLAUDE.md` | Claude Code's standing-context file at a repo's root, empty until module 3 |

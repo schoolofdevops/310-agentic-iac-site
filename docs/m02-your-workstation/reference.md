@@ -12,7 +12,7 @@ claude --version
 codex --version
 ```
 
-## Devcontainer verify checklist
+## Pinned tool verify checklist
 
 ```
 terraform version    # 1.16.0, pinned

@@ -6,7 +6,7 @@ title: "Project 02: Build an Nginx Test Module Using Claude Code's Agent Modes"
 # Project 02: Build an Nginx Test Module Using Claude Code's Agent Modes
 
 **Tier 0** · ~15 min · no cloud account, no `terraform apply` required. Claude Code (or Codex),
-Terraform, and Checkov, all already in the devcontainer.
+Terraform, and Checkov, all installed on your host per Environment Setup.
 
 In this project, you will build one real thing: a local nginx test module, a container that
 serves a static page you control, its rendered HTML kept on disk so you can diff it in git,
@@ -609,7 +609,7 @@ result, not a guarantee for yours. Confirm it in your own output before you trus
 one more thing static checks can't tell you: nginx only auto-loads `/etc/nginx/conf.d/*.conf`
 files at the point they're `include`d inside its own `http` block, and a bare `location` block
 dropped in there has to make sense in that context. `terraform plan` has no opinion on nginx's
-config grammar, only Terraform's. **Apply this for real** in your devcontainer, where Docker is
+config grammar, only Terraform's. **Apply this for real** on your machine, where Docker is
 reachable, and curl all three paths:
 
 ```

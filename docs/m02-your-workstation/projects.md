@@ -11,9 +11,11 @@ title: 'Exploratory projects'
    one-line ask and compare their first drafts. Where do they agree, and where does the
    design choice differ?
 
-2. **Break the devcontainer on purpose.** Comment out the Docker socket mount in
-   `.devcontainer/devcontainer.json`, rebuild, and try Lab 1's `docker info` check. You should
-   see the exact failure mode module 1 warned about. Fix it, and confirm it's clean again.
+2. **Break a pinned version on purpose.** Install a second Terraform version alongside the
+   pinned 1.16.0 (a version manager like `tfenv`, or a second binary on a scratch `PATH`), point
+   your shell at the wrong one, and re-run `terraform plan` on `lab/solution/step2-drafted`. Note
+   exactly what differs, warning text, plan formatting, an outright error, whatever you actually
+   see. Then switch back to 1.16.0 and confirm the module's real `[ Expected output ]` returns.
 
 3. **Write your own step 1 to step 2 pair.** Pick a small, real ask from your own work, not
    from this course. Run it through step 1 first, by hand, then step 2. Note what actually
