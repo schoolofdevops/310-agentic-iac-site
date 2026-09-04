@@ -154,11 +154,14 @@ gap, between a file that type-checks and a file that is actually safe to run,
 is the whole reason this course keeps a real syntax-and-plan floor under every
 lab, not just a syntax floor.
 
-**Seeded failure:** a `docker_container` volume's `host_path` built from a relative,
-`path.module`-derived reference. **Caught by:** `terraform plan`, not `terraform
-validate`, the only step that actually evaluates the docker provider's absolute-path
-requirement. **Fixed by:** wrapping the reference in `abspath()` at the point Docker
-needs it.
+**Seeded failure:** the same real gap, twice, independently. Step 1's suggested
+`default = "${path.module}/site"` fails `terraform validate` outright, and once that's fixed to
+a plain relative string, `terraform plan` catches Docker's absolute-path requirement on the
+fixed value. Step 2's drafted `local_file.index_html.filename = "${path.module}/html/index.html"`
+validates clean and is caught by `terraform plan` while still carrying `path.module`.
+**Caught by:** `terraform plan` in both cases, the step that actually evaluates the docker
+provider's absolute-path requirement, not `terraform validate`. **Fixed by:** wrapping the
+reference in `abspath()` at the point Docker needs it.
 
 ## `acceptEdits`, Delegating to a Subagent, and a Slash Command
 

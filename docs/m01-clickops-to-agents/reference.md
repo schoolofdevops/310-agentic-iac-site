@@ -38,7 +38,7 @@ No step is safe without the gate listed beside it.
 |---|---|---|
 | Loop | What re-triggers the agent, when it stops | "Works, but I babysit every run" |
 | Harness | Skills, tools, MCP, hooks, sandbox, gates | "Works, but ignores our standards" |
-| Context | AGENTS.md, repo shape, policy text, retrieval | "Can't get one task right at all" |
+| Context | AGENTS.md, repo layout, policy text, retrieval | "Can't get one task right at all" |
 
 Build bottom-up. Never add a loop on top of a broken harness.
 

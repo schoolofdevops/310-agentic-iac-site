@@ -24,5 +24,5 @@ title: 'Exploratory projects'
    gap is real, not hypothetical, see this module's own lab.
 
 5. **Try Spec Kit or Kiro specs on a non-Terraform task.** The spec/requirements/
-   constraints/criteria shape isn't infrastructure-specific. Try it on a small script or a
+   constraints/criteria pattern isn't infrastructure-specific. Try it on a small script or a
    CI config change and see what changes about how you'd review the result.

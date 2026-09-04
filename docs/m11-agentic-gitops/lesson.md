@@ -46,7 +46,7 @@ those stages yourself, by typing a command. Module 6 built a hook that ran autom
 but only when your own agent tried to act. Neither one runs on its own, on a repo nobody
 is currently sitting at, catching a change an agent proposed while nobody was watching.
 
-This chapter is where that changes. The same shape of pipeline gets wired into GitHub
+This chapter is where that changes. The same kind of pipeline gets wired into GitHub
 Actions, so it runs on every pull request, whether or not anyone is watching, whether the
 change came from a human or an agent. And on the other side of a merge, a real controller
 keeps a real cluster matching whatever's in the repo, continuously, without anyone running
@@ -75,7 +75,7 @@ controller running inside the cluster notices the merge and makes the cluster ma
 
 ![A git repository as the single source of truth, with a controller drawn as a constant arrow comparing the cluster's live state against the repo and correcting any difference.](./diagrams/gitops-picture.svg)
 
-This is a different shape than Terraform's plan-and-apply. Terraform runs once, changes
+This works differently than Terraform's plan-and-apply. Terraform runs once, changes
 what it changes, and stops. A GitOps controller never stops. It keeps checking, forever,
 and if something in the cluster drifts away from what the repo says, whether a person
 changed it by hand or something else did, the controller notices and puts it back. You'll

@@ -74,7 +74,7 @@ up one more level. Instead of describing the state of one server, you describe t
 of your whole environment, the servers, the network, the load balancers, the database, as
 one set of files. The tool works out what to create, change, or destroy, so that reality
 matches the files. This is a real step up: the files are now the source of truth for the
-shape of your environment, not just one machine's setup. What it left behind is state.
+layout of your environment, not just one machine's setup. What it left behind is state.
 Terraform has to track what it already created, somewhere. If that record drifts from
 reality, because someone made a manual change, or two people ran `apply` from two
 different laptops, the next plan can be wrong in ways that are hard to catch before they
@@ -179,7 +179,7 @@ loop.
 
 ### Coding agents and operational agents
 
-Not every agent has the same shape. A **coding agent** works inside a repository, on one
+Not every agent has the same design. A **coding agent** works inside a repository, on one
 short task: read the code, make a change, run the checks, hand you a diff. It stays
 inside a worktree, or a set of files it is allowed to touch, and when it is done, you
 review it the ordinary way, as a pull request. Almost everything in this course, M02
@@ -283,7 +283,7 @@ other reason on the list.
 
 ### Adoption is not trust
 
-Read those three numbers together, and you get the real shape of where the industry
+Read those three numbers together, and you get the real picture of where the industry
 stands: broad adoption, narrow trust, and a specific, named reason for the gap between
 them. Teams are not avoiding agentic infrastructure. They are avoiding running it
 unattended, because most of them do not yet have the gate that would make that safe. That
@@ -348,7 +348,7 @@ snippets got bigger, down to around **1.4 times** at twenty or more resources.
 
 This is a single-author, August 2026 preprint, not a peer-reviewed, widely-replicated
 finding, and every time it gets cited, including here, it should carry that caveat. But
-the shape of the result is worth taking seriously regardless of the exact multiplier: the
+the pattern of the result is worth taking seriously regardless of the exact multiplier: the
 *smallest*, simplest-looking pieces of generated infrastructure were the *least* safe, not
 the most. That cuts directly against the natural assumption that a short snippet must be
 low-risk, simply because there is less of it to get wrong. The same research found that
@@ -390,7 +390,7 @@ to happen first.
 ### Three layers
 
 You will build all three of these starting in Module 3, but it is worth previewing the
-shape of them now, because you will use this as a diagnostic for the rest of the book:
+form of them now, because you will use this as a diagnostic for the rest of the book:
 when something about an agentic workflow is not working, which of three layers does the
 real problem live in?
 
@@ -406,7 +406,7 @@ but it keeps ignoring our team's standards", the problem is usually here, not in
 itself.
 
 The **context** layer is everything the agent knows before it even starts: your
-`AGENTS.md` file, the shape of your repository, policy documents, retrieved examples. If
+`AGENTS.md` file, the layout of your repository, policy documents, retrieved examples. If
 your symptom sounds like "it cannot get one single task right, at all", look here first. A
 broken context layer makes the other two layers pointless, because there is no loop worth
 running, and no harness worth building, on top of a model that never understood the
@@ -438,7 +438,7 @@ in before you are ever allowed to climb it.
 
 | Term | Definition |
 |---|---|
-| Snowflake server | A server shaped by so many small, undocumented manual changes, by mouse or by keyboard, that it is unique and can't reliably be rebuilt |
+| Snowflake server | A server altered by so many small, undocumented manual changes, by mouse or by keyboard, that it is unique and can't reliably be rebuilt |
 | ClickOps | Building or changing infrastructure by hand through a console or web UI, with no file recording what was done |
 | Configuration management | Tools that describe the desired state of a single machine and only change what doesn't already match it |
 | Declarative IaC | Describing the desired state of a whole environment in files, so a tool can work out what to create, change, or destroy |
@@ -454,7 +454,7 @@ in before you are ever allowed to climb it.
 | Drift | A mismatch between what infrastructure tooling believes is deployed and what's actually running |
 | State | The record an infrastructure tool keeps of what it has already created, used to work out what a new plan should change |
 | Context engineering | Deliberately shaping what an agent knows before it starts a task, rather than relying on a single prompt |
-| Harness | The tools, skills, hooks, and permission scopes that surround an agent and shape how it's allowed to act |
+| Harness | The tools, skills, hooks, and permission scopes that surround an agent and control how it's allowed to act |
 | Loop engineering | Designing what re-triggers an agent and what makes it stop |
 | Plan gate | A checkpoint where a human or an automated policy reviews a plan's effects before it's applied |
 | Spec | A written, specific description of what a piece of infrastructure should do, used to give an agent an unambiguous intent to build against |

@@ -42,6 +42,6 @@ checker. Add a second one: a generator that scaffolds a brand new environment di
 just a name, an AZ count, and a `nat_strategy`, instead of a human copy-pasting an existing
 environment and editing five values by hand.
 
-*Hint: the generator's job is to produce files identical in shape to `vpc/envs/dev` or
+*Hint: the generator's job is to produce files identical in structure to `vpc/envs/dev` or
 `vpc/envs/prod`, not to invent a new structure. Diff its output against a hand-written
 environment to prove it.*

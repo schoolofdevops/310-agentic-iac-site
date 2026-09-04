@@ -37,7 +37,7 @@ Three failed fix attempts on the same symptom is the signal to stop, not to try 
 |---|---|---|
 | 1 | Provider version mismatch, pin exact version | Same error |
 | 2 | Stale `.terraform` cache, wipe and reinit | Same error |
-| 3 | Argument is just misnamed, guess `endpoints_url` | Same shape of error, still wrong |
+| 3 | Argument is just misnamed, guess `endpoints_url` | Same kind of error, still wrong |
 | Stop | Compare against a known-working example instead of a 4th guess | Root cause found: `endpoint_url` was never valid AWS-provider syntax |
 
 ## Harness vs context vs loop, in one line each

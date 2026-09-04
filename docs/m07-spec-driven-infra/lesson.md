@@ -87,10 +87,10 @@ You don't have to invent your own spec format. GitHub's Spec Kit gives you a rea
 one. Install it, and it drops a set of skills into your coding agent: `/speckit-specify` writes
 the baseline spec, `/speckit-plan` turns it into an implementation plan, `/speckit-tasks` breaks
 that into actionable steps, and `/speckit-implement` generates against all of it. Kiro specs work
-the same shape, a different tool, the same underlying idea: write the spec, then generate against
+the same pattern, a different tool, the same underlying idea: write the spec, then generate against
 it, then check the result against what you wrote.
 
-A Spec Kit spec has a fixed shape you'll recognize from the section above. Functional
+A Spec Kit spec has a fixed structure you'll recognize from the section above. Functional
 requirements, written as `FR-001`, `FR-002`, numbered so you can point at exactly one. Success
 criteria, numbered the same way, `SC-001`, `SC-002`, stated as something you could check with a
 command, not something you'd have to eyeball. This isn't ceremony for its own sake. Numbered,
@@ -111,7 +111,7 @@ Here's the honest part, and it matters as much as the success. A spec's success 
 cover what its author thought to write down. Write a spec for an autoscaling tier with five
 requirements, and a scanner will very likely still find things outside those five: missing tags on
 the launch configuration, no encrypted root volume, no detailed monitoring. None of that is a
-failure of spec-driven work. It's the spec doing exactly what it promised, no more. A spec shapes
+failure of spec-driven work. It's the spec doing exactly what it promised, no more. A spec defines
 what gets generated. It was never supposed to replace what checks it afterward.
 
 ### Try it: spec-driven vs vibe-coded
@@ -121,13 +121,13 @@ module's own lab play out: [Spec-Driven vs Vibe-Coded Simulator](pathname:///310
 
 <Embed src="sims/spec-vs-vibe-sim.html" title="Spec-Driven vs Vibe-Coded Simulator" />
 
-**Seeded divergence:** the same one-line ticket, give me an autoscaling web tier for our checkout
-service, built twice, once vibe-coded and once from a written spec, diverging on five real
+**Seeded failure:** the same one-line ticket, give me an autoscaling web tier for our checkout
+service, answered without a spec, diverges from the same ticket answered with one on five real
 judgment calls: health check grace period, scale-in termination policy, capacity ceiling, scaling
 cooldown, and IMDSv2. **Caught by:** real `terraform plan` values compared line by line between
 the two modules, plus checkov, which passes `CKV_AWS_79` on the spec-driven module and fails it,
-plus nine more findings on an unrequested ALB, on the vibe-coded one. **Resolved by:** applying
-the spec-driven module and checking its live state against SC-001 through SC-004, with SC-005 and
+plus nine more findings on an unrequested ALB, on the vibe-coded one. **Fixed by:** the
+spec-driven module, whose live state checks out against SC-001 through SC-004, with SC-005 and
 SC-006 verified separately by checkov earlier in the same lab, every one of the six written into
 `spec.md` before any code existed.
 
@@ -138,7 +138,7 @@ SC-006 verified separately by checkov earlier in the same lab, every one of the 
 It's tempting to think a good spec makes the later gates unnecessary. It doesn't, and this is
 worth stating plainly so the three don't blur together.
 
-A spec shapes the ask, before generation happens at all. It's nothing but a better question. A
+A spec defines the ask, before generation happens at all. It's nothing but a better question. A
 gate, the kind you built in M06, blocks `apply` based on something mechanical: a blast radius, a
 missing approval. A policy check, the kind M09 runs, scans the generated plan against rules
 neither you nor the spec's author necessarily thought of. Three different jobs, three different

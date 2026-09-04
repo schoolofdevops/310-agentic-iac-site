@@ -42,12 +42,12 @@ makes a namespaced XR possible; there is no `claimNames` field to add.
 
 | Layer | What a team gets | What they have to know |
 |---|---|---|
-| Raw manifests | Full control, every field explicit | The full shape of a `Secret`, `Service`, `StatefulSet` |
+| Raw manifests | Full control, every field explicit | The full definition of a `Secret`, `Service`, `StatefulSet` |
 | Helm chart | `helm install --set dbName=X` | The chart's `values.yaml`, nothing else |
 | Crossplane XR | A 5-line request, `kubectl apply` | Only the XRD's schema, `dbName` and `storageSize` |
 
 Each layer is real, none of them fake the layer below, the XR composes the exact same
-`Secret`/`Service`/`StatefulSet` shape the raw manifests define by hand.
+`Secret`/`Service`/`StatefulSet` structure the raw manifests define by hand.
 
 ## Composing a native Kubernetes kind needs its own RBAC
 

@@ -27,7 +27,7 @@ infrastructure specifically because infrastructure has no undo and failure that 
 
 | Stage | Module | Does | Does not |
 |---|---|---|---|
-| Spec | M07 | Shapes the ask, before generation | Block or scan anything itself |
+| Spec | M07 | Defines the ask, before generation | Block or scan anything itself |
 | Gate | M06 | Blocks `apply` on something mechanical (blast radius) | Care how the module was written |
 | Policy | M09 | Scans the generated plan against a ruleset | Get skipped just because a spec exists |
 
