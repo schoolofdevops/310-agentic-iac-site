@@ -21,7 +21,7 @@ hand to the agent, and how much permission it runs with.
 - A preview of plan mode on a throwaway file, before the real thing lands in M04
 - The module extended under `acceptEdits` while you watch, applied and destroyed for real
 - A bounded audit delegated to a subagent, its narrower permissions doing their job
-- This module's own check floor turned into a one-word slash command
+- This module's own set of required checks turned into a one-word slash command
 
 M01 had you run a generate-verify-fix loop by hand, no agent involved. This project hands the
 first half of that loop, just the generating, to a real agent, on the same intent, so you feel
@@ -176,15 +176,14 @@ practice: the agent never touched a file, you're the one moving its answer into 
 same way you'd copy a suggestion out of a chat window or a code review comment:
 
 ```
-mkdir -p ~/m02-lab/step1-suggested
-cd ~/m02-lab/step1-suggested
+mkdir -p modules/module-02-your-workstation/lab/step1-suggested
+cd modules/module-02-your-workstation/lab/step1-suggested
 ```
 
-`file: ~/m02-lab/step1-suggested/main.tf`
+`file: main.tf`
 
 Copy the block above into this file, however you'd normally do that, paste it, redirect the
-agent's raw output into it with `> main.tf`, whatever's fastest for you. Then run the syntax
-floor from M01 on it:
+agent's raw output into it with `> main.tf`, whatever's fastest for you. Then run the same basic checks from M01 on it:
 
 ```
 terraform fmt -check -diff
@@ -207,7 +206,7 @@ The suggestion doesn't validate. `path.module` isn't available inside a `variabl
 suggestion doesn't make it correct, it makes it **yours to have caught**. **Fix** it to a plain
 relative path:
 
-`edit file: ~/m02-lab/step1-suggested/main.tf`
+`edit file: main.tf`
 ```
 variable "site_dir" {
   description = "Path to local dir with static HTML you author/edit"
@@ -229,7 +228,7 @@ terraform validate
 Success! The configuration is valid.
 ```
 
-**`terraform validate` is not the whole floor.** It checks types and syntax, not every constraint a
+**`terraform validate` alone is not enough.** It checks types and syntax, not every constraint a
 provider enforces once it actually has to act on your values. Run `terraform plan` on this same
 file:
 
@@ -254,7 +253,7 @@ the actual create, and `terraform validate` never evaluates. Your file validated
 still have failed the moment anyone tried to plan or apply it. **Fix** it by wrapping the
 reference in `abspath()` at the point Docker actually needs it:
 
-`edit file: ~/m02-lab/step1-suggested/main.tf`
+`edit file: main.tf`
 ```
   volumes {
     host_path      = abspath(var.site_dir)
@@ -289,7 +288,7 @@ permission prompt appears asking to write `main.tf`, **approve** it. That's the 
 mechanism, you didn't need a flag, you just said yes at the prompt instead of no:
 
 ```
-mkdir -p ~/m02-lab/step2-drafted && cd ~/m02-lab/step2-drafted
+mkdir -p modules/module-02-your-workstation/lab/step2-drafted && cd modules/module-02-your-workstation/lab/step2-drafted
 claude
 ```
 ```
@@ -309,7 +308,7 @@ intent directly. Do not ask questions, just write the file. Intent: <paste the i
 ```
 
 **Read** `main.tf` before you do anything else with it, the same discipline M01's `terraform
-plan` step asked for. Then run the same syntax floor:
+plan` step asked for. Then run the same basic checks:
 
 ```
 terraform fmt -check -diff
@@ -323,7 +322,7 @@ Success! The configuration is valid.
 ```
 
 Validated clean on the first try. Before you call that "no fix needed," remember step 1's
-lesson: validate isn't the floor, plan is. Run it:
+lesson: validate is not enough, plan catches more. Run it:
 
 ```
 terraform plan
@@ -346,7 +345,7 @@ on `local_file.index_html`, and that resource's `filename` feeds straight into t
 failure, because neither the model nor `terraform validate` catches Docker's absolute-path
 requirement. **Fix** it the same way, wrapping the reference in `abspath()`:
 
-`edit file: ~/m02-lab/step2-drafted/main.tf`
+`edit file: main.tf`
 ```
 resource "local_file" "index_html" {
   filename = abspath("${path.module}/html/index.html")
@@ -380,7 +379,7 @@ the mode indicator at the bottom of the prompt reads `plan mode`, then ask it a 
 thing:
 
 ```
-mkdir -p ~/m02-lab/plan-preview && cd ~/m02-lab/plan-preview
+mkdir -p modules/module-02-your-workstation/lab/plan-preview && cd modules/module-02-your-workstation/lab/plan-preview
 claude
 ```
 ```
@@ -527,8 +526,8 @@ hand twice.
 ## Check both with checkov
 
 ```
-cd ~/m02-lab/step1-suggested && checkov -d .
-cd ~/m02-lab/step2-drafted && checkov -d .
+cd modules/module-02-your-workstation/lab/step1-suggested && checkov -d .
+cd ../step2-drafted && checkov -d .
 ```
 
 `[ Expected output ]`
@@ -549,7 +548,7 @@ turn, in the transcript. **Open** a fresh session in a copy of your fixed `step2
 and press **Shift+Tab** until the mode indicator reads `accept edits`:
 
 ```
-cp -r ~/m02-lab/step2-drafted ~/m02-lab/step3-acceptedits && cd ~/m02-lab/step3-acceptedits
+cp -r modules/module-02-your-workstation/lab/step2-drafted modules/module-02-your-workstation/lab/step3-acceptedits && cd modules/module-02-your-workstation/lab/step3-acceptedits
 claude
 ```
 ```
@@ -671,15 +670,15 @@ permissions. That is by design, and module 6 turns it into a formal gate.
 
 ## Step 6: Custom Slash Command
 
-One last thing the project's own repo can carry: its own check floor, as a command anyone
+One last thing the project's own repo can carry: its own required checks, as a command anyone
 opening it can run. You've now typed `fmt`, `init`, `validate`, `plan` by hand four times in
 this lab. A custom slash
 command turns a sequence you run often into one word. **Create** this file:
 
-`file: ~/m02-lab/step3-acceptedits/.claude/commands/tf-check.md`
+`file: .claude/commands/tf-check.md`
 ```
 ---
-description: Run this course's Terraform syntax + plan floor (fmt, validate, plan) against the current directory
+description: Run this course's Terraform checks (fmt, validate, plan) against the current directory
 ---
 
 Run, in order, in the current directory, and report the real output of each:
@@ -714,7 +713,7 @@ All 4 steps pass.
 
 A real, captured run. `.claude/commands/` is project-scoped, checked into the repo alongside the
 module it belongs to, so anyone (or any agent) working in this directory gets the same
-one-word floor you just built. That's the last real dial this module teaches: slash commands
+one-word check you just built. That's the last real dial this module teaches: slash commands
 turn a repeatable check into a fact the repo carries, not a sequence you re-type or re-explain
 every session.
 
@@ -724,7 +723,7 @@ Write a short note, in your own words, in a file called `notes.md` next to your 
 
 - What felt different between typing step 1's suggestion and reading step 2's draft?
 - Both step 1 and step 2 validated clean and still failed `terraform plan`. What does that tell
-  you about where you should actually set your own floor, on a real repo, not a lab?
+  you about which checks you should actually require, on a real repo, not a lab?
 - What did you find when you actually applied `step3-acceptedits` and curled `/healthz`? Write
   the real result, whatever it was.
 - The subagent's checkov call got blocked by its own permissions. Why is that the right default,
@@ -763,7 +762,7 @@ What you built:
 
 - One project, the local nginx test module, built five times over: typed as a suggestion,
   written as a draft, extended under `acceptEdits` while you watched, audited by a subagent,
-  and given its own one-word check floor
+  and given its own one-word check
 - A real bug, caught twice, independently, by two different agent sessions: `terraform
   validate` never saw it, only `terraform plan` did
 - A bounded audit delegated to a subagent, its narrower permissions doing their job instead of
