@@ -22,9 +22,13 @@ cd 310-agentic-iac-labs
 
 Run this on macOS or Linux (including WSL2 on Windows, see below). It detects your OS
 and CPU architecture, downloads the exact pinned binary for each tool from its
-official release, and installs it to `/usr/local/bin`:
+official release, and installs it to `~/.local/bin`, a directory you already own, so
+none of this needs `sudo`:
 
 ```bash
+INSTALL_DIR="$HOME/.local/bin"
+mkdir -p "$INSTALL_DIR"
+
 OS="$(uname -s | tr '[:upper:]' '[:lower:]')"
 ARCH="$(uname -m)"
 case "$ARCH" in
@@ -46,33 +50,42 @@ CONFTEST_VERSION=0.68.2
 
 # Terraform and OpenTofu, one language, two runtimes
 curl -fsSL "https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_${OS}_${ARCH_TF}.zip" -o /tmp/tf.zip \
-  && unzip -oq /tmp/tf.zip -d /usr/local/bin && rm /tmp/tf.zip
+  && unzip -oq /tmp/tf.zip -d "$INSTALL_DIR" && rm /tmp/tf.zip
 curl -fsSL "https://github.com/opentofu/opentofu/releases/download/v${OPENTOFU_VERSION}/tofu_${OPENTOFU_VERSION}_${OS}_${ARCH_TF}.zip" -o /tmp/tofu.zip \
-  && unzip -oq /tmp/tofu.zip -d /tmp/tofu && mv /tmp/tofu/tofu /usr/local/bin/ && rm -rf /tmp/tofu*
+  && unzip -oq /tmp/tofu.zip -d /tmp/tofu && mv /tmp/tofu/tofu "$INSTALL_DIR/" && rm -rf /tmp/tofu*
 
 # Trivy and Checkov, always both
 curl -fsSL "https://github.com/aquasecurity/trivy/releases/download/v${TRIVY_VERSION}/trivy_${TRIVY_VERSION}_${OS_TRIVY}-${ARCH_TRIVY}.tar.gz" \
-  | tar xz -C /usr/local/bin trivy
+  | tar xz -C "$INSTALL_DIR" trivy
 pip install --user "checkov==${CHECKOV_VERSION}"
 
 # OPA policy checks and cost gates (module 9 onward)
 curl -fsSL "https://github.com/open-policy-agent/conftest/releases/download/v${CONFTEST_VERSION}/conftest_${CONFTEST_VERSION}_$([ "$OS" = "darwin" ] && echo Darwin || echo Linux)_${ARCH}.tar.gz" \
-  | tar xz -C /usr/local/bin conftest
+  | tar xz -C "$INSTALL_DIR" conftest
 curl -fsSL "https://github.com/infracost/infracost/releases/download/v${INFRACOST_VERSION}/infracost-${OS}-${ARCH_TF}.tar.gz" \
-  | tar xz -C /tmp && mv "/tmp/infracost-${OS}-${ARCH_TF}" /usr/local/bin/infracost
+  | tar xz -C /tmp && mv "/tmp/infracost-${OS}-${ARCH_TF}" "$INSTALL_DIR/infracost"
 
 # Kubernetes tools, needed from module 10 onward
-curl -fsSLo /usr/local/bin/kind "https://kind.sigs.k8s.io/dl/v${KIND_VERSION}/kind-${OS}-${ARCH_TF}" && chmod +x /usr/local/bin/kind
-curl -fsSLo /usr/local/bin/kubectl "https://dl.k8s.io/release/v${KUBECTL_VERSION}/bin/${OS}/${ARCH_TF}/kubectl" && chmod +x /usr/local/bin/kubectl
+curl -fsSLo "$INSTALL_DIR/kind" "https://kind.sigs.k8s.io/dl/v${KIND_VERSION}/kind-${OS}-${ARCH_TF}" && chmod +x "$INSTALL_DIR/kind"
+curl -fsSLo "$INSTALL_DIR/kubectl" "https://dl.k8s.io/release/v${KUBECTL_VERSION}/bin/${OS}/${ARCH_TF}/kubectl" && chmod +x "$INSTALL_DIR/kubectl"
 curl -fsSL "https://get.helm.sh/helm-v${HELM_VERSION}-${OS}-${ARCH_TF}.tar.gz" \
-  | tar xz -C /tmp && mv "/tmp/${OS}-${ARCH_TF}/helm" /usr/local/bin/ && rm -rf "/tmp/${OS}-${ARCH_TF}"
+  | tar xz -C /tmp && mv "/tmp/${OS}-${ARCH_TF}/helm" "$INSTALL_DIR/" && rm -rf "/tmp/${OS}-${ARCH_TF}"
 ```
 
-`/usr/local/bin` usually needs `sudo` to write to on macOS and most Linux distros. If
-any `mv`/`unzip -d` step above fails on a permissions error, re-run that one line with
-`sudo` in front of it, or point the installs at a directory already on your `PATH` that
-you own (e.g. `~/.local/bin`, with `export PATH="$HOME/.local/bin:$PATH"` in your
-shell profile).
+Put `~/.local/bin` first on your `PATH` so these versions win over anything else
+already installed. Add this line to your shell profile (`~/.zshrc` on a default macOS
+shell, `~/.bashrc` on most Linux setups), then open a new terminal:
+
+```
+export PATH="$HOME/.local/bin:$PATH"
+```
+
+If you'd tried an earlier version of this page that installed to `/usr/local/bin` and
+hit a `Permission denied` or a `root/wheel` overwrite prompt partway through, that's
+expected there, `/usr/local/bin` is root-owned by default on a stock macOS install.
+Nothing from that partial attempt needs cleaning up: putting `~/.local/bin` first on
+your `PATH` means the correct, pinned version installed here is always what actually
+runs, regardless of what's sitting in `/usr/local/bin`.
 
 ## Install the GitHub CLI
 
