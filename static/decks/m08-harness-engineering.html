@@ -9,7 +9,7 @@
      CourseSmith whiteboard deck skeleton (self-contained).
      Style contract: templates/deck/whiteboard-style-guide.md
      Tokens: Agentic Infrastructure as Code 8 Harness Engineering
-             Three pieces, taught separately, become one assembled system M8 (e.g. M1)
+             A workflow harness you install, not one you invent M8 (e.g. M1)
      Zero external requests: reveal.js 5.x runtime + Patrick Hand
      woff2 are inlined below. Keep it that way.
      ============================================================ -->
@@ -140,24 +140,38 @@ footer, header, hgroup, main, menu, nav, section {
 <section data-auto-animate>
   <p class="kicker">MODULE 8 &nbsp;&middot;&nbsp; AGENTIC INFRASTRUCTURE AS CODE</p>
   <h2 class="t" style="font-size:1.7em">Harness Engineering</h2>
-  <p class="s" style="font-size:1em">Three pieces, taught separately, become one assembled system</p>
-  <svg viewBox="0 0 900 260" role="img" aria-label="A skill, an MCP server, and a hook converging into one labeled harness box">
-    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.2">
-      <rect x="80" y="40" width="160" height="50" rx="8"/>
-      <rect x="80" y="105" width="160" height="50" rx="8"/>
-      <rect x="80" y="170" width="160" height="50" rx="8"/>
-      <rect x="560" y="80" width="260" height="100" rx="12" stroke-width="2.8"/>
+  <p class="s" style="font-size:1em">A workflow harness you install, not one you invent</p>
+  <svg viewBox="0 0 900 260" role="img" aria-label="A plugin box holding a stack of skills, one skill pulled out and injected into a session box at startup">
+    <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2.4">
+      <rect x="60" y="30" width="300" height="200" rx="12"/>
     </g>
-    <text x="160" y="70" text-anchor="middle" class="lbl-sm">skill</text>
-    <text x="160" y="135" text-anchor="middle" class="lbl-sm">MCP server</text>
-    <text x="160" y="200" text-anchor="middle" class="lbl-sm">hook</text>
+    <text x="210" y="60" text-anchor="middle" class="lbl-sm">superpowers plugin</text>
+    <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="1.8">
+      <rect x="85" y="78" width="250" height="30" rx="6" fill="#dae8fc"/>
+      <rect x="85" y="116" width="250" height="30" rx="6" fill="#dae8fc"/>
+      <rect x="85" y="154" width="250" height="30" rx="6" fill="#dae8fc"/>
+      <rect x="85" y="192" width="250" height="30" rx="6" fill="none" stroke-dasharray="5 4" stroke="#757575"/>
+    </g>
+    <text x="210" y="99" text-anchor="middle" class="lbl-sm">brainstorming</text>
+    <text x="210" y="137" text-anchor="middle" class="lbl-sm">test-driven-development</text>
+    <text x="210" y="175" text-anchor="middle" class="lbl-sm">verification-before-completion</text>
+    <text x="210" y="213" text-anchor="middle" class="lbl-g" font-size="14">pulled out</text>
     <g filter="url(#rough)" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round">
-      <path d="M245,65 L555,120"/>
-      <path d="M245,130 L555,132"/>
-      <path d="M245,195 L555,140"/>
+      <path d="M335,207 C 400,207 410,70 460,70" marker-end="url(#ah)" stroke-dasharray="6 5"/>
     </g>
-    <text x="690" y="135" text-anchor="middle" class="lbl-b">a harness</text>
-    <text x="450" y="235" text-anchor="middle" class="lbl-g">assembled around one real discipline, not three unrelated lessons</text>
+    <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="2.4">
+      <rect x="460" y="50" width="200" height="40" rx="6" fill="#e1d5e7"/>
+    </g>
+    <text x="560" y="76" text-anchor="middle" class="lbl-sm">using-superpowers</text>
+    <g fill="none" stroke="#1e1e1e" stroke-width="2.2" stroke-linecap="round">
+      <path d="M560,92 L562,142" marker-end="url(#ah)"/>
+    </g>
+    <text x="572" y="122" text-anchor="start" class="lbl-g" font-size="14">SessionStart</text>
+    <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="2.8">
+      <rect x="440" y="146" width="400" height="84" rx="12" fill="#d5e8d4"/>
+    </g>
+    <text x="640" y="180" text-anchor="middle" class="lbl-b">session context</text>
+    <text x="640" y="208" text-anchor="middle" class="lbl-g">injected every session, before your first message</text>
   </svg>
   <p class="credit"><b>Gourav Shah</b> &nbsp;&middot;&nbsp; School of DevOps &amp; AI &nbsp;&middot;&nbsp; Lesson + Lab + Quiz</p>
   <div class="pageno">M8&middot;01</div>
@@ -165,36 +179,28 @@ footer, header, hgroup, main, menu, nav, section {
 
 
 <section class="divider">
-  <h2 class="t">Assembling the Harness</h2>
+  <h2 class="t">Three Things Called a Harness</h2>
   <div class="pageno">M8&middot;02</div>
 </section>
 
 
 <section>
-  <h2 class="t">Three Pieces, One System</h2>
-  <p class="s">skill + MCP + hook, converging into one system</p>
-  <svg viewBox="0 0 880 300" role="img" aria-label="A skill, an MCP server, and a hook, three pieces taught separately, converging into one labeled system: a harness.">
+  <h2 class="t">Three Things Called a Harness</h2>
+  <p class="s">this module is the inner box</p>
+  <svg viewBox="0 0 900 320" role="img" aria-label="Three nested boxes: the runtime harness on the outside, the HARNESS layer inside it, the workflow harness inside that.">
 <g>
-    <rect x="40" y="30" width="180" height="60" rx="8" fill="#e1d5e7" stroke="#1e1e1e" stroke-width="2.2" filter="url(#rough)"/>
-    <text x="130" y="55" text-anchor="middle" font-size="13" fill="#1e1e1e">skill</text>
-    <text x="130" y="75" text-anchor="middle" font-size="11" fill="#666">M04, voluntary</text>
+    <rect x="40" y="22" width="820" height="276" rx="14" fill="none" stroke="#1e1e1e" stroke-width="2.2" filter="url(#rough)"/>
+    <text x="66" y="52" text-anchor="start" font-size="15" fill="#1e1e1e">runtime harness</text>
+    <text x="66" y="72" text-anchor="start" font-size="11" fill="#666">Claude Code · Codex · Cursor · the program that runs the model (M02)</text>
 
-    <rect x="40" y="120" width="180" height="60" rx="8" fill="#dae8fc" stroke="#1e1e1e" stroke-width="2.2" filter="url(#rough)"/>
-    <text x="130" y="145" text-anchor="middle" font-size="13" fill="#1e1e1e">MCP server</text>
-    <text x="130" y="165" text-anchor="middle" font-size="11" fill="#666">M05, a live connection</text>
+    <rect x="130" y="92" width="640" height="184" rx="12" fill="none" stroke="#1e1e1e" stroke-width="2.2" filter="url(#rough)"/>
+    <text x="156" y="120" text-anchor="start" font-size="15" fill="#1e1e1e">HARNESS layer</text>
+    <text x="156" y="140" text-anchor="start" font-size="11" fill="#666">skills · MCP · hooks · gates (M04–M06)</text>
 
-    <rect x="40" y="210" width="180" height="60" rx="8" fill="#f8cecc" stroke="#1e1e1e" stroke-width="2.2" filter="url(#rough)"/>
-    <text x="130" y="235" text-anchor="middle" font-size="13" fill="#1e1e1e">hook</text>
-    <text x="130" y="255" text-anchor="middle" font-size="11" fill="#666">M06, enforced</text>
-
-    <path d="M220,60 L420,140" stroke="#1e1e1e" stroke-width="2" marker-end="url(#ah)" filter="url(#rough)"/>
-    <path d="M220,150 L420,150" stroke="#1e1e1e" stroke-width="2" marker-end="url(#ah)"/>
-    <path d="M220,240 L420,160" stroke="#1e1e1e" stroke-width="2" marker-end="url(#ah)" filter="url(#rough)"/>
-
-    <rect x="430" y="100" width="300" height="100" rx="12" fill="#d5e8d4" stroke="#1e1e1e" stroke-width="2.8" filter="url(#rough)"/>
-    <text x="580" y="145" text-anchor="middle" font-size="18" fill="#1e1e1e">a harness</text>
-    <text x="580" y="170" text-anchor="middle" font-size="12" fill="#333">one assembled system,</text>
-    <text x="580" y="186" text-anchor="middle" font-size="12" fill="#333">not three separate lessons</text>
+    <rect x="250" y="160" width="400" height="92" rx="10" fill="#d5e8d4" stroke="#1e1e1e" stroke-width="2.8" filter="url(#rough)"/>
+    <text x="450" y="196" text-anchor="middle" font-size="17" fill="#1e1e1e">workflow harness</text>
+    <text x="450" y="220" text-anchor="middle" font-size="12" fill="#333">Superpowers (M08) · skills + a bootstrap</text>
+    <text x="450" y="238" text-anchor="middle" font-size="11" fill="#666">this module</text>
   </g>
   </svg>
   <div class="pageno">M8&middot;03</div>
@@ -202,117 +208,279 @@ footer, header, hgroup, main, menu, nav, section {
 
 
 <section class="divider">
-  <h2 class="t">The Superpowers Pattern</h2>
+  <h2 class="t">Superpowers</h2>
   <div class="pageno">M8&middot;04</div>
 </section>
 
 
 <section>
-  <h2 class="t">Test-First, Verify, Root-Cause</h2>
-  <p class="s">three disciplines a harness enforces mechanically</p>
-  <svg viewBox="0 0 880 300" role="img" aria-label="Three disciplines in a row: test-first, verify before claiming, and root-cause debugging, each a habit an agent will skip under pressure unless something mechanical stops it.">
+  <h2 class="t">A Skills Library Plus a Bootstrap</h2>
+  <p class="s">one injected skill makes the rest live</p>
+  <svg viewBox="0 0 1000 330" role="img" aria-label="A box of skills with one of them, using-superpowers, pulled out and injected into the session at startup.">
 <g>
-    <rect x="40" y="70" width="240" height="140" rx="10" fill="#dae8fc" stroke="#1e1e1e" stroke-width="2.2" filter="url(#rough)"/>
-    <text x="160" y="110" text-anchor="middle" font-size="15" fill="#1e1e1e">test-first</text>
-    <text x="160" y="140" text-anchor="middle" font-size="11" fill="#333">a failing test before</text>
-    <text x="160" y="158" text-anchor="middle" font-size="11" fill="#333">any production code</text>
+    <rect x="30" y="28" width="580" height="282" rx="12" fill="none" stroke="#1e1e1e" stroke-width="2.4" filter="url(#rough)"/>
+    <text x="320" y="54" text-anchor="middle" font-size="15" fill="#1e1e1e">superpowers plugin</text>
 
-    <rect x="320" y="70" width="240" height="140" rx="10" fill="#ffe6cc" stroke="#1e1e1e" stroke-width="2.2" filter="url(#rough)"/>
-    <text x="440" y="105" text-anchor="middle" font-size="15" fill="#1e1e1e">verify before</text>
-    <text x="440" y="123" text-anchor="middle" font-size="15" fill="#1e1e1e">claiming</text>
-    <text x="440" y="153" text-anchor="middle" font-size="11" fill="#333">evidence, not a claim,</text>
-    <text x="440" y="171" text-anchor="middle" font-size="11" fill="#333">that something works</text>
+    <rect x="50" y="68" width="170" height="36" rx="6" fill="#dae8fc" stroke="#1e1e1e" stroke-width="1.8" filter="url(#rough)"/>
+    <text x="135" y="91" text-anchor="middle" font-size="11" fill="#1e1e1e">brainstorming</text>
+    <rect x="228" y="68" width="170" height="36" rx="6" fill="#dae8fc" stroke="#1e1e1e" stroke-width="1.8" filter="url(#rough)"/>
+    <text x="313" y="91" text-anchor="middle" font-size="11" fill="#1e1e1e">writing-plans</text>
+    <rect x="406" y="68" width="170" height="36" rx="6" fill="#dae8fc" stroke="#1e1e1e" stroke-width="1.8" filter="url(#rough)"/>
+    <text x="491" y="91" text-anchor="middle" font-size="11" fill="#1e1e1e">executing-plans</text>
 
-    <rect x="600" y="70" width="240" height="140" rx="10" fill="#e1d5e7" stroke="#1e1e1e" stroke-width="2.2" filter="url(#rough)"/>
-    <text x="720" y="105" text-anchor="middle" font-size="15" fill="#1e1e1e">root-cause</text>
-    <text x="720" y="123" text-anchor="middle" font-size="15" fill="#1e1e1e">debugging</text>
-    <text x="720" y="153" text-anchor="middle" font-size="11" fill="#333">fix the cause,</text>
-    <text x="720" y="171" text-anchor="middle" font-size="11" fill="#333">not the symptom</text>
+    <rect x="50" y="114" width="170" height="36" rx="6" fill="#dae8fc" stroke="#1e1e1e" stroke-width="1.8" filter="url(#rough)"/>
+    <text x="135" y="137" text-anchor="middle" font-size="11" fill="#1e1e1e">test-driven-development</text>
+    <rect x="228" y="114" width="170" height="36" rx="6" fill="#dae8fc" stroke="#1e1e1e" stroke-width="1.8" filter="url(#rough)"/>
+    <text x="313" y="137" text-anchor="middle" font-size="11" fill="#1e1e1e">systematic-debugging</text>
+    <rect x="406" y="114" width="170" height="36" rx="6" fill="#dae8fc" stroke="#1e1e1e" stroke-width="1.8" filter="url(#rough)"/>
+    <text x="491" y="137" text-anchor="middle" font-size="11" fill="#1e1e1e">verification-before-completion</text>
+
+    <rect x="50" y="160" width="170" height="36" rx="6" fill="#dae8fc" stroke="#1e1e1e" stroke-width="1.8" filter="url(#rough)"/>
+    <text x="135" y="183" text-anchor="middle" font-size="11" fill="#1e1e1e">writing-skills</text>
+    <rect x="228" y="160" width="170" height="36" rx="6" fill="#dae8fc" stroke="#1e1e1e" stroke-width="1.8" filter="url(#rough)"/>
+    <text x="313" y="183" text-anchor="middle" font-size="11" fill="#1e1e1e">requesting-code-review</text>
+    <rect x="406" y="160" width="170" height="36" rx="6" fill="#dae8fc" stroke="#1e1e1e" stroke-width="1.8" filter="url(#rough)"/>
+    <text x="491" y="183" text-anchor="middle" font-size="11" fill="#1e1e1e">using-git-worktrees</text>
+
+    <rect x="50" y="206" width="170" height="36" rx="6" fill="#dae8fc" stroke="#1e1e1e" stroke-width="1.8" filter="url(#rough)"/>
+    <text x="135" y="229" text-anchor="middle" font-size="11" fill="#1e1e1e">subagent-driven-development</text>
+    <rect x="228" y="206" width="170" height="36" rx="6" fill="#dae8fc" stroke="#1e1e1e" stroke-width="1.8" filter="url(#rough)"/>
+    <text x="313" y="229" text-anchor="middle" font-size="11" fill="#1e1e1e">finishing-a-development-branch</text>
+    <rect x="406" y="206" width="170" height="36" rx="6" fill="none" stroke="#666" stroke-width="1.6" stroke-dasharray="5 4" filter="url(#rough)"/>
+    <text x="491" y="229" text-anchor="middle" font-size="11" fill="#666">pulled out</text>
+
+    <text x="320" y="280" text-anchor="middle" font-size="11" fill="#666">15 skills, each a SKILL.md: name, description, body (the M04 format)</text>
+
+    <path d="M576,224 C 640,224 650,88 700,88" stroke="#1e1e1e" stroke-width="1.8" stroke-dasharray="5 4" marker-end="url(#ah)" filter="url(#rough)" fill="none"/>
+
+    <rect x="700" y="68" width="220" height="40" rx="6" fill="#e1d5e7" stroke="#1e1e1e" stroke-width="2.4" filter="url(#rough)"/>
+    <text x="810" y="93" text-anchor="middle" font-size="13" fill="#1e1e1e">using-superpowers</text>
+
+    <path d="M810,108 L810,186" stroke="#1e1e1e" stroke-width="2.2" marker-end="url(#ah)" fill="none"/>
+    <text x="822" y="150" text-anchor="start" font-size="11" fill="#666">SessionStart hook</text>
+
+    <rect x="660" y="188" width="300" height="100" rx="12" fill="#d5e8d4" stroke="#1e1e1e" stroke-width="2.8" filter="url(#rough)"/>
+    <text x="810" y="222" text-anchor="middle" font-size="15" fill="#1e1e1e">session context</text>
+    <text x="810" y="246" text-anchor="middle" font-size="11" fill="#666">injected at startup</text>
+    <text x="810" y="266" text-anchor="middle" font-size="11" fill="#666">before your first message</text>
+
+    <text x="810" y="318" text-anchor="middle" font-size="12" fill="#1e1e1e">one injected skill makes the other fourteen live</text>
   </g>
-  <text x="440" y="255" text-anchor="middle" font-size="14" fill="#1e1e1e">three habits a harness can enforce mechanically, instead of hoping an agent remembers them</text>
   </svg>
   <div class="pageno">M8&middot;05</div>
 </section>
 
 
-<section class="divider">
-  <h2 class="t">A Verification Hook</h2>
+<section>
+  <h2 class="t">The Bootstrap Path</h2>
+  <p class="s">three files, one event, every session</p>
+  <svg viewBox="0 0 1000 310" role="img" aria-label="The bootstrap path: SessionStart event, the session-start script, the using-superpowers skill file, and the EXTREMELY_IMPORTANT block landing in the agent's context. A second, shorter arrow for Codex labelled skill discovery.">
+<g>
+    <text x="20" y="38" text-anchor="start" font-size="12" fill="#666">Claude Code: a hook carries it</text>
+
+    <rect x="20" y="58" width="200" height="76" rx="8" fill="#ffe6cc" stroke="#1e1e1e" stroke-width="2.2" filter="url(#rough)"/>
+    <text x="120" y="88" text-anchor="middle" font-size="13" fill="#1e1e1e">SessionStart</text>
+    <text x="120" y="108" text-anchor="middle" font-size="11" fill="#333">startup | clear | compact</text>
+    <text x="120" y="124" text-anchor="middle" font-size="11" fill="#666">hooks/hooks.json</text>
+
+    <path d="M220,96 L270,96" stroke="#1e1e1e" stroke-width="2.2" marker-end="url(#ah)" fill="none"/>
+    <text x="245" y="84" text-anchor="middle" font-size="11" fill="#666">fires</text>
+
+    <rect x="270" y="58" width="200" height="76" rx="8" fill="#dae8fc" stroke="#1e1e1e" stroke-width="2.2" filter="url(#rough)"/>
+    <text x="370" y="88" text-anchor="middle" font-size="13" fill="#1e1e1e">hooks/session-start</text>
+    <text x="370" y="108" text-anchor="middle" font-size="11" fill="#333">a shell script</text>
+    <text x="370" y="124" text-anchor="middle" font-size="11" fill="#666">prints JSON the runtime reads</text>
+
+    <path d="M470,96 L520,96" stroke="#1e1e1e" stroke-width="2.2" marker-end="url(#ah)" fill="none"/>
+    <text x="495" y="84" text-anchor="middle" font-size="11" fill="#666">reads</text>
+
+    <rect x="520" y="58" width="220" height="76" rx="8" fill="#e1d5e7" stroke="#1e1e1e" stroke-width="2.2" filter="url(#rough)"/>
+    <text x="630" y="88" text-anchor="middle" font-size="13" fill="#1e1e1e">using-superpowers/SKILL.md</text>
+    <text x="630" y="108" text-anchor="middle" font-size="11" fill="#333">"check for a skill before any action"</text>
+    <text x="630" y="124" text-anchor="middle" font-size="11" fill="#666">names actions, not tools</text>
+
+    <path d="M740,96 L790,96" stroke="#1e1e1e" stroke-width="2.2" marker-end="url(#ah)" fill="none"/>
+    <text x="765" y="84" text-anchor="middle" font-size="11" fill="#666">wraps</text>
+
+    <rect x="790" y="50" width="195" height="92" rx="8" fill="#d5e8d4" stroke="#1e1e1e" stroke-width="2.8" filter="url(#rough)"/>
+    <text x="887" y="76" text-anchor="middle" font-size="12" fill="#1e1e1e">&lt;EXTREMELY_IMPORTANT&gt;</text>
+    <text x="887" y="94" text-anchor="middle" font-size="12" fill="#333">... the skill text ...</text>
+    <text x="887" y="112" text-anchor="middle" font-size="12" fill="#1e1e1e">&lt;/EXTREMELY_IMPORTANT&gt;</text>
+    <text x="887" y="132" text-anchor="middle" font-size="11" fill="#666">in context, every session</text>
+
+    <text x="20" y="188" text-anchor="start" font-size="12" fill="#666">Codex: native skill discovery, no hook</text>
+    <rect x="20" y="206" width="200" height="56" rx="8" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-dasharray="6 5" filter="url(#rough)"/>
+    <text x="120" y="230" text-anchor="middle" font-size="13" fill="#1e1e1e">Codex manifest</text>
+    <text x="120" y="250" text-anchor="middle" font-size="11" fill="#666">"hooks": {} on purpose</text>
+
+    <path d="M220,234 C 560,234 760,234 880,146" stroke="#1e1e1e" stroke-width="2" stroke-dasharray="6 5" marker-end="url(#ah)" filter="url(#rough)" fill="none"/>
+    <text x="520" y="256" text-anchor="middle" font-size="11" fill="#666">the skill's own description, "Use when starting any conversation", loads it</text>
+
+    <text x="500" y="296" text-anchor="middle" font-size="13" fill="#1e1e1e">same skills, same bootstrap text, a different delivery path</text>
+  </g>
+  </svg>
   <div class="pageno">M8&middot;06</div>
 </section>
 
 
 <section>
-  <h2 class="t">A Claim Without Evidence</h2>
-  <p class="s">no real command output anywhere, the hook blocks it</p>
-  <svg viewBox="0 0 880 300" role="img" aria-label="An agent says checkov passes, no real command output anywhere nearby, a hook scans the claim and blocks it for missing evidence.">
+  <h2 class="t">The Basic Workflow</h2>
+  <p class="s">ask, plan, test first, verify, review, finish</p>
+  <svg viewBox="0 0 1100 330" role="img" aria-label="Seven skills in a row in the order the README states them, brainstorming through finishing a development branch, with three craft skills underneath: systematic debugging, verification before completion, and writing skills.">
 <g>
-    <rect x="60" y="50" width="320" height="90" rx="10" fill="#dae8fc" stroke="#1e1e1e" stroke-width="2.2" filter="url(#rough)"/>
-    <text x="220" y="85" text-anchor="middle" font-size="13" fill="#1e1e1e">agent: "checkov passes,</text>
-    <text x="220" y="105" text-anchor="middle" font-size="13" fill="#1e1e1e">the module is clean"</text>
-    <text x="220" y="160" text-anchor="middle" font-size="12" fill="#999">no real checkov output anywhere in the turn</text>
+    <text x="94" y="40" text-anchor="middle" font-size="11" fill="#666">1</text>
+    <rect x="27" y="50" width="134" height="72" rx="8" fill="#e1d5e7" stroke="#1e1e1e" stroke-width="2.2" filter="url(#rough)"/>
+    <text x="94" y="82" text-anchor="middle" font-size="12" fill="#1e1e1e">brainstorming</text>
+    <text x="94" y="104" text-anchor="middle" font-size="11" fill="#666">ask first</text>
 
-    <path d="M400,95 L520,95" stroke="#1e1e1e" stroke-width="2.4" marker-end="url(#ah)"/>
+    <path d="M161,86 L179,86" stroke="#1e1e1e" stroke-width="2" marker-end="url(#ah)" fill="none"/>
 
-    <rect x="530" y="50" width="290" height="90" rx="10" fill="#f8cecc" stroke="#1e1e1e" stroke-width="2.8" filter="url(#rough)"/>
-    <text x="675" y="90" text-anchor="middle" font-size="15" fill="#1e1e1e">hook: BLOCK</text>
-    <text x="675" y="112" text-anchor="middle" font-size="11" fill="#333">claim found, no evidence found</text>
+    <text x="246" y="40" text-anchor="middle" font-size="11" fill="#666">2</text>
+    <rect x="179" y="50" width="134" height="72" rx="8" fill="#dae8fc" stroke="#1e1e1e" stroke-width="2.2" filter="url(#rough)"/>
+    <text x="246" y="82" text-anchor="middle" font-size="12" fill="#1e1e1e">using-git-worktrees</text>
+    <text x="246" y="104" text-anchor="middle" font-size="11" fill="#666">isolate</text>
+
+    <path d="M313,86 L331,86" stroke="#1e1e1e" stroke-width="2" marker-end="url(#ah)" fill="none"/>
+
+    <text x="398" y="40" text-anchor="middle" font-size="11" fill="#666">3</text>
+    <rect x="331" y="50" width="134" height="72" rx="8" fill="#dae8fc" stroke="#1e1e1e" stroke-width="2.2" filter="url(#rough)"/>
+    <text x="398" y="82" text-anchor="middle" font-size="12" fill="#1e1e1e">writing-plans</text>
+    <text x="398" y="104" text-anchor="middle" font-size="11" fill="#666">tasks + tests</text>
+
+    <path d="M465,86 L483,86" stroke="#1e1e1e" stroke-width="2" marker-end="url(#ah)" fill="none"/>
+
+    <text x="550" y="40" text-anchor="middle" font-size="11" fill="#666">4</text>
+    <rect x="483" y="50" width="134" height="72" rx="8" fill="#dae8fc" stroke="#1e1e1e" stroke-width="2.2" filter="url(#rough)"/>
+    <text x="550" y="72" text-anchor="middle" font-size="12" fill="#1e1e1e">executing-plans</text>
+    <text x="550" y="90" text-anchor="middle" font-size="11" fill="#666">or subagent-driven-</text>
+    <text x="550" y="106" text-anchor="middle" font-size="11" fill="#666">development</text>
+
+    <path d="M617,86 L635,86" stroke="#1e1e1e" stroke-width="2" marker-end="url(#ah)" fill="none"/>
+
+    <text x="702" y="40" text-anchor="middle" font-size="11" fill="#666">5</text>
+    <rect x="635" y="50" width="134" height="72" rx="8" fill="#d5e8d4" stroke="#1e1e1e" stroke-width="2.8" filter="url(#rough)"/>
+    <text x="702" y="76" text-anchor="middle" font-size="12" fill="#1e1e1e">test-driven-</text>
+    <text x="702" y="92" text-anchor="middle" font-size="12" fill="#1e1e1e">development</text>
+    <text x="702" y="110" text-anchor="middle" font-size="11" fill="#666">test first</text>
+
+    <path d="M769,86 L787,86" stroke="#1e1e1e" stroke-width="2" marker-end="url(#ah)" fill="none"/>
+
+    <text x="854" y="40" text-anchor="middle" font-size="11" fill="#666">6</text>
+    <rect x="787" y="50" width="134" height="72" rx="8" fill="#dae8fc" stroke="#1e1e1e" stroke-width="2.2" filter="url(#rough)"/>
+    <text x="854" y="76" text-anchor="middle" font-size="12" fill="#1e1e1e">requesting-</text>
+    <text x="854" y="92" text-anchor="middle" font-size="12" fill="#1e1e1e">code-review</text>
+    <text x="854" y="110" text-anchor="middle" font-size="11" fill="#666">against the plan</text>
+
+    <path d="M921,86 L939,86" stroke="#1e1e1e" stroke-width="2" marker-end="url(#ah)" fill="none"/>
+
+    <text x="1006" y="40" text-anchor="middle" font-size="11" fill="#666">7</text>
+    <rect x="939" y="50" width="134" height="72" rx="8" fill="#dae8fc" stroke="#1e1e1e" stroke-width="2.2" filter="url(#rough)"/>
+    <text x="1006" y="76" text-anchor="middle" font-size="12" fill="#1e1e1e">finishing-a-</text>
+    <text x="1006" y="92" text-anchor="middle" font-size="12" fill="#1e1e1e">development-branch</text>
+    <text x="1006" y="110" text-anchor="middle" font-size="11" fill="#666">verify, then merge</text>
+
+    <path d="M550,122 L550,184" stroke="#666" stroke-width="1.8" stroke-dasharray="5 4" marker-end="url(#ah)" fill="none"/>
+    <text x="562" y="158" text-anchor="start" font-size="11" fill="#666">used inside every step</text>
+
+    <rect x="200" y="186" width="700" height="100" rx="12" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-dasharray="7 5" filter="url(#rough)"/>
+    <text x="550" y="208" text-anchor="middle" font-size="12" fill="#666">craft skills underneath</text>
+
+    <rect x="230" y="222" width="200" height="46" rx="8" fill="#ffe6cc" stroke="#1e1e1e" stroke-width="2.2" filter="url(#rough)"/>
+    <text x="330" y="250" text-anchor="middle" font-size="12" fill="#1e1e1e">systematic-debugging</text>
+    <rect x="450" y="222" width="200" height="46" rx="8" fill="#ffe6cc" stroke="#1e1e1e" stroke-width="2.2" filter="url(#rough)"/>
+    <text x="550" y="250" text-anchor="middle" font-size="11" fill="#1e1e1e">verification-before-completion</text>
+    <rect x="670" y="222" width="200" height="46" rx="8" fill="#ffe6cc" stroke="#1e1e1e" stroke-width="2.2" filter="url(#rough)"/>
+    <text x="770" y="250" text-anchor="middle" font-size="12" fill="#1e1e1e">writing-skills</text>
+
+    <text x="550" y="314" text-anchor="middle" font-size="13" fill="#1e1e1e">ask, plan, test first, verify, review, finish</text>
   </g>
-  <text x="440" y="230" text-anchor="middle" font-size="14" fill="#1e1e1e">a claim with no evidence never reaches "done"</text>
   </svg>
   <div class="pageno">M8&middot;07</div>
 </section>
 
 
-<section>
-  <h2 class="t">A Claim With Evidence</h2>
-  <p class="s">real captured output right beside the claim, the hook passes it</p>
-  <svg viewBox="0 0 880 300" role="img" aria-label="The same claim, this time with real captured checkov output right beside it, and the hook lets it through.">
-<g>
-    <rect x="40" y="40" width="360" height="120" rx="10" fill="#dae8fc" stroke="#1e1e1e" stroke-width="2.2" filter="url(#rough)"/>
-    <text x="220" y="68" text-anchor="middle" font-size="12" fill="#1e1e1e">$ checkov -d . --compact --quiet</text>
-    <text x="220" y="90" text-anchor="middle" font-size="12" fill="#1e1e1e">Passed checks: 11, Failed checks: 5</text>
-    <text x="220" y="118" text-anchor="middle" font-size="12" fill="#1e1e1e">"the two checks this fix targets pass"</text>
-    <text x="220" y="150" text-anchor="middle" font-size="11" fill="#999">real output, right beside the claim</text>
-
-    <path d="M410,100 L520,100" stroke="#1e1e1e" stroke-width="2.4" marker-end="url(#ah)"/>
-
-    <rect x="530" y="55" width="290" height="90" rx="10" fill="#d5e8d4" stroke="#1e1e1e" stroke-width="2.8" filter="url(#rough)"/>
-    <text x="675" y="95" text-anchor="middle" font-size="15" fill="#1e1e1e">hook: PASS</text>
-    <text x="675" y="117" text-anchor="middle" font-size="11" fill="#333">claim found, evidence found</text>
-  </g>
-  <text x="440" y="230" text-anchor="middle" font-size="14" fill="#1e1e1e">same claim, same words, the only thing that changed is the evidence</text>
-  </svg>
+<section class="divider">
+  <h2 class="t">Adapting It to Infrastructure</h2>
   <div class="pageno">M8&middot;08</div>
 </section>
 
 
-<section class="divider">
-  <h2 class="t">Harness vs Context, Revisited</h2>
+<section>
+  <h2 class="t">The IaC Loop</h2>
+  <p class="s">evidence has four forms for infrastructure</p>
+  <svg viewBox="0 0 1000 340" role="img" aria-label="The RED-GREEN-REFACTOR loop redrawn for infrastructure: a failing terraform test, minimal HCL, scan, plan, apply, destroy, with the evidence captured at each step.">
+<g>
+    <rect x="40" y="40" width="190" height="64" rx="8" fill="#f8cecc" stroke="#1e1e1e" stroke-width="2.8" filter="url(#rough)"/>
+    <text x="135" y="65" text-anchor="middle" font-size="13" fill="#1e1e1e">RED: failing terraform test</text>
+    <text x="135" y="86" text-anchor="middle" font-size="11" fill="#333">evidence: test output, 1 failed</text>
+
+    <path d="M230,72 L280,72" stroke="#1e1e1e" stroke-width="2.2" marker-end="url(#ah)" fill="none"/>
+
+    <rect x="280" y="40" width="190" height="64" rx="8" fill="#d5e8d4" stroke="#1e1e1e" stroke-width="2.8" filter="url(#rough)"/>
+    <text x="375" y="65" text-anchor="middle" font-size="13" fill="#1e1e1e">GREEN: minimal HCL</text>
+    <text x="375" y="86" text-anchor="middle" font-size="11" fill="#333">evidence: test output, 0 failed</text>
+
+    <path d="M470,72 L520,72" stroke="#1e1e1e" stroke-width="2.2" marker-end="url(#ah)" fill="none"/>
+
+    <rect x="520" y="40" width="190" height="64" rx="8" fill="none" stroke="#1e1e1e" stroke-width="2.2" filter="url(#rough)"/>
+    <text x="615" y="65" text-anchor="middle" font-size="13" fill="#1e1e1e">checkov</text>
+    <text x="615" y="86" text-anchor="middle" font-size="11" fill="#333">evidence: scan count</text>
+
+    <path d="M710,72 L760,72" stroke="#1e1e1e" stroke-width="2.2" marker-end="url(#ah)" fill="none"/>
+
+    <rect x="760" y="40" width="190" height="64" rx="8" fill="none" stroke="#1e1e1e" stroke-width="2.2" filter="url(#rough)"/>
+    <text x="855" y="65" text-anchor="middle" font-size="13" fill="#1e1e1e">terraform plan</text>
+    <text x="855" y="86" text-anchor="middle" font-size="11" fill="#333">the proposal: plan output</text>
+
+    <path d="M855,104 L855,196" stroke="#1e1e1e" stroke-width="2.2" marker-end="url(#ah)" fill="none"/>
+    <text x="867" y="154" text-anchor="start" font-size="11" fill="#666">human approves</text>
+
+    <rect x="760" y="198" width="190" height="64" rx="8" fill="none" stroke="#1e1e1e" stroke-width="2.2" filter="url(#rough)"/>
+    <text x="855" y="223" text-anchor="middle" font-size="13" fill="#1e1e1e">apply</text>
+    <text x="855" y="244" text-anchor="middle" font-size="11" fill="#333">evidence: apply summary</text>
+
+    <path d="M760,230 L710,230" stroke="#1e1e1e" stroke-width="2.2" marker-end="url(#ah)" fill="none"/>
+
+    <rect x="520" y="198" width="190" height="64" rx="8" fill="none" stroke="#1e1e1e" stroke-width="2.2" filter="url(#rough)"/>
+    <text x="615" y="223" text-anchor="middle" font-size="13" fill="#1e1e1e">destroy</text>
+    <text x="615" y="244" text-anchor="middle" font-size="11" fill="#333">evidence: destroy summary</text>
+
+    <path d="M520,230 C 350,230 135,222 135,106" stroke="#1e1e1e" stroke-width="2" stroke-dasharray="6 5" marker-end="url(#ah)" filter="url(#rough)" fill="none"/>
+    <text x="330" y="262" text-anchor="middle" font-size="11" fill="#666">back to RED: the next assertion (REFACTOR between)</text>
+
+    <text x="500" y="318" text-anchor="middle" font-size="13" fill="#1e1e1e">four forms of evidence: test output, scan count, apply summary, destroy summary</text>
+  </g>
+  </svg>
   <div class="pageno">M8&middot;09</div>
 </section>
 
 
 <section>
-  <h2 class="t">Ignores Our Standards</h2>
-  <p class="s">that symptom points to harness, not context</p>
-  <svg viewBox="0 0 880 300" role="img" aria-label="M01's three-layer diagnostic revisited: the symptom it ignores our standards points to the harness layer, not the context layer.">
+  <h2 class="t">Skill Versus Gate</h2>
+  <p class="s">the harness makes it hard to skip, the gate makes it impossible</p>
+  <svg viewBox="0 0 960 320" role="img" aria-label="Two lanes side by side. The workflow harness lane: the bootstrap says check for a skill, the agent follows the process, hard to skip. The gate lane: a hook or scanner runs regardless, exits non-zero, impossible to pass. Footer: keep both.">
 <g>
-    <rect x="60" y="40" width="330" height="80" rx="10" fill="#f8cecc" stroke="#1e1e1e" stroke-width="2.6" filter="url(#rough)"/>
-    <text x="225" y="72" text-anchor="middle" font-size="14" fill="#1e1e1e">"it ignores our standards"</text>
-    <text x="225" y="94" text-anchor="middle" font-size="11" fill="#333">the symptom</text>
+    <text x="240" y="40" text-anchor="middle" font-size="15" fill="#1e1e1e">workflow harness (M08)</text>
+    <rect x="90" y="60" width="300" height="48" rx="8" fill="#e1d5e7" stroke="#1e1e1e" stroke-width="2.2" filter="url(#rough)"/>
+    <text x="240" y="89" text-anchor="middle" font-size="12" fill="#1e1e1e">bootstrap says: check for a skill</text>
+    <path d="M240,108 L240,138" stroke="#1e1e1e" stroke-width="2" marker-end="url(#ah)" fill="none"/>
+    <rect x="90" y="140" width="300" height="48" rx="8" fill="#e1d5e7" stroke="#1e1e1e" stroke-width="2.2" filter="url(#rough)"/>
+    <text x="240" y="169" text-anchor="middle" font-size="12" fill="#1e1e1e">agent follows the process</text>
+    <text x="240" y="224" text-anchor="middle" font-size="15" fill="#1e1e1e">hard to skip</text>
+    <text x="240" y="246" text-anchor="middle" font-size="11" fill="#666">a probability, in practice high</text>
 
-    <path d="M225,120 L225,155" stroke="#1e1e1e" stroke-width="2.2" marker-end="url(#ah)"/>
+    <path d="M480,24 L481,272" stroke="#1e1e1e" stroke-width="1.6" stroke-dasharray="6 6" filter="url(#rough)" fill="none"/>
 
-    <rect x="60" y="165" width="150" height="70" rx="8" fill="#e5e5e5" stroke="#1e1e1e" stroke-width="1.6" stroke-dasharray="5 4" filter="url(#rough)"/>
-    <text x="135" y="195" text-anchor="middle" font-size="12" fill="#999">context</text>
-    <text x="135" y="215" text-anchor="middle" font-size="10" fill="#999">not this</text>
+    <text x="720" y="40" text-anchor="middle" font-size="15" fill="#1e1e1e">gate (M06, M09)</text>
+    <rect x="570" y="60" width="300" height="48" rx="8" fill="#f8cecc" stroke="#1e1e1e" stroke-width="2.2" filter="url(#rough)"/>
+    <text x="720" y="89" text-anchor="middle" font-size="12" fill="#1e1e1e">hook / scanner runs regardless</text>
+    <path d="M720,108 L720,138" stroke="#1e1e1e" stroke-width="2" marker-end="url(#ah)" fill="none"/>
+    <rect x="570" y="140" width="300" height="48" rx="8" fill="#f8cecc" stroke="#1e1e1e" stroke-width="2.2" filter="url(#rough)"/>
+    <text x="720" y="169" text-anchor="middle" font-size="12" fill="#1e1e1e">exit non-zero, apply blocked</text>
+    <text x="720" y="224" text-anchor="middle" font-size="15" fill="#1e1e1e">impossible to pass</text>
+    <text x="720" y="246" text-anchor="middle" font-size="11" fill="#666">a certainty, whether or not the agent read anything</text>
 
-    <rect x="245" y="165" width="150" height="70" rx="8" fill="#d5e8d4" stroke="#1e1e1e" stroke-width="2.6" filter="url(#rough)"/>
-    <text x="320" y="195" text-anchor="middle" font-size="12" fill="#1e1e1e">harness</text>
-    <text x="320" y="215" text-anchor="middle" font-size="10" fill="#1e1e1e">this module</text>
-
-    <text x="620" y="90" text-anchor="middle" font-size="13" fill="#1e1e1e">"can't get one task right at all"</text>
-    <text x="620" y="112" text-anchor="middle" font-size="11" fill="#999">that's context (M03), a different symptom</text>
+    <text x="480" y="300" text-anchor="middle" font-size="13" fill="#1e1e1e">keep both: each closes a gap the other cannot see</text>
   </g>
   </svg>
   <div class="pageno">M8&middot;10</div>
@@ -320,38 +488,99 @@ footer, header, hgroup, main, menu, nav, section {
 
 
 <section class="divider">
-  <h2 class="t">What Has to Be True Before You Loop</h2>
+  <h2 class="t">Bigger Builds</h2>
   <div class="pageno">M8&middot;11</div>
 </section>
 
 
 <section>
-  <h2 class="t">Harness Before Loop</h2>
-  <p class="s">never add a loop on top of a broken harness</p>
-  <svg viewBox="0 0 880 300" role="img" aria-label="A complete harness drawn as a solid foundation, with a loop icon sitting on top of it but not yet built, labeled as M12's job.">
+  <h2 class="t">Superpowers and GSD, Stacked</h2>
+  <p class="s">one change: Superpowers. Many phases: GSD on top</p>
+  <svg viewBox="0 0 1000 340" role="img" aria-label="GSD's milestone loop stacked on top of Superpowers' skills: Discuss, Plan, Execute, Verify, Ship above; brainstorming, TDD, verification below. One arrow labelled workflow, one labelled craft.">
 <g>
-    <rect x="240" y="170" width="400" height="70" rx="10" fill="#d5e8d4" stroke="#1e1e1e" stroke-width="2.8" filter="url(#rough)"/>
-    <text x="440" y="200" text-anchor="middle" font-size="15" fill="#1e1e1e">a complete harness</text>
-    <text x="440" y="222" text-anchor="middle" font-size="11" fill="#333">context + skill + MCP + hook, assembled</text>
+    <text x="60" y="24" text-anchor="middle" font-size="12" fill="#1e1e1e">workflow</text>
+    <path d="M60,310 L60,36" stroke="#1e1e1e" stroke-width="2" marker-end="url(#ah)" fill="none"/>
+    <text x="60" y="330" text-anchor="middle" font-size="12" fill="#1e1e1e">craft</text>
 
-    <rect x="340" y="80" width="200" height="70" rx="10" fill="#e5e5e5" stroke="#1e1e1e" stroke-width="1.8" stroke-dasharray="6 5" filter="url(#rough)"/>
-    <text x="440" y="112" text-anchor="middle" font-size="13" fill="#666">a loop</text>
-    <text x="440" y="132" text-anchor="middle" font-size="10" fill="#999">not built yet, M12</text>
+    <rect x="120" y="30" width="850" height="122" rx="12" fill="none" stroke="#1e1e1e" stroke-width="2.2" filter="url(#rough)"/>
+    <text x="140" y="54" text-anchor="start" font-size="14" fill="#1e1e1e">GSD, per milestone</text>
+
+    <rect x="150" y="68" width="130" height="44" rx="8" fill="#dae8fc" stroke="#1e1e1e" stroke-width="2.2" filter="url(#rough)"/>
+    <text x="215" y="95" text-anchor="middle" font-size="13" fill="#1e1e1e">Discuss</text>
+    <path d="M280,90 L310,90" stroke="#1e1e1e" stroke-width="2" marker-end="url(#ah)" fill="none"/>
+    <rect x="310" y="68" width="130" height="44" rx="8" fill="#dae8fc" stroke="#1e1e1e" stroke-width="2.2" filter="url(#rough)"/>
+    <text x="375" y="95" text-anchor="middle" font-size="13" fill="#1e1e1e">Plan</text>
+    <path d="M440,90 L470,90" stroke="#1e1e1e" stroke-width="2" marker-end="url(#ah)" fill="none"/>
+    <rect x="470" y="68" width="130" height="44" rx="8" fill="#dae8fc" stroke="#1e1e1e" stroke-width="2.2" filter="url(#rough)"/>
+    <text x="535" y="95" text-anchor="middle" font-size="13" fill="#1e1e1e">Execute</text>
+    <path d="M600,90 L630,90" stroke="#1e1e1e" stroke-width="2" marker-end="url(#ah)" fill="none"/>
+    <rect x="630" y="68" width="130" height="44" rx="8" fill="#dae8fc" stroke="#1e1e1e" stroke-width="2.2" filter="url(#rough)"/>
+    <text x="695" y="95" text-anchor="middle" font-size="13" fill="#1e1e1e">Verify</text>
+    <path d="M760,90 L790,90" stroke="#1e1e1e" stroke-width="2" marker-end="url(#ah)" fill="none"/>
+    <rect x="790" y="68" width="130" height="44" rx="8" fill="#dae8fc" stroke="#1e1e1e" stroke-width="2.2" filter="url(#rough)"/>
+    <text x="855" y="95" text-anchor="middle" font-size="13" fill="#1e1e1e">Ship</text>
+
+    <text x="545" y="138" text-anchor="middle" font-size="11" fill="#666">STATE.md · CONTEXT.md · fresh-context subagents · many sessions</text>
+
+    <path d="M535,152 L535,182" stroke="#1e1e1e" stroke-width="2" marker-end="url(#ah)" fill="none"/>
+    <text x="548" y="172" text-anchor="start" font-size="11" fill="#666">each task inside Execute</text>
+
+    <rect x="120" y="184" width="850" height="122" rx="12" fill="none" stroke="#1e1e1e" stroke-width="2.2" filter="url(#rough)"/>
+    <text x="140" y="208" text-anchor="start" font-size="14" fill="#1e1e1e">Superpowers, per task</text>
+
+    <rect x="170" y="222" width="165" height="44" rx="8" fill="#ffe6cc" stroke="#1e1e1e" stroke-width="2.2" filter="url(#rough)"/>
+    <text x="252" y="249" text-anchor="middle" font-size="13" fill="#1e1e1e">brainstorming</text>
+    <rect x="365" y="222" width="165" height="44" rx="8" fill="#ffe6cc" stroke="#1e1e1e" stroke-width="2.2" filter="url(#rough)"/>
+    <text x="447" y="249" text-anchor="middle" font-size="13" fill="#1e1e1e">writing-plans</text>
+    <rect x="560" y="222" width="165" height="44" rx="8" fill="#ffe6cc" stroke="#1e1e1e" stroke-width="2.2" filter="url(#rough)"/>
+    <text x="642" y="249" text-anchor="middle" font-size="13" fill="#1e1e1e">TDD</text>
+    <rect x="755" y="222" width="165" height="44" rx="8" fill="#ffe6cc" stroke="#1e1e1e" stroke-width="2.2" filter="url(#rough)"/>
+    <text x="837" y="249" text-anchor="middle" font-size="13" fill="#1e1e1e">verification</text>
+
+    <text x="545" y="292" text-anchor="middle" font-size="11" fill="#666">one piece of work, one session, done well</text>
+
+    <text x="545" y="330" text-anchor="middle" font-size="13" fill="#1e1e1e">one change: Superpowers alone. Many phases: GSD on top, Superpowers underneath</text>
   </g>
-  <text x="440" y="270" text-anchor="middle" font-size="14" fill="#1e1e1e">never add a loop on top of a broken harness</text>
   </svg>
   <div class="pageno">M8&middot;12</div>
 </section>
 
 
+<section class="divider">
+  <h2 class="t">What Has to Be True Before You Loop</h2>
+  <div class="pageno">M8&middot;13</div>
+</section>
+
+
+<section>
+  <h2 class="t">Harness Before Loop</h2>
+  <p class="s">never loop on a broken harness</p>
+  <svg viewBox="0 0 900 300" role="img" aria-label="A workflow harness drawn as a foundation, with a loop icon on top that is not built yet, labelled as Module 12's job.">
+<g>
+    <rect x="120" y="170" width="660" height="82" rx="10" fill="#d5e8d4" stroke="#1e1e1e" stroke-width="2.8" filter="url(#rough)"/>
+    <text x="450" y="201" text-anchor="middle" font-size="16" fill="#1e1e1e">workflow harness</text>
+    <text x="450" y="226" text-anchor="middle" font-size="12" fill="#333">asks, plans, tests first, verifies</text>
+    <text x="450" y="243" text-anchor="middle" font-size="11" fill="#666">step 4, gated apply: what step 5 stands on</text>
+
+    <path d="M392,125 A58,58 0 1 1 508,125" stroke="#1e1e1e" stroke-width="2" stroke-dasharray="6 5" marker-end="url(#ah)" filter="url(#rough)" fill="none"/>
+    <text x="450" y="108" text-anchor="middle" font-size="14" fill="#666">loop</text>
+    <text x="450" y="158" text-anchor="middle" font-size="11" fill="#666">M12, not built yet</text>
+
+    <text x="450" y="284" text-anchor="middle" font-size="14" fill="#1e1e1e">never add a loop on top of a broken harness</text>
+  </g>
+  </svg>
+  <div class="pageno">M8&middot;14</div>
+</section>
+
+
 <section>
   <p class="kicker">MODULE 8 TAKEAWAYS</p>
-  <h2 class="t">A Complete Harness Is What Makes Looping Safe</h2>
+  <h2 class="t">A Harness You Install, Not One You Invent</h2>
   <svg viewBox="0 0 1100 320" role="img" aria-label="Four key takeaways listed as numbered rows">
     <g filter="url(#rough)" stroke="#1e1e1e" stroke-width="2.4">
       <circle cx="110" cy="50"  r="22" fill="#dae8fc"/>
-      <circle cx="110" cy="118" r="22" fill="#d5e8d4"/>
-      <circle cx="110" cy="186" r="22" fill="#ffe6cc"/>
+      <circle cx="110" cy="118" r="22" fill="#e1d5e7"/>
+      <circle cx="110" cy="186" r="22" fill="#d5e8d4"/>
       <circle cx="110" cy="254" r="22" fill="#f8cecc"/>
     </g>
     <g class="num" text-anchor="middle">
@@ -359,65 +588,58 @@ footer, header, hgroup, main, menu, nav, section {
       <text x="110" y="194">3</text><text x="110" y="262">4</text>
     </g>
     <g class="lbl" text-anchor="start">
-      <text x="158" y="58">a harness is a skill, an MCP server, and a hook assembled around one discipline</text>
-      <text x="158" y="126">three superpowers disciplines: test-first, verify before claiming, root-cause debugging</text>
-      <text x="158" y="194">a claim without evidence never reaches "done", a hook can check for that mechanically</text>
-      <text x="158" y="262">never add a loop on top of a broken harness, this module is what M12 stands on</text>
+      <text x="158" y="58">three things are called a harness; this module is the workflow harness</text>
+      <text x="158" y="126">Superpowers is a skills library plus a bootstrap injected every session</text>
+      <text x="158" y="194">for infrastructure, RED is a failing terraform test and evidence has four forms</text>
+      <text x="158" y="262">never add a loop on top of a broken harness</text>
     </g>
   </svg>
   <p class="credit">Now open <b>Module 8 &middot; Lab</b>. &nbsp;&middot;&nbsp; <b>Gourav Shah</b> &middot; School of DevOps &amp; AI</p>
-  <div class="pageno">M8&middot;13</div>
+  <div class="pageno">M8&middot;15</div>
 </section>
 
 
 <section>
   <h2 class="t">Next: Open the Lab</h2>
-  <p class="s">the same claim, twice, once with the harness wired in</p>
-  <svg viewBox="0 0 840 190" role="img" aria-label="Six lab steps revealed one at a time: no harness, write the skill, write the hook, an unbacked claim blocked, a backed claim passed, apply and destroy against floci">
+  <p class="s">the same request twice, plugin off and then on, then the real loop against floci</p>
+  <svg viewBox="0 0 840 190" role="img" aria-label="Five lab stages revealed one at a time: install on both runtimes, the first action with the plugin off then on, brainstorm, plan and a failing test first, apply and destroy against floci">
     <g class="fragment" transform="translate(0,0)">
-      <rect x="10" y="35" width="120" height="95" rx="10" fill="none" stroke="#1e1e1e" stroke-width="1.8" stroke-dasharray="6 5" filter="url(#rough)"/>
-      <circle cx="70" cy="83" r="28" fill="#f8cecc" stroke="#1e1e1e" stroke-width="2" filter="url(#rough)"/>
-      <path d="M55,68 L88,98" stroke="#1e1e1e" stroke-width="4" fill="none" stroke-linecap="round"/><path d="M88,68 L55,98" stroke="#1e1e1e" stroke-width="4" fill="none" stroke-linecap="round"/>
-      <text x="70" y="150" text-anchor="middle" class="lbl-sm">no harness</text>
-      <text x="70" y="166" text-anchor="middle" class="lbl-g" font-size="12">claim, no evidence</text>
-    </g>
-    <g class="fragment" transform="translate(140,0)">
-      <rect x="10" y="35" width="120" height="95" rx="10" fill="none" stroke="#1e1e1e" stroke-width="1.8" stroke-dasharray="6 5" filter="url(#rough)"/>
-      <circle cx="70" cy="83" r="28" fill="#e1d5e7" stroke="#1e1e1e" stroke-width="2" filter="url(#rough)"/>
-      <path d="M55,85 L67,97 L88,70" stroke="#1e1e1e" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-      <text x="70" y="150" text-anchor="middle" class="lbl-sm">write the skill</text>
-      <text x="70" y="166" text-anchor="middle" class="lbl-g" font-size="12">state the rule</text>
-    </g>
-    <g class="fragment" transform="translate(280,0)">
       <rect x="10" y="35" width="120" height="95" rx="10" fill="none" stroke="#1e1e1e" stroke-width="1.8" stroke-dasharray="6 5" filter="url(#rough)"/>
       <circle cx="70" cy="83" r="28" fill="#dae8fc" stroke="#1e1e1e" stroke-width="2" filter="url(#rough)"/>
       <path d="M55,85 L67,97 L88,70" stroke="#1e1e1e" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-      <text x="70" y="150" text-anchor="middle" class="lbl-sm">write the hook</text>
-      <text x="70" y="166" text-anchor="middle" class="lbl-g" font-size="12">enforce it mechanically</text>
+      <text x="70" y="150" text-anchor="middle" class="lbl-sm">install</text>
+      <text x="70" y="166" text-anchor="middle" class="lbl-g" font-size="12">both runtimes, probe it</text>
     </g>
-    <g class="fragment" transform="translate(420,0)">
+    <g class="fragment" transform="translate(168,0)">
       <rect x="10" y="35" width="120" height="95" rx="10" fill="none" stroke="#1e1e1e" stroke-width="1.8" stroke-dasharray="6 5" filter="url(#rough)"/>
       <circle cx="70" cy="83" r="28" fill="#f8cecc" stroke="#1e1e1e" stroke-width="2" filter="url(#rough)"/>
-      <path d="M55,85 L67,97 L88,70" stroke="#1e1e1e" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-      <text x="70" y="150" text-anchor="middle" class="lbl-sm">run 1</text>
-      <text x="70" y="166" text-anchor="middle" class="lbl-g" font-size="12">unbacked claim, blocked</text>
+      <path d="M55,68 L88,98" stroke="#1e1e1e" stroke-width="4" fill="none" stroke-linecap="round"/><path d="M88,68 L55,98" stroke="#1e1e1e" stroke-width="4" fill="none" stroke-linecap="round"/>
+      <text x="70" y="150" text-anchor="middle" class="lbl-sm">first action</text>
+      <text x="70" y="166" text-anchor="middle" class="lbl-g" font-size="12">plugin off, then on</text>
     </g>
-    <g class="fragment" transform="translate(560,0)">
+    <g class="fragment" transform="translate(336,0)">
       <rect x="10" y="35" width="120" height="95" rx="10" fill="none" stroke="#1e1e1e" stroke-width="1.8" stroke-dasharray="6 5" filter="url(#rough)"/>
-      <circle cx="70" cy="83" r="28" fill="#d5e8d4" stroke="#1e1e1e" stroke-width="2" filter="url(#rough)"/>
+      <circle cx="70" cy="83" r="28" fill="#e1d5e7" stroke="#1e1e1e" stroke-width="2" filter="url(#rough)"/>
       <path d="M55,85 L67,97 L88,70" stroke="#1e1e1e" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-      <text x="70" y="150" text-anchor="middle" class="lbl-sm">run 2</text>
-      <text x="70" y="166" text-anchor="middle" class="lbl-g" font-size="12">backed claim, passes</text>
+      <text x="70" y="150" text-anchor="middle" class="lbl-sm">brainstorm</text>
+      <text x="70" y="166" text-anchor="middle" class="lbl-g" font-size="12">it asks before it builds</text>
     </g>
-    <g class="fragment" transform="translate(700,0)">
+    <g class="fragment" transform="translate(504,0)">
       <rect x="10" y="35" width="120" height="95" rx="10" fill="none" stroke="#1e1e1e" stroke-width="1.8" stroke-dasharray="6 5" filter="url(#rough)"/>
       <circle cx="70" cy="83" r="28" fill="#ffe6cc" stroke="#1e1e1e" stroke-width="2" filter="url(#rough)"/>
       <path d="M55,85 L67,97 L88,70" stroke="#1e1e1e" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      <text x="70" y="150" text-anchor="middle" class="lbl-sm">plan + RED</text>
+      <text x="70" y="166" text-anchor="middle" class="lbl-g" font-size="12">test first, then HCL</text>
+    </g>
+    <g class="fragment" transform="translate(672,0)">
+      <rect x="10" y="35" width="120" height="95" rx="10" fill="none" stroke="#1e1e1e" stroke-width="1.8" stroke-dasharray="6 5" filter="url(#rough)"/>
+      <circle cx="70" cy="83" r="28" fill="#d5e8d4" stroke="#1e1e1e" stroke-width="2" filter="url(#rough)"/>
+      <path d="M55,85 L67,97 L88,70" stroke="#1e1e1e" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
       <text x="70" y="150" text-anchor="middle" class="lbl-sm">apply + destroy</text>
-      <text x="70" y="166" text-anchor="middle" class="lbl-g" font-size="12">real floci, last step</text>
+      <text x="70" y="166" text-anchor="middle" class="lbl-g" font-size="12">evidence, then floci</text>
     </g>
   </svg>
-  <div class="pageno">M8&middot;14</div>
+  <div class="pageno">M8&middot;16</div>
 </section>
 
 
