@@ -130,7 +130,7 @@ const sidebars: SidebarsConfig = {
     },
     {
       type: 'category',
-      label: 'Module 12: Loop Engineering, Multi-Agent Ops, Economics',
+      label: 'Module 12: Loop Engineering for Infrastructure Agents',
       items: [
         'm12-loop-multiagent-economics/lesson',
         'm12-loop-multiagent-economics/lab',

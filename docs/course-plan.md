@@ -39,7 +39,7 @@ module 3 previews.
 | 09 | Verifying AI-Generated Infrastructure | Build a scan-and-policy pipeline for a real S3 module: Trivy, Checkov, OPA, Infracost | 1 |
 | 10 | Agentic Kubernetes and Platform IaC | Build a database-as-a-service capability using Helm, manifests, and Crossplane v2 | 2 |
 | 11 | Agentic GitOps and Pipelines | Ship an agent's change to production using a pipeline and GitOps | 2 |
-| 12 | Loop Engineering, Multi-Agent Ops, Economics | Build a self-healing compliance loop with a GitHub Actions trigger | 0 |
+| 12 | Loop Engineering for Infrastructure Agents | Put a real agent in a loop that only a deterministic Stop gate can end, in Claude Code and Codex, and catch drift with /loop | 0 |
 | CAP | Capstone | Ship infrastructure through a propose-verify-approve-apply pipeline, all three tiers | 1, 2, 3 (optional) |
 
 Each project is real: applied and destroyed against Floci or a local `kind` cluster,

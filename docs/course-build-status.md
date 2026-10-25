@@ -21,7 +21,7 @@ capstone are live.
 | 09 | Verifying AI-Generated Infrastructure | hands-on | **Live** |
 | 10 | Agentic Kubernetes and Platform IaC | hands-on | **Live** |
 | 11 | Agentic GitOps and Pipelines | hands-on | **Live** |
-| 12 | Loop Engineering, Multi-Agent Ops, Economics | conceptual | **Live** |
+| 12 | Loop Engineering for Infrastructure Agents | hands-on | **Live** |
 | CAP | Capstone: Ship Infrastructure Through a Propose-Verify-Approve-Apply Pipeline | project | **Live** |
 
 Every module ships the full set: explainer deck, hands-on lab with a real `run.sh`
